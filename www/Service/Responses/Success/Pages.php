@@ -9,16 +9,6 @@
       $configRenderer = (array) $config->renderer;
       $configRenderer["args"] = (array) $configRenderer["args"];
 
-      // Преобразуем Less в СSS
-      $less = new LessCss([
-         "path" => "Client",
-         "exception" => (object) [
-            "paths" => ["Librarys"]
-         ],
-         "inportDirs" => ["Client/"]
-      ]);
-      $less->run();
-
       // Имя страницы
       $namePage = ucfirst($route[1]);
 

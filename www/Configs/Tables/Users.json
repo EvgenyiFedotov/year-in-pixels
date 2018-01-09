@@ -1,22 +1,10 @@
 {
    "name": "users",
-   "columns": [
-      {
-         "name": "id",
-         "setup": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
-         "primary": true
-      }, {
-         "name": "login",
-         "setup": "VARCHAR(255) NOT NULL"
-      }, {
-         "name": "password",
-         "setup": "VARCHAR(255) NOT NULL"
-      }, {
-         "name": "last_name",
-         "setup": "VARCHAR(255)"
-      }, {
-         "name": "first_name",
-         "setup": "VARCHAR(255)"
-      }
-   ]
+   "columns": {
+      "id": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+      "login": "VARCHAR(255) NOT NULL",
+      "password": "VARCHAR(255) NOT NULL",
+      "last_name": "VARCHAR(255)",
+      "first_name": "VARCHAR(255)"
+   }
 }

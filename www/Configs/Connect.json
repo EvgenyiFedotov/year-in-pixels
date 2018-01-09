@@ -1,7 +1,8 @@
 {
-   "connect": {
+   "className": "Medoo\\Medoo",
+   "config": {
       "database_type": "mysql",
-      "database_name": "eventstime",
+      "database_name": "yearinpixels",
       "server": "localhost",
       "username": "root"
    }
