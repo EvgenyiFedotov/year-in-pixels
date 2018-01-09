@@ -1,0 +1,21 @@
+include ../../Templates/Main.jade
+
+//- Список событий
+include ListEvents.jade
+
+block headBefore
+   script !{"var events = " . json_encode($events) . ";"}
+   +routepage()
+
+block body
+   .head
+   .content
+      .top
+         .button-calendar="Calendar"
+         .button-add="Add event"
+         .count-events=count($events)
+      .shadow-top
+      .events
+         +listevents()
+      .shadow-bottom
+   .footer

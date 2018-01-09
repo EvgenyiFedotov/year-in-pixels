@@ -1,0 +1,7 @@
+.float-area {
+  position: fixed;
+  display: none;
+}
+.float-area[data-show="true"] {
+  display: block;
+}

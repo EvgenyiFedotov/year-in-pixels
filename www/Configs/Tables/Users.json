@@ -1,0 +1,22 @@
+{
+   "name": "users",
+   "columns": [
+      {
+         "name": "id",
+         "setup": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+         "primary": true
+      }, {
+         "name": "login",
+         "setup": "VARCHAR(255) NOT NULL"
+      }, {
+         "name": "password",
+         "setup": "VARCHAR(255) NOT NULL"
+      }, {
+         "name": "last_name",
+         "setup": "VARCHAR(255)"
+      }, {
+         "name": "first_name",
+         "setup": "VARCHAR(255)"
+      }
+   ]
+}

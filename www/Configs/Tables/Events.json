@@ -1,0 +1,22 @@
+{
+   "name": "events",
+   "columns": [
+      {
+         "name": "id",
+         "setup": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+         "primary": true
+      }, {
+         "name": "login",
+         "setup": "VARCHAR(255) NOT NULL"
+      }, {
+         "name": "type",
+         "setup": "VARCHAR(255)"
+      }, {
+         "name": "header",
+         "setup": "TEXT"
+      }, {
+         "name": "note",
+         "setup": "TEXT"
+      }
+   ]
+}

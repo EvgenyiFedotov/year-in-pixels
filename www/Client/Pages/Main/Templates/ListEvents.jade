@@ -1,0 +1,16 @@
+mixin listevents()
+   if count($events)
+      each $event, $key in $events
+         .event
+            .content
+               .header
+                  =$event["header"]
+               .note
+                  =$event["note"]
+
+            if isset($event["begin"])
+               - $style = "left: " . $event["left"] . "%; width: " . $event["width"] ."%;";
+               .time
+                  .line(style=$style)
+   else
+      ="No events found"

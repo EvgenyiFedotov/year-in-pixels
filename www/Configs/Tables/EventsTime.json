@@ -1,0 +1,19 @@
+{
+   "name": "events_time",
+   "columns": [
+      {
+         "name": "id",
+         "setup": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+         "primary": true
+      }, {
+         "name": "event",
+         "setup": "INT NOT NULL"
+      }, {
+         "name": "begin",
+         "setup": "TIMESTAMP NOT NULL"
+      }, {
+         "name": "End",
+         "setup": "TIMESTAMP NOT NULL"
+      }
+   ]
+}

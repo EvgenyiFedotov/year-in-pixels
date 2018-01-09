@@ -1,0 +1,8 @@
+{
+   "connect": {
+      "database_type": "mysql",
+      "database_name": "eventstime",
+      "server": "localhost",
+      "username": "root"
+   }
+}

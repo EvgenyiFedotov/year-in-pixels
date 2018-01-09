@@ -1,0 +1,14 @@
+.float-area-palette {
+  border-radius: 4px;
+  box-shadow: 0 0 1rem #9E9E9E;
+  background-color: #ffffffd6;
+  padding: .5rem .5rem 0 .5rem;
+}
+.float-area-palette .content .palette-item {
+  display: flex;
+  margin-bottom: .3rem;
+  cursor: pointer;
+}
+.float-area-palette .content .palette-item .note {
+  line-height: 1.5rem;
+}

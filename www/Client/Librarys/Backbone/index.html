@@ -1,0 +1,3104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="viewport" content="width=device-width">
+  <link rel="canonical" href="http://backbonejs.ru" />
+  <link rel="icon" href="docs/images/favicon.ico" />
+  <title>Backbone.js по-русски</title>
+  <style>
+    body {
+      font-size: 14px;
+      line-height: 22px;
+      font-family: Verdana, Arial, sans-serif;
+      background: #f4f4f4 url(docs/images/background.png);
+    }
+    .interface {
+      font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
+    }
+    div#sidebar {
+      background: #fff;
+      position: fixed;
+      z-index: 10;
+      top: 0; left: 0; bottom: 0;
+      width: 200px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 15px 0 30px 30px;
+      border-right: 1px solid #bbb;
+      box-shadow: 0 0 20px #ccc; -webkit-box-shadow: 0 0 20px #ccc; -moz-box-shadow: 0 0 20px #ccc;
+    }
+      a.toc_title, a.toc_title:visited {
+        display: block;
+        color: black;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+        a.toc_title:hover {
+          text-decoration: underline;
+        }
+        #sidebar .version {
+          font-size: 10px;
+          font-weight: normal;
+        }
+      ul.toc_section {
+        font-size: 11px;
+        line-height: 14px;
+        margin: 5px 0 0 0;
+        padding-left: 0px;
+        list-style-type: none;
+        font-family: Lucida Grande, Arial, sans-serif;
+      }
+        .toc_section li {
+          cursor: pointer;
+          margin: 0 0 3px 0;
+        }
+          .toc_section li a {
+            text-decoration: none;
+            color: black;
+          }
+            .toc_section li a:hover {
+              text-decoration: underline;
+            }
+    div.container {
+      position: relative;
+      width: 550px;
+      margin: 40px 0 50px 260px;
+    }
+    img#logo {
+      width: 451px;
+      height: 150px;
+    }
+    div.run {
+      position: absolute;
+      right: 15px;
+      width: 26px; height: 18px;
+      background: url('docs/images/arrows.png') no-repeat -26px 0;
+    }
+      div.run:active {
+        background-position: -51px 0;
+      }
+    p, div.container ul {
+      margin: 25px 0;
+      width: 550px;
+    }
+      p.warning {
+        font-size: 12px;
+        line-height: 18px;
+        font-style: italic;
+      }
+      div.container ul {
+        list-style: circle;
+        padding-left: 15px;
+        font-size: 13px;
+        line-height: 18px;
+      }
+        div.container ul li {
+          margin-bottom: 10px;
+        }
+        div.container ul.small {
+          font-size: 12px;
+        }
+    a, a:visited {
+      color: #444;
+    }
+    a:active, a:hover {
+      color: #000;
+    }
+    a.punch {
+      display: inline-block;
+      background: #4162a8;
+      border-top: 1px solid #38538c;
+      border-right: 1px solid #1f2d4d;
+      border-bottom: 1px solid #151e33;
+      border-left: 1px solid #1f2d4d;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+      -moz-box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+      -ms-box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+      -o-box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+      box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+      color: #fff;
+      font: bold 14px "helvetica neue", helvetica, arial, sans-serif;
+      line-height: 1;
+      margin-bottom: 15px;
+      padding: 8px 0 10px 0;
+      text-align: center;
+      text-shadow: 0px -1px 1px #1e2d4d;
+      text-decoration: none;
+      width: 225px;
+      -webkit-background-clip: padding-box; }
+      a.punch:hover {
+        -webkit-box-shadow: inset 0 0px 20px 1px #87adff, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+        -moz-box-shadow: inset 0 0px 20px 1px #87adff, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+        -ms-box-shadow: inset 0 0px 20px 1px #87adff, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+        -o-box-shadow: inset 0 0px 20px 1px #87adff, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+        box-shadow: inset 0 0px 20px 1px #87adff, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+        cursor: pointer; }
+      a.punch:active {
+        -webkit-box-shadow: inset 0 1px 10px 1px #5c8bee, 0 1px 0 #1d2c4d, 0 2px 0 #1f3053, 0 4px 3px 0 #111111;
+        -moz-box-shadow: inset 0 1px 10px 1px #5c8bee, 0 1px 0 #1d2c4d, 0 2px 0 #1f3053, 0 4px 3px 0 #111111;
+        -ms-box-shadow: inset 0 1px 10px 1px #5c8bee, 0 1px 0 #1d2c4d, 0 2px 0 #1f3053, 0 4px 3px 0 #111111;
+        -o-box-shadow: inset 0 1px 10px 1px #5c8bee, 0 1px 0 #1d2c4d, 0 2px 0 #1f3053, 0 4px 3px 0 #111111;
+        box-shadow: inset 0 1px 10px 1px #5c8bee, 0 1px 0 #1d2c4d, 0 2px 0 #1f3053, 0 4px 3px 0 #111111;
+        margin-top: 5px; margin-bottom: 10px }
+    a img {
+      border: 0;
+    }
+    a.travis-badge {
+      display: block;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      padding-top: 20px;
+    }
+      h2 {
+        font-size: 22px;
+      }
+    b.header {
+      font-size: 18px;
+      line-height: 35px;
+    }
+    span.alias {
+      font-size: 14px;
+      font-style: italic;
+      margin-left: 20px;
+    }
+    table {
+      margin: 15px 0 0; padding: 0;
+    }
+      tr, td {
+        margin: 0; padding: 0;
+      }
+        td {
+          padding: 0px 15px 5px 0;
+        }
+        table .rule {
+          height: 1px;
+          background: #ccc;
+          margin: 5px 0;
+        }
+    code, pre, tt {
+      font-family: Monaco, Consolas, "Lucida Console", monospace;
+      font-size: 12px;
+      line-height: 18px;
+      font-style: normal;
+    }
+      tt {
+        padding: 0px 3px;
+        background: #fff;
+        border: 1px solid #ddd;
+        zoom: 1;
+      }
+      code {
+        margin-left: 20px;
+      }
+      pre {
+        font-size: 12px;
+        padding: 2px 0 2px 15px;
+        border: 4px solid #bbb; border-top: 0; border-bottom: 0;
+        margin: 0px 0 25px;
+      }
+      img.example_image {
+        margin: 0px auto;
+      }
+        img.example_retina {
+          margin: 20px;
+          box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+        }
+    @media only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 600px),
+           only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 600px) {
+      div#sidebar {
+        display: none;
+      }
+      img#logo {
+        max-width: 450px;
+        width: 100%;
+        height: auto;
+      }
+      div.container {
+        width: auto;
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+        p, div.container ul {
+          width: auto;
+        }
+    }
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (max-width: 640px),
+          only screen and (-o-min-device-pixel-ratio: 3/2) and (max-width: 640px),
+          only screen and (min-device-pixel-ratio: 1.5) and (max-width: 640px) {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      div#sidebar {
+        -webkit-overflow-scrolling: initial;
+        position: relative;
+        width: 90%;
+        height: 120px;
+        left: 0;
+        top: -7px;
+        padding: 10px 0 10px 30px;
+        border: 0;
+      }
+      img#logo {
+        width: auto;
+        height: auto;
+      }
+      div.container {
+        margin: 0;
+        width: 100%;
+      }
+      p, div.container ul {
+        max-width: 98%;
+        overflow-x: scroll;
+      }
+      table {
+        position: relative;
+      }
+        tr:first-child td {
+          padding-bottom: 25px;
+        }
+        td.text {
+          line-height: 12px;
+          padding: 0;
+          position: absolute;
+          left: 0;
+          top: 48px;
+        }
+        tr:last-child td.text {
+          top: 122px;
+        }
+      pre {
+        overflow: scroll;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebar" class="interface">
+
+    <a class="toc_title" href="#">
+      Backbone.js <span class="version">(1.0.0)</span>
+    </a>
+    <ul class="toc_section">
+      <li>&raquo; <a href="http://github.com/jashkenas/backbone">Репозиторий GitHub</a></li>
+      <li>&raquo; <a href="http://backbonejs.org/docs/backbone.html">Исходный код с аннотациями</a></li>
+    </ul>
+
+    <a class="toc_title" href="#introduction">
+      Введение
+    </a>
+
+    <a class="toc_title" href="#upgrading">
+      Обновление версии
+    </a>
+
+    <a class="toc_title" href="#Events">
+      События (Events)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#Events-on">on</a></li>
+      <li>– <a href="#Events-off">off</a></li>
+      <li>– <a href="#Events-trigger">trigger</a></li>
+      <li>– <a href="#Events-once">once</a></li>
+      <li>– <a href="#Events-listenTo">listenTo</a></li>
+      <li>– <a href="#Events-stopListening">stopListening</a></li>
+      <li>– <a href="#Events-listenToOnce">listenToOnce</a></li>
+      <li>- <a href="#Events-catalog"><b>Каталог событий</b></a></li>
+    </ul>
+
+    <a class="toc_title" href="#Model">
+      Модель (Model)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#Model-extend">extend</a></li>
+      <li>– <a href="#Model-constructor">constructor / initialize</a></li>
+      <li>– <a href="#Model-get">get</a></li>
+      <li>– <a href="#Model-set">set</a></li>
+      <li>– <a href="#Model-escape">escape</a></li>
+      <li>– <a href="#Model-has">has</a></li>
+      <li>– <a href="#Model-unset">unset</a></li>
+      <li>– <a href="#Model-clear">clear</a></li>
+      <li>– <a href="#Model-id">id</a></li>
+      <li>– <a href="#Model-idAttribute">idAttribute</a></li>
+      <li>– <a href="#Model-cid">cid</a></li>
+      <li>– <a href="#Model-attributes">attributes</a></li>
+      <li>– <a href="#Model-changed">changed</a></li>
+      <li>– <a href="#Model-defaults">defaults</a></li>
+      <li>– <a href="#Model-toJSON">toJSON</a></li>
+      <li>– <a href="#Model-sync">sync</a></li>
+      <li>– <a href="#Model-fetch">fetch</a></li>
+      <li>– <a href="#Model-save">save</a></li>
+      <li>– <a href="#Model-destroy">destroy</a></li>
+      <li>– <a href="#Model-Underscore-Methods"><b>Методы Underscore (6)</b></a></li>
+      <li>– <a href="#Model-validate">validate</a></li>
+      <li>– <a href="#Model-validationError">validationError</a></li>
+      <li>– <a href="#Model-isValid">isValid</a></li>
+      <li>– <a href="#Model-url">url</a></li>
+      <li>– <a href="#Model-urlRoot">urlRoot</a></li>
+      <li>– <a href="#Model-parse">parse</a></li>
+      <li>– <a href="#Model-clone">clone</a></li>
+      <li>– <a href="#Model-isNew">isNew</a></li>
+      <li>– <a href="#Model-hasChanged">hasChanged</a></li>
+      <li>– <a href="#Model-changedAttributes">changedAttributes</a></li>
+      <li>– <a href="#Model-previous">previous</a></li>
+      <li>– <a href="#Model-previousAttributes">previousAttributes</a></li>
+    </ul>
+
+    <a class="toc_title" href="#Collection">
+      Коллекции (Collection)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#Collection-extend">extend</a></li>
+      <li>– <a href="#Collection-model">model</a></li>
+      <li>– <a href="#Collection-constructor">constructor / initialize</a></li>
+      <li>– <a href="#Collection-models">models</a></li>
+      <li>– <a href="#Collection-toJSON">toJSON</a></li>
+      <li>– <a href="#Collection-sync">sync</a></li>
+      <li>– <a href="#Collection-Underscore-Methods"><b>Методы Underscore (28)</b></a></li>
+      <li>– <a href="#Collection-add">add</a></li>
+      <li>– <a href="#Collection-remove">remove</a></li>
+      <li>– <a href="#Collection-reset">reset</a></li>
+      <li>– <a href="#Collection-set">set</a></li>
+      <li>– <a href="#Collection-get">get</a></li>
+      <li>– <a href="#Collection-at">at</a></li>
+      <li>– <a href="#Collection-push">push</a></li>
+      <li>– <a href="#Collection-pop">pop</a></li>
+      <li>– <a href="#Collection-unshift">unshift</a></li>
+      <li>– <a href="#Collection-shift">shift</a></li>
+      <li>– <a href="#Collection-slice">slice</a></li>
+      <li>– <a href="#Collection-length">length</a></li>
+      <li>– <a href="#Collection-comparator">comparator</a></li>
+      <li>– <a href="#Collection-sort">sort</a></li>
+      <li>– <a href="#Collection-pluck">pluck</a></li>
+      <li>– <a href="#Collection-where">where</a></li>
+      <li>– <a href="#Collection-findWhere">findWhere</a></li>
+      <li>– <a href="#Collection-url">url</a></li>
+      <li>– <a href="#Collection-parse">parse</a></li>
+      <li>– <a href="#Collection-clone">clone</a></li>
+      <li>– <a href="#Collection-fetch">fetch</a></li>
+      <li>– <a href="#Collection-create">create</a></li>
+    </ul>
+
+    <a class="toc_title" href="#Router">
+      Роутер (Router)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#Router-extend">extend</a></li>
+      <li>– <a href="#Router-routes">routes</a></li>
+      <li>– <a href="#Router-constructor">constructor / initialize</a></li>
+      <li>– <a href="#Router-route">route</a></li>
+      <li>– <a href="#Router-navigate">navigate</a></li>
+    </ul>
+
+    <a class="toc_title" href="#History">
+      История (History)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#History-start">start</a></li>
+    </ul>
+
+    <a class="toc_title" href="#Sync">
+      Синхронизация (Sync)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#Sync">Backbone.sync</a></li>
+      <li>– <a href="#Sync-ajax">Backbone.ajax</a></li>
+      <li>– <a href="#Sync-emulateHTTP">Backbone.emulateHTTP</a></li>
+      <li>– <a href="#Sync-emulateJSON">Backbone.emulateJSON</a></li>
+    </ul>
+
+    <a class="toc_title" href="#View">
+      Представление (View)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#View-extend">extend</a></li>
+      <li>– <a href="#View-constructor">constructor / initialize</a></li>
+      <li>– <a href="#View-el">el</a></li>
+      <li>– <a href="#View-$el">$el</a></li>
+      <li>– <a href="#View-setElement">setElement</a></li>
+      <li>– <a href="#View-attributes">attributes</a></li>
+      <li>– <a href="#View-dollar">$ (jQuery)</a></li>
+      <li>– <a href="#View-render">render</a></li>
+      <li>– <a href="#View-remove">remove</a></li>
+      <li>– <a href="#View-delegateEvents">delegateEvents</a></li>
+      <li>– <a href="#View-undelegateEvents">undelegateEvents</a></li>
+    </ul>
+
+    <a class="toc_title" href="#Utility">
+      Утилиты (Utility)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#Utility-Backbone-noConflict">Backbone.noConflict</a></li>
+      <li>– <a href="#Utility-Backbone-$">Backbone.$</a></li>
+    </ul>
+
+    <a class="toc_title" href="#examples">
+      Примеры (Examples)
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#examples-todos">Todos</a></li>
+      <li>– <a href="#examples-documentcloud">DocumentCloud</a></li>
+      <li>– <a href="#examples-linkedin">LinkedIn Mobile</a></li>
+      <li>– <a href="#examples-foursquare">Foursquare</a></li>
+      <li>– <a href="#examples-khan-academy">Khan Academy</a></li>
+      <li>– <a href="#examples-basecamp">Basecamp Mobile</a></li>
+    </ul>
+
+    <a class="toc_title" href="#faq">
+      F.A.Q.
+    </a>
+    <ul class="toc_section">
+      <li>– <a href="#FAQ-tim-toady">Больше, чем один способ  сделать это</a></li>
+      <li>– <a href="#FAQ-nested">Вложенные модели и коллекции</a></li>
+      <li>– <a href="#FAQ-bootstrap">Предзагрузка моделей</a></li>
+      <li>– <a href="#FAQ-extending">Расширяем Backbone</a></li>
+      <li>– <a href="#FAQ-mvc">Традиционное MVC</a></li>
+      <li>– <a href="#FAQ-this">Привязка "this"</a></li>
+      <li>– <a href="#FAQ-rails">Работа с Rails</a></li>
+    </ul>
+
+  </div>
+
+  <div class="container">
+
+    <p>
+      <img id="logo" src="docs/images/backbone.png" alt="Backbone.js" />
+    </p>
+
+    <p>
+      Backbone.js придает структуру веб-приложениям с помощью
+      <b>моделей</b> с биндингами по ключу и пользовательскими событиями,
+      <b>коллекций</b> с богатым набором методов с перечислимыми сущностями,
+      <b>представлений</b> с декларативной обработкой событий; и соединяет это все
+      с вашим существующим REST-овым JSON API.
+    </p>
+
+    <p>
+      Проект <a href="http://github.com/jashkenas/backbone/">размещается на GitHub</a>,
+      с доступным <a href="http://backbonejs.org/docs/backbone.html">аннотированным исходным кодом</a>,
+      с онлайновыми <a href="test/index.html">тестами</a>
+      с <a href="examples/todos/index.html">примером приложения</a>,
+      со <a href="https://github.com/jashkenas/backbone/wiki/Tutorials%2C-blog-posts-and-example-sites">списком туториалов</a>
+      и <a href="#examples">списком реальных проектов</a>, которые используют Backbone.
+      Backbone доступен под <a href="http://github.com/jashkenas/backbone/blob/master/LICENSE">лицензией MIT</a>.
+    </p>
+    
+    <p>
+      Русская версия документации <a href="https://github.com/kulakowka/Backbone.js-Russian">размещается на GitHub</a>. 
+    </p>
+
+    <p>
+      Оставляйте баг-репорты и обсуждайте фичи
+      <a href="http://github.com/jashkenas/backbone/issues">в багтрекере на GitHub'е</a>,
+      на IRC-канале Freenode <tt>#documentcloud</tt>, задавайте вопросы в
+      <a href="https://groups.google.com/forum/#!forum/backbonejs">группу Google</a>,
+      добавляйте страницы в <a href="https://github.com/jashkenas/backbone/wiki">вики</a>,
+      или шлите твиты <a href="http://twitter.com/documentcloud">@documentcloud</a>.
+    </p>
+
+    <p>
+      <i>
+        Backbone — это компонент <a href="http://documentcloud.org/">DocumentCloud</a> c открытым исходным кодом.
+      </i>
+    </p>
+
+    <h2 id="downloads">
+      Загрузка и зависимости
+      <span style="padding-left: 7px; font-size:11px; font-weight: normal;" class="interface">(ПКМ и "Сохранить как")</span>
+    </h2>
+
+    <table>
+      <tr>
+        <td><a class="punch" href="backbone.js">Версия для разработки (1.0.0)</a></td>
+        <td class="text" style="line-height: 18px;"><i>58кб, полный код, много комментариев</i></td>
+      </tr>
+      <tr>
+        <td><a class="punch" href="backbone-min.js">Production-версия (1.0.0)</a></td>
+        <td class="text" style="line-height: 16px;">
+          <i>6.3кб, упакованная и gzip-ованная</i><br />
+          <small>(<a href="backbone-min.map">Source Map</a>)</small>
+        </td>
+      </tr>
+      <tr>
+        <td><a class="punch" href="https://raw.github.com/jashkenas/backbone/master/backbone.js">Edge Version (master)</a></td>
+        <td style="line-height: 18px;">
+          <i>Последняя версия из репозитория, используйте на свой страх и риск</i>
+          <a class="travis-badge" href="https://travis-ci.org/jashkenas/backbone">
+            <img src="https://travis-ci.org/jashkenas/backbone.png" />
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p>
+      Единственная жесткая зависимость в Backbone —
+      <a href="http://underscorejs.ru/">Underscore.js</a> <small>( >= 1.4.3)</small>.
+      Для RESTful-персистентности, поддержки истории с помощью <a href="#Router">Backbone.Router</a>
+      и операций с DOM в <a href="#View">Backbone.View</a>, подключите
+      <a href="https://github.com/douglascrockford/JSON-js">json2.js</a>, и либо
+      <a href="http://jquery.com">jQuery</a> <small>( > 1.7.0)</small> либо
+      <a href="http://zeptojs.com/">Zepto</a>.
+    </p>
+
+    <h2 id="introduction">Введение</h2>
+
+    <p>
+      При работе с веб-приложением, которое включает в себя много JavaScript,
+      первое, чему вы научитесь — это перестать связывать ваши данные с DOM, потому что
+      это подходит только для создания простых JavaScript приложений,
+      которые в конечном итоге выглядят,
+      как запутанные груды jQuery-селекторов и коллбэков,
+      которые отчаянно пытаются хранить актуализированные данные в UI,
+      JavaScript логике и базе данных на сервере.
+      Для сложных клиентских приложений часто бывает полезным более структурированный подход.
+    </p>
+
+    <p>
+      Работая с Backbone, вы представляете ваши данные как <a href="#Model">Модели (Models)</a>,
+      которые могут быть созданы, провалидированы, удалены, и сохранены на сервере.
+      Всякий раз, когда в интерфейсе изменяется атрибуты модели, модель вызывает событие <i>"change"</i>;
+      все <a href="#View">Представления (Views)</a>,
+      которые отображают состояние модели, могут быть уведомлены об изменении атрибутов модели,
+      с тем чтобы они могли отреагировать соответствующим образом — например,
+      перерисовать себя с учетом новых данных.
+      В готовом приложении на Backbone, вы не должны писать код,
+      ищущий элемент с определенным id в DOM
+      и обновлять HTML вручную. При изменении модели представление просто обновит себя самостоятельно.
+    </p>
+
+    <p>
+      Если вы новичок и еще не совсем уверены, что Backbone вам подходит,
+      начните с просмотра <a href="#examples">списка проектов, использующих Backbone</a>.
+    </p>
+
+    <p>
+      Многие из следующих примеров работоспособны.
+      Нажмите кнопку <i>play</i>, чтобы запустить их.
+    </p>
+
+    <h2 id="upgrading">Обновление до версии 1.0</h2>
+
+    <p>
+      Backbone версии <b>0.9</b> должна быть достаточно безболезненно обновлена до версии <b>1.0</b>.
+      Ниже представлены несколько наиболее важных изменений:
+    </p>
+
+    <ul>
+      <li>
+        Если вам нужно "умное" обновление коллекции,
+        добавление новых моделей, удаление недостающих и объединение уже существующих,
+        вы должны использовать метод <a href="#Collection-set">set</a> (ранее "update"),
+        по аналогии с методом <tt>set</tt> модели. Такое поведение теперь
+        является стандартным при вызове метода <a href="#Collection-fetch">fetch</a> коллекции.
+        Чтобы получить прежнее поведение, передайте <tt>{reset: true}</tt> в хэше <tt>options</tt>.
+      </li>
+      <li>
+        Если в ваших URL есть символы, требующие кодирования,
+        Backbone декодирует их для вас и ваши обработчики роутов получат их в качестве аргументов.
+      </li>
+      <li>
+        В версии <b>0.9.x</b> в событиях Backbone появились два метода:
+        <a href="#Events-listenTo">listenTo</a> и
+        <a href="#Events-stopListening">stopListening</a>, которые упрощают управление
+        событиями при удалении (<a href="#View-remove">remove</a>) представления.
+      </li>
+      <li>
+        Теперь валидация модели по умолчанию включена только для метода
+        <a href="#Model-save">save</a>. Чтобы отвалидировать модель при
+        <a href="#Model-set">set</a>, необходимо передать <tt>{validate:true}</tt>
+        в хэше <tt>options</tt>. Валидация модели теперь запускает событие <tt>"invalid"</tt> вместо
+        <tt>"error"</tt>.
+      </li>
+    </ul>
+
+    <h2 id="Events">Backbone.Events</h2>
+
+    <p>
+      <b>Events</b> — это модуль, который может расширить возможности любого объекта,
+      давая ему способность отслеживать и вызывать именованные пользовательские события.
+      События должны быть объявлены после примешивания модуля.
+      В событие можно передавать аргументы. Например:
+    </p>
+
+<pre class="runnable">
+var object = {};
+
+_.extend(object, Backbone.Events);
+
+object.on("alert", function(msg) {
+  alert("Сработало " + msg);
+});
+
+object.trigger("alert", "событие");
+</pre>
+
+    <p>
+      Например, можно сделать удобный диспетчер событий,
+      который будет координировать события между различными областями приложения:<br/>
+      <tt>var dispatcher = _.clone(Backbone.Events)</tt>
+    </p>
+
+    <p id="Events-on">
+      <b class="header">on</b><code>object.on(event, callback, [context])</code><span class="alias">Синоним: bind</span>
+      <br />
+      Привязывает функцию-обработчик <b>callback</b> к объекту,
+      который будет вызываться всякий раз, когда сработает событие <b>event</b>.
+      Если у вас используется множество различных событий на странице, следует использовать двоеточия в названиях:
+      <tt>"poll:start"</tt>, или <tt>"change:selection"</tt>.
+      Строка названия события (event) может состоять из разделенных пробелами нескольких событий...
+    </p>
+
+<pre>
+book.on("change:title change:author", ...);
+</pre>
+
+    <p>Чтобы сохранить контекст, с которым должен быть вызван обработчик,
+      передайте третий необязательный аргумент <b>context</b>:<br/>
+      <tt>model.on('change', this.render, this)</tt>
+    </p>
+
+    <p>
+      Существует специальное значение <tt>"all"</tt>,
+      которое можно указать в качестве названия события.
+      Такой обработчик будет срабатывать при возникновении любого события.
+      Название события будет передаваться в него в первом аргументе.
+      Это можно использовать, например, для проксирования всех событий от одного объекта к другому:
+    </p>
+
+<pre>
+proxy.on("all", function(eventName) {
+  object.trigger(eventName);
+});
+</pre>
+
+    <p>
+      Все методы Backbone.Events также поддерживают передачу параметров через хэш,
+      как альтернативу передачи позиционных аргументов:
+    </p>
+
+<pre>
+book.on({
+  "change:title": titleView.update,
+  "change:author": authorPane.update,
+  "destroy": bookView.remove
+});
+</pre>
+
+
+    <p id="Events-off">
+      <b class="header">off</b><code>object.off([event], [callback], [context])</code><span class="alias">Синоним: unbind</span>
+      <br />
+      Удаляет привязанный ранее обработчик.
+      Если параметр <b>context</b> не задан, все версии обработчика будут удалены, независимо от контекста.
+
+      Если не указан обработчик, будут удалены все обработчики для события <b>event</b>.
+      Если не указано событие, обработчики для <i>всех</i> событий будут удалены.
+    </p>
+
+<pre>
+// Удаляет только обработчик `onChange`.
+object.off("change", onChange);
+
+// Удаляет все обработчики события "change".
+object.off("change");
+
+// Удаляет все обработчики `onChange` для всех событий.
+object.off(null, onChange);
+
+// Удаляет все обработчики в контексте `context` для всех событий.
+object.off(null, null, context);
+
+// Удаляет все обработчики для объекта `object`.
+object.off();
+</pre>
+
+    <p>
+      Помните, что вызов <tt>model.off()</tt>, удалит <i>все</i> события
+      модели &mdash; в том числе события, которые используются внутри Backbone.
+    </p>
+
+    <p id="Events-trigger">
+      <b class="header">trigger</b><code>object.trigger(event, [*args])</code>
+      <br />
+      Вызывает срабатывание события <b>event</b> (или группы событий — разделенных пробелами).
+      Последующие аргументы в <b>trigger</b> будут переданы вместе с событием в обработчик.
+    </p>
+
+    <p id="Events-once">
+      <b class="header">once</b><code>object.once(event, callback, [context])</code>
+      <br />
+      Ведет себя так же, как <a href="#Events-on">on</a>, за исключением того, что будет удалён после первого
+      срабатывания события. Можно произнести как "В следующий раз, когда что-то призойдёт, сделай это".
+    </p>
+
+    <p id="Events-listenTo">
+      <b class="header">listenTo</b><code>object.listenTo(other, event, callback)</code>
+      <br />
+      Указывает объекту <b>object</b> прослушивать конкретное событие другого объекта <b>other</b>.
+      Преимущество использования этого метода вместо <tt>other.on(event, callback)</tt>
+      в том, что <b>listenTo</b> позволяет объекту <b>object</b> отслеживать события, которые
+      позже могут быть удалены все сразу.
+    </p>
+
+<pre>
+view.listenTo(model, 'change', view.render);
+</pre>
+
+    <p id="Events-stopListening">
+      <b class="header">stopListening</b><code>object.stopListening([other], [event], [callback])</code>
+      <br />
+      Указывает объекту <b>object</b> перестать слушать события. Вызов метода
+      <b>stopListening</b> без аргументов удалит все <a href="#Events-listenTo">зарегистрированные</a> обработчики.
+      Также можно указать определённый объект, событие или обработчик.
+    </p>
+
+<pre>
+view.stopListening();
+
+view.stopListening(model);
+</pre>
+
+    <p id="Events-listenToOnce">
+      <b class="header">listenToOnce</b><code>object.listenToOnce(other, event, callback)</code>
+      <br />
+      Похож на <a href="#Events-listenTo">listenTo</a>, за исключением того,
+      что будет удалён после первого срабатывания события.
+    </p>
+
+    <p id="Events-catalog">
+      <b class="header">Каталог событий</b>
+      <br />
+      Это список всех встроенных событий, которые может запускать Backbone.js.
+      Вы также вольны запускать свои собственные события на моделях и представлениях,
+      как считаете нужным. В объект <tt>Backbone</tt> тоже подмешан миксин событий <tt>Events</tt>,
+      и вы можете использовать этот объект для глобальных событий вашего приложения.
+    </p>
+
+    <ul class="small">
+      <li><b>"add"</b> (model, collection, options) &mdash; когда модель добавляется в коллекцию. </li>
+      <li><b>"remove"</b> (model, collection, options) &mdash; когда модель удаляется из коллекции. </li>
+      <li><b>"reset"</b> (collection, options) &mdash; когда всё содержимое коллекции заменяется. </li>
+      <li><b>"sort"</b> (collection, options) &mdash; когда коллекция была отсортирована. </li>
+      <li><b>"change"</b> (model, options) &mdash; когда атрибут модели меняется. </li>
+      <li><b>"change:[attribute]"</b> (model, value, options) &mdash; когда меняется конкретный атрибут модели. </li>
+      <li><b>"destroy"</b> (model, collection, options) &mdash; когда модель <a href="#Model-destroy">уничтожена</a>. </li>
+      <li><b>"request"</b> (model, xhr, options) &mdash; когда модель (или коллекция) отправляет запрос на сервер. </li>
+      <li><b>"sync"</b> (model, resp, options) &mdash; когда модель была успешно синхронизирована с сервером. </li>
+      <li><b>"error"</b> (model, xhr, options) &mdash; когда вызов <a href="#Model-save">save</a> провалился на сервере. </li>
+      <li><b>"invalid"</b> (model, error, options) &mdash; модель не прошла <a href="#Model-validate">валидацию</a> на клиенте. </li>
+      <li><b>"route:[name]"</b> (params) &mdash; когда один конкретный роут находит соответствие.</li>
+      <li><b>"route"</b> (router, route, params) &mdash; когда <i>любой</i> из роутов находит соответствие.</li>
+      <li><b>"all"</b> &mdash; это специальное событие срабатывает каждый раз, когда срабатывает <i>любое</i> событие, передавая имя события первым аргументом. </li>
+    </ul>
+
+    <p>
+      Если при вызове метода, который генерирует событие
+      (<tt>model.set</tt>, <tt>collection.add</tt>, и пр.) вы не хотите,
+      чтобы события были вызваны, вы можете передать <tt>{silent: true}</tt> в хэше <tt>options</tt>.
+      Обратите внимание, что это не является хорошей практикой.
+      Вместо этого хорошей идеей будет передача специального флага через хэш <tt>options</tt>,
+      который скажет обработчику события, что его нужно проигнорировать.
+    </p>
+
+    <h2 id="Model">Backbone.Model</h2>
+
+    <p>
+      <b>Модели</b> — это самое сердце любого JavaScript-приложения.
+      Они содержат как интерактивные данные, так и большую часть соответствующей логики:
+	    конвертации, валидации, вычисленные свойства и контроль доступа. Вы расширяете
+  	  <b>Backbone.Model</b> методами своей предметной области, а <b>Model</b>
+	    предоставляет базовый набор функциональности по управлению изменениями.
+    </p>
+
+    <p>
+      Нижеприведённый пример спорен, но он демонстрирует определение модели с пользовательским
+	    методом, установку атрибута и запуск события, привязанного к этому атрибуту.
+      После запуска этого кода <tt>sidebar</tt> станет доступен в консоли браузера,
+	    так что можно будет с ним поиграться.
+    </p>
+
+<pre class="runnable">
+var Sidebar = Backbone.Model.extend({
+  promptColor: function() {
+    var cssColor = prompt("Пожалуйста, введите CSS-цвет:");
+    this.set({color: cssColor});
+  }
+});
+
+window.sidebar = new Sidebar;
+
+sidebar.on('change:color', function(model, color) {
+  $('#sidebar').css({background: color});
+});
+
+sidebar.set({color: 'white'});
+
+sidebar.promptColor();
+</pre>
+
+    <p id="Model-extend">
+      <b class="header">extend</b><code>Backbone.Model.extend(properties, [classProperties])</code>
+      <br />
+      Чтобы создать свой собственный класс моделей, нужно расширить <b>Backbone.Model</b>
+      и предоставить свойства экземпляра в параметре <b>properties</b>; опциональный параметр
+      <b>classProperties</b> отвечает за свойства, которые будут прицеплены напрямую к функции-конструктору.
+    </p>
+
+    <p>
+      <b>extend</b> корректно устанавливает цепочку прототипов, так что дочерние классы,
+	    созданные с помощью <b>extend</b>, могут дальше расширяться и наследоваться, сколько угодно.
+    </p>
+
+<pre>
+var Note = Backbone.Model.extend({
+
+  initialize: function() { ... },
+
+  author: function() { ... },
+
+  coordinates: function() { ... },
+
+  allowedToEdit: function(account) {
+    return true;
+  }
+
+});
+
+var PrivateNote = Note.extend({
+
+  allowedToEdit: function(account) {
+    return account.owns(this);
+  }
+
+});
+</pre>
+
+    <p class="warning">
+      Небольшое замечание о <tt>super</tt>: JavaScript не предоставляет простого способа
+      вызвать родительский метод &mdash; функцию с таким же именем, определённую выше
+      в цепочке прототипов. Если вы переопределяете функцию ядра, например
+      <tt>set</tt> или <tt>save</tt>, и хотите вызвать родительскую имплементацию,
+  	  вам придётся вручную вызвать её примерно вот так:
+    </p>
+
+<pre>
+var Note = Backbone.Model.extend({
+  set: function(attributes, options) {
+    Backbone.Model.prototype.set.apply(this, arguments);
+    ...
+  }
+});
+</pre>
+
+    <p id="Model-constructor">
+      <b class="header">constructor / initialize</b><code>new Model([attributes], [options])</code>
+      <br />
+      Можно передать начальные значения атрибутов, создавая экземпляр модели —
+	    параметр <b>attributes</b> будет передан в метод <a href="#Model-set">set</a>.
+	    Если вы определите функцию <b>initialize</b>, она будет вызвана после создания модели.
+    </p>
+
+<pre>
+new Book({
+  title: "Тысяча и одна ночь",
+  author: "Шахерезада"
+});
+</pre>
+
+    <p>
+      В редких случаях, если вам досталось что-то особенное,
+      может понадобиться переопределить <b>constructor</b> — это позволит заменить
+      настоящую функцию-конструктор для вашей модели.
+    </p>
+
+<pre>
+var Library = Backbone.Model.extend({
+  constructor: function() {
+    this.books = new Books();
+    Backbone.Model.apply(this, arguments);
+  },
+  parse: function(data, options) {
+    this.books.reset(data.books);
+    return data.library;
+  }
+});
+</pre>
+
+    <p>
+      Если вы передаёте <tt>{collection: ...}</tt> в качестве параметра <b>options</b>,
+      модель получит свойство <tt>collection</tt>, которое будет использовано для индикации того,
+      к какой коллекции принадлежит данная модель, и для того, чтобы вычислить свойство
+      <a href="#Model-url">url</a>. В противном случае свойство <tt>model.collection</tt>
+      будет добавлено автоматически в момент первого добавления модели в коллекцию.
+    </p>
+
+    <p>
+      При создании новой модели могут быть переданы следующие опции:
+      <tt>{url:&nbsp;"..."}</tt> и/ или <tt>{urlRoot:&nbsp;"..."}</tt> которые определяют
+       пользовательские URL-эндпоинты.
+    </p>
+
+    <p>
+      Если при создании передать <tt>{parse: true}</tt> в хэш <b>options</b>, атрибуты
+      перед <a href="#Model-set">добавлением</a> в модель будут пропущены через функцию <a href="#Model-parse">parse</a>.
+    </p>
+
+    <p id="Model-get">
+      <b class="header">get</b><code>model.get(attribute)</code>
+      <br />
+      Отдаёт текущее значение атрибута модели, например:
+      <tt>note.get("title")</tt>
+    </p>
+
+    <p id="Model-set">
+      <b class="header">set</b><code>model.set(attributes, [options])</code>
+      <br />
+      Хэш <b>attributes</b> устанавливает значения атрибутам (одному или многим).
+  	  Если любой из атрибутов изменяет состояние модели, то сработает событие <tt>"change"</tt>.
+      События изменения для каждого из атрибутов также сработают, и вы можете привязаться к ним тоже,
+	  например: <tt>change:title</tt>, или <tt>change:content</tt>.
+	  Также можно передать отдельный ключ и значение:
+    </p>
+
+<pre>
+note.set({title: "20-ого марта", content: "В его глазах она затмевала…"});
+
+book.set("title", "Скандал в Богемии");
+</pre>
+
+    <p id="Model-escape">
+      <b class="header">escape</b><code>model.escape(attribute)</code>
+      <br />
+      Этот метод похож на <a href="#Model-get">get</a>, но возвращает HTML-безопасную версию
+      атрибута. Если вы вставляете данные из модели в HTML, использование <b>escape</b>
+	    для получения атрибута предотвратит
+      <a href="http://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D0%B6%D1%81%D0%B0%D0%B9%D1%82%D0%BE%D0%B2%D1%8B%D0%B9_%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B8%D0%BD%D0%B3">XSS</a>-атаки.
+    </p>
+
+<pre class="runnable">
+var hacker = new Backbone.Model({
+  name: "&lt;script&gt;alert('xss')&lt;/script&gt;"
+});
+
+alert(hacker.escape('name'));
+</pre>
+
+    <p id="Model-has">
+      <b class="header">has</b><code>model.has(attribute)</code>
+      <br />
+      Возвращает <tt>true</tt>, если атрибут установлен не в <tt>null</tt> и не в <tt>undefined</tt>.
+    </p>
+
+<pre>
+if (note.has("title")) {
+  ...
+}
+</pre>
+
+    <p id="Model-unset">
+      <b class="header">unset</b><code>model.unset(attribute, [options])</code>
+      <br />
+      Убирает атрибут, удаляя его из внутреннего хэша атрибутов.
+      Запускает событие <tt>"change"</tt>, если не передать <tt>silent</tt> в опциях.
+    </p>
+
+    <p id="Model-clear">
+      <b class="header">clear</b><code>model.clear([options])</code>
+      <br />
+      Убирает все атрибуты из модели, включая <tt>id</tt>. Запускает событие <tt>"change"</tt>, если не передать <tt>silent</tt> в опциях.
+    </p>
+
+    <p id="Model-id">
+      <b class="header">id</b><code>model.id</code>
+      <br />
+      Специальное свойство модели <b>id</b> — произвольная строка (целый id или UUID).
+	    Если вы указываете <b>id</b> в хэше атрибутов, он будет скопирован в свойство модели напрямую.
+      Модели могут быть вытащены из коллекций по id, и id используется для генерации URL по умолчанию.
+    </p>
+
+    <p id="Model-idAttribute">
+      <b class="header">idAttribute</b><code>model.idAttribute</code>
+      <br />
+      Уникальный идентификатор модели хранится в атрибуте <tt>id</tt>.
+      Если вы напрямую общаетесь с бэкендом (CouchDB, MongoDB), который использует
+      другой уникальный ключ, вы можете указать <tt>idAttribute</tt>, чтобы прозрачно мапить этот ключ на <tt>id</tt>.
+
+<pre class="runnable">
+var Meal = Backbone.Model.extend({
+  idAttribute: "_id"
+});
+
+var cake = new Meal({ _id: 1, name: "Пирожок" });
+alert("id пирожка: " + cake.id);
+</pre>
+    </p>
+
+    <p id="Model-cid">
+      <b class="header">cid</b><code>model.cid</code>
+      <br />
+      Специальное свойство моделей <b>cid</b> (от "client id", клиентский id) — уникальный идентификатор,
+      автоматически назначающийся всем моделям в момент создания экземпляра. cid'ы удобны,
+      когда модель ещё не была сохранена на сервер и не имеет своего настоящего <b>id</b>,
+	  но уже должна быть отображена в UI.
+    </p>
+
+    <p id="Model-attributes">
+      <b class="header">attributes</b><code>model.attributes</code>
+      <br />
+      Свойство <b>attributes</b> — это внутренний хэш, содержащий состояние модели &mdash;
+      как правило (но не обязательно) это JSON-объект, представляющий модель на сервере.
+      Лучше использовать метод <a href="#Model-set">set</a> для обновления атрибутов вместо прямого изменения этого хэша.
+    </p>
+
+    <p>
+      Если вы хотите получить и изменять копию атрибутов модели,
+      вместо этого используйте <a href="#Model-toJSON">toJSON</a>.
+    </p>
+
+    <p class="warning">
+      Обратите внимание: в отличии от <a href="#Events">событий</a>,
+      которые поддерживают разделенный пробелами список событий, имена атрибутов не должны содержать пробелов.
+    </p>
+
+
+    <p id="Model-changed">
+      <b class="header">changed</b><code>model.changed</code>
+      <br />
+      Свойство <b>changed</b> — это внутренний хэш, содержащий все атрибуты, которые были изменены
+	  с тех пор, как последний раз срабатывало событие <tt>"change"</tt>.
+      Пожалуйста, не обновляйте <b>changed</b> напрямую, потому что его состояние поддерживается внутри
+      методами <a href="#Model-set">set</a> и <a href="#Model-change">change</a>.
+      Копию <b>changed</b> можно получить при помощи метода <a href="#Model-changedAttributes">changedAttributes</a>.
+    </p>
+
+    <p id="Model-defaults">
+      <b class="header">defaults</b><code>model.defaults или model.defaults()</code>
+      <br />
+      Хэш (или функция) <b>defaults</b> используется для указания значений атрибутов
+	   по умолчанию. Если в момент создания экземпляра модели какие-то атрибуты не будут указаны,
+      то они примут значения по умолчанию.
+    </p>
+
+<pre class="runnable">
+var Meal = Backbone.Model.extend({
+  defaults: {
+    "appetizer":  "Салат «Цезарь»",
+    "entree":     "Равиоли",
+    "dessert":    "Чиз-кейк"
+  }
+});
+
+alert("На десерт: " + (new Meal).get('dessert'));
+</pre>
+
+    <p class="warning">
+      Помните, что в JavaScript объекты передаются по ссылке, 
+	  так что, если какое-либо значение по умолчанию будет объектом,
+	  оно будет одним для всех экземпляров.
+      Вместо этого определите <b>defaults</b> как функцию.
+    </p>
+
+    <p id="Model-toJSON">
+      <b class="header">toJSON</b><code>model.toJSON()</code>
+      <br />
+      Возвращает копию поля <a href="#Model-attributes">attributes</a> для превращения в JSON-строку.
+      Метод может быть использован для персистентности, сериализации или для аугментации перед
+	  отправкой на сервер.
+	  Имя этого метода несколько сбивает с толку, так как он на самом деле не возвращает JSON-строку,
+	  но именно так работает <a href="https://developer.mozilla.org/en/JSON#toJSON()_method">JavaScript API для <b>JSON.stringify</b></a>.
+    </p>
+
+<pre class="runnable">
+var artist = new Backbone.Model({
+  firstName: "Василий",
+  lastName: "Кандинский"
+});
+
+artist.set({birthday: "December 16, 1866"});
+
+alert(JSON.stringify(artist));
+</pre>
+
+    <p id="Model-sync">
+      <b class="header">sync</b><code>model.sync(method, model, [options])</code>
+      <br />
+      Использует <a href="#Sync">Backbone.sync</a> для обеспечения персистентности состояния модели с сервером.
+      Может быть переопределён для пользовательского поведения.
+    </p>
+
+    <p id="Model-fetch">
+      <b class="header">fetch</b><code>model.fetch([options])</code>
+      <br />
+      Обновляет состояние модели данными с сервера с помощью
+      <a href="#Sync">Backbone.sync</a>. Возвращает
+      <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">jqXHR</a>-объект.
+      Полезен, если модель никогда не наполнялась данными, или если вы хотите
+      удостовериться, что вы имеете актуальные данные. Событие <tt>"change"</tt>
+	    сработает, если состояние сервера отличается от текущих атрибутов.
+	    Принимает коллбэки <tt>success</tt> и <tt>error</tt> в хэше <b>options</b>,
+	    в которые передаются <tt>(model, response, options)</tt> в качестве аргументов.
+    </p>
+
+<pre>
+// Опрашивать каждые 10 секунд,
+// чтобы хранить модель канала в актуальном состоянии.
+setInterval(function() {
+  channel.fetch();
+}, 10000);
+</pre>
+
+    <p id="Model-save">
+      <b class="header">save</b><code>model.save([attributes], [options])</code>
+      <br />
+      Сохраняет модель в БД (или другой слой персистентности) при помощи <a href="#Sync">Backbone.sync</a>.
+	    Возвращает <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">jqXHR</a> объект, если валидация прошла успешно,
+	    и <tt>false</tt> в противном случае. Хэш <b>attributes</b> (так же, как в <a href="#Model-set">set</a>),
+  	  должен содержать атрибуты, которые вы хотите изменить — ключи, которые не были указаны, не будут изменены.
+	    Однако на сервер будет послано <i>полное представление</i> ресурса.
+      Так же, как и в <tt>set</tt>, можно передать отдельный ключ и значение вместо хэша.
+      Если у модели определен метод <a href="#Model-validate">validate</a> и валидация не проходит успешно,
+	    модель не будет сохранена.
+      Если флаг <a href="#Model-isNew">isNew</a> модели установлен в <tt>true</tt>,
+	    сохранение будет действием <tt>"create"</tt>(HTTP-действие <tt>POST</tt>);
+      если модель уже существует на сервере — <tt>"update"</tt> (HTTP-действие <tt>PUT</tt>).
+    </p>
+
+    <p>
+      Если вместо этого вы хотите отправить на сервер только изменённые атрибуты,
+      вызовите <tt>model.save(attrs, {patch: true})</tt>. В таком случае будет отправлен
+      <tt>PATCH</tt> запрос к серверу, который будет содержать только измененные атрибуты.
+    </p>
+
+    <p>
+      Вызов <tt>save</tt> с новыми атрибутами немедленно вызовет срабатывание события <tt>"change"</tt>,
+      событие <tt>"request"</tt> будет вызвано перед совершением Ajax-запроса на сервер,
+      а событие <tt>"sync"</tt> — после того, как сервер известит об успешном изменении.
+	  Передайте <tt>{wait: true}</tt>, если хотите подождать ответа сервера, прежде чем устанавливать
+  	  новые значения атрибутов модели.
+    </p>
+
+    <p>
+      Обратите внимание, как в следующем примере наша переопределённая версия <tt>Backbone.sync</tt>
+	    получает запрос <tt>"create"</tt> в первый раз, когда сохраняется модель, и <tt>"update"</tt>
+      во второй раз.
+    </p>
+
+<pre class="runnable">
+Backbone.sync = function(method, model) {
+  alert(method + ": " + JSON.stringify(model));
+  model.id = 1;
+};
+
+var book = new Backbone.Model({
+  title: "Малая Земля",
+  author: "Леонид Брежнев"
+});
+
+book.save();
+
+book.save({author: "Лёня"});
+</pre>
+
+    <p>
+      <b>save</b> принимает коллбэки <tt>success</tt> и <tt>error</tt> в хэше <b>options</b>,
+	  в которые передаются соответственно <tt>(model, response, options)</tt> и <tt>(model, xhr, options)</tt>
+      в качестве аргументов. Если проваливается валидация на стороне сервера,
+	  верните не-<tt>2XX</tt> HTTP-статус, вместе с описанием ошибки в тексте или в JSON.
+    </p>
+
+<pre>
+book.save("author", "У.К. Черненко", {error: function(){ ... }});
+</pre>
+
+    <p id="Model-destroy">
+      <b class="header">destroy</b><code>model.destroy([options])</code>
+      <br />
+      Уничтожает модель на сервере с помощью HTTP-запроса <tt>DELETE</tt>
+      через <a href="#Sync">Backbone.sync</a>. Возвращает
+      <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">jqXHR</a>-объект или
+      <tt>false</tt>, если флаг <a href="#Model-isNew">isNew</a> истинен. Принимает коллбэки
+      <tt>success</tt> и <tt>error</tt> в хэше <b>options</b> в которые передаются соответственно
+      <tt>(model, response, options)</tt> и <tt>(model, xhr, options)</tt> в качестве аргументов.
+      Запускает событие <tt>"destroy"</tt> на модели, которое также всплывет на всех коллекциях,
+	  которые содержат её, событие <tt>"request"</tt> перед совершением Ajax-запроса на сервер
+      и событие <tt>"sync"</tt> после того, как сервер известит об успешном удалении модели.
+	  Передайте <tt>{wait: true}</tt>, если хотите подождать ответа сервера, прежде чем удалять модель.
+    </p>
+
+<pre>
+book.destroy({success: function(model, response) {
+  ...
+}});
+</pre>
+
+    <p id="Model-Underscore-Methods">
+      <b class="header">Методы Underscore (6)</b>
+      <br />
+      Backbone проксирует 6 методов <b>Underscore.js</b> для операций над моделями.
+      Они не описываются в данной документации, но вы можете обратиться к документации
+      Underscore, чтобы найти их полное описание:
+    </p>
+
+    <ul class="small">
+      <li><a href="http://underscorejs.ru/#keys">keys</a></li>
+      <li><a href="http://underscorejs.ru/#values">values</a></li>
+      <li><a href="http://underscorejs.ru/#pairs">pairs</a></li>
+      <li><a href="http://underscorejs.ru/#invert">invert</a></li>
+      <li><a href="http://underscorejs.ru/#pick">pick</a></li>
+      <li><a href="http://underscorejs.ru/#omit">omit</a></li>
+    </ul>
+
+<pre>
+user.pick('first_name', 'last_name', 'email');
+
+chapters.keys().join(', ');
+</pre>
+
+    <p id="Model-validate">
+      <b class="header">validate</b><code>model.validate(attributes)</code>
+      <br />
+      Этот метод оставлен неопределенным; поощряется переопределять его со своей логикой валидации — если у вас есть такая,
+      которую можно выполнить на стороне клиента.
+      По умолчанию метод <b>validate</b> вызывается только перед <tt>save</tt>,
+      но также может быть вызван при выполнении <tt>set</tt>, если передать <tt>{validate:true}</tt> в хеше <tt>options</tt>.
+      При вызове <b>validate</b> ему передаются атрибуты модели и хэш <tt>options</tt>, с которым вызван метод <tt>set</tt> или <tt>save</tt>.
+      Если атрибуты валидны, не возвращайте ничего из <b>validate</b>;
+      если нет, возвращайте любую ошибку на ваш выбор — как просто
+	  строку с сообщением, которое надо отобразить, так и сложный объект, программно описывающий ошибку.
+  	  Если <b>validate</b> вернул ошибку, выполнение <tt>save</tt> прервётся
+  	  и атрибуты модели на сервере не будут изменены.
+      Проваленная валидация запустит событие <tt>"invalid"</tt>, а значение, полученное методом <b>validate</b>
+      будет установлено в свойcтво <tt>validationError</tt> модели.
+    </p>
+
+<pre class="runnable">
+var Chapter = Backbone.Model.extend({
+  validate: function(attrs, options) {
+    if (attrs.end &lt; attrs.start) {
+      return "начало не может быть раньше конца";
+    }
+  }
+});
+
+var one = new Chapter({
+  title : "Глава I: Начало"
+});
+
+one.on("invalid", function(model, error) {
+  alert(model.get("title") + " " + error);
+});
+
+one.save({
+  start: 15,
+  end:   10
+});
+</pre>
+
+    <p>
+      События <tt>"invalid"</tt> полезны для грубой обработки ошибок на уровне модели или коллекции.
+    </p>
+
+    <p id="Model-validationError">
+      <b class="header">validationError</b><code>model.validationError</code>
+      <br />
+      Значение, полученное методом <a href="#Model-validate">validate</a> во время последней неудачной валидации.
+    </p>
+
+    <p id="Model-isValid">
+      <b class="header">isValid</b><code>model.isValid()</code>
+      <br />
+      Запускает <a href="#Model-validate">валидацию</a>, чтобы проверить состояние модели.
+    </p>
+
+<pre class="runnable">
+var Chapter = Backbone.Model.extend({
+  validate: function(attrs, options) {
+    if (attrs.end &lt; attrs.start) {
+      return "начало не может быть раньше конца";
+    }
+  }
+});
+
+var one = new Chapter({
+  title : "Глава I: Начало"
+});
+
+one.set({
+  start: 15,
+  end:   10
+});
+
+if (!one.isValid()) {
+  alert(one.get("title") + " " + one.validationError);
+}
+</pre>
+
+    <p id="Model-url">
+      <b class="header">url</b><code>model.url()</code>
+      <br />
+      Возвращает относительный URL, по которому ресурс модели должен располагаться
+	  на сервере. Если ваши модели расположены в другом месте, переопределите этот метод
+	  с правильной логикой. По умолчанию генерирует URL'ы вида: <tt>"/[collection.url]/[id]"</tt>,
+      но вы можете переопределить это поведение, явно указав <tt>urlRoot</tt>, тогда URL коллекции не будет принят во внимание.
+      Значение <tt>url</tt> можно передать при создании экземпляра модели.
+    </p>
+
+    <p>
+      Обращается к <a href="#Collection-url">Collection#url</a>, чтобы сгенерировать URL,
+	    так что удостоверьтесь, что он определён, или к свойству <a href="#Model-urlRoot">urlRoot</a> модели,
+  	  если все модели этого класса разделяют общий корневой URL.
+      Модель с id равным <tt>101</tt>, хранящяяся в
+      <a href="#Collection">коллекции</a> с <tt>url</tt> равным <tt>"/documents/7/notes"</tt>,
+      будет иметь такой url: <tt>"/documents/7/notes/101"</tt>
+    </p>
+
+    <p id="Model-urlRoot">
+      <b class="header">urlRoot</b><code>model.urlRoot или model.urlRoot()</code>
+      <br />
+      Укажите <tt>urlRoot</tt>, если вы используете модель <i>вне коллекции</i>,
+      чтобы дефолтный метод <a href="#Model-url">url</a> генерировал
+      URL'ы, исходя из id. <tt>"/[urlRoot]/id"</tt><br />
+      Как правило, вам не нужно будет указывать это значение.
+      Обратите внимание, что <tt>urlRoot</tt> также может быть функцией.
+    </p>
+
+<pre class="runnable">
+var Book = Backbone.Model.extend({urlRoot : '/books'});
+
+var solaris = new Book({id: "1083-lem-solaris"});
+
+alert(solaris.url());
+</pre>
+
+    <p id="Model-parse">
+      <b class="header">parse</b><code>model.parse(response, options)</code>
+      <br />
+      Метод <b>parse</b> вызывается каждый раз, когда данные модели возвращаются
+	    сервером, в методах <a href="#Model-fetch">fetch</a> и <a href="#Model-save">save</a>.
+      Функции передаётся «сырой» объект <tt>response</tt>, и она должна возвратить
+      хэш атрибутов, который будет передан методу <a href="#Model-set">set</a>. 
+      Реализация по умолчанию просто пробрасывает JSON-ответ.
+      Переопределите этот метод, если вы работаете с уже существующим API,
+  	  или чтобы лучше заворачивать в пространства имён ответы сервера.
+    </p>
+
+    <p>
+      Если вы работаете с Rails версии 3.1 и ниже, вы наткнётесь на то, что реализация по умолчанию
+      <tt>to_json</tt> отдаёт атрибуты модели в пространстве имён.
+	    Чтобы устранить это поведение для лучшей интеграции с Backbone, установите:
+    </p>
+
+<pre>
+ActiveRecord::Base.include_root_in_json = false
+</pre>
+
+    <p id="Model-clone">
+      <b class="header">clone</b><code>model.clone()</code>
+      <br />
+      Возвращает новый экземпляр модели с идентичными атрибутами.
+    </p>
+
+    <p id="Model-isNew">
+      <b class="header">isNew</b><code>model.isNew()</code>
+      <br />
+      Была ли модель уже сохранена на сервер? Модель считается новой, 
+      если ещё не имеет атрибута <tt>id</tt>.
+    </p>
+
+    <p id="Model-hasChanged">
+      <b class="header">hasChanged</b><code>model.hasChanged([attribute])</code>
+      <br />
+      Была ли модель изменена с последнего события <tt>"change"</tt>? Если передан <b>attribute</b>,
+      возвращает <tt>true</tt>, если этот атрибут был изменён.
+    </p>
+
+    <p class="warning">
+      Обратите внимание, что этот метод и следующие, касающиеся изменений, полезны только во время
+  	  обработки события <tt>"change"</tt>.
+    </p>
+
+<pre>
+book.on("change", function() {
+  if (book.hasChanged("title")) {
+    ...
+  }
+});
+</pre>
+
+    <p id="Model-changedAttributes">
+      <b class="header">changedAttributes</b><code>model.changedAttributes([attributes])</code>
+      <br />
+      Возвращает хэш только тех атрибутов модели, которые были изменены, или <tt>false</tt>, если все атрибуты остались без изменений.
+  	  Опционально может быть передан внешний хэш атрибутов; в этом случае возвращаются
+  	  те атрибуты из этого хэша, которые отличаются от таковых в модели.
+  	  Может быть полезно для выяснения, какие части представления надо обновить,
+	    или какие вызовы надо сделать, чтобы синхронизировать изменения с сервером.
+    </p>
+
+    <p id="Model-previous">
+      <b class="header">previous</b><code>model.previous(attribute)</code>
+      <br />
+      Во время события <tt>"change"</tt> этот метод позволяет получить предыдущее значение изменённого атрибута.
+    </p>
+
+<pre class="runnable">
+var bill = new Backbone.Model({
+  name: "Иван Петров"
+});
+
+bill.on("change:name", function(model, name) {
+  alert("Изменено имя с " + bill.previous("name") + " на " + name);
+});
+
+bill.set({name : "Иван Иванов"});
+</pre>
+
+    <p id="Model-previousAttributes">
+      <b class="header">previousAttributes</b><code>model.previousAttributes()</code>
+      <br />
+      Возвращает копию предыдущих атрибутов модели. Полезно, чтобы получить
+	    diff между версиями модели, или вернуться в валидное состояние после ошибки.
+    </p>
+
+    <h2 id="Collection">Backbone.Collection</h2>
+
+    <p>
+      Коллекции — это упорядоченные наборы моделей. Вы можете навесить слушателей: 
+      на событие <tt>"change"</tt>, чтобы получать оповещения, когда любая модель в коллекции изменяется;
+      на события <tt>"add"</tt> и <tt>"remove"</tt>;
+      на получение (<tt>fetch</tt>) коллекции с сервера &mdash; и использовать полный набор
+      <a href="#Collection-Underscore-Methods">методов Underscore.js</a>.
+    </p>
+
+    <p>
+      Любое событие, которое сработает на модели в коллекции также сработает и напрямую — для удобства — на коллекции.
+      Это позволяет напрямую слушать события изменения отдельных атрибутов любой модели в коллекции. Например:
+      <tt>documents.on("change:selected", ...)</tt>
+    </p>
+
+    <p id="Collection-extend">
+      <b class="header">extend</b><code>Backbone.Collection.extend(properties, [classProperties])</code>
+      <br />
+      Чтобы создать собственный класс коллекции, расширьте <b>Backbone.Collection</b>,
+      предоставив свойства экземпляра в хэше <b>properties</b> и опциональные свойства класса в <b>classProperties</b>,
+      которые станут свойствами функции-конструктора.
+    </p>
+
+    <p id="Collection-model">
+      <b class="header">model</b><code>collection.model</code>
+      <br />
+      Переопределите это свойство, чтобы указать класс моделей, которые будет содержать эта коллекция.
+      Если это свойство определено, можно передавать «сырые» хэши объектов (и массивы) в методы
+      <a href="#Collection-add">add</a>, <a href="#Collection-create">create</a>,
+      и <a href="#Collection-reset">reset</a>, и атрибуты будут сконвертированы в модели соответствующего типа.
+    </p>
+
+<pre>
+var Library = Backbone.Collection.extend({
+  model: Book
+});
+</pre>
+
+    <p>
+      Свойство <b>model</b> также можно определить функцией.
+    </p>
+
+<pre>
+var Library = Backbone.Collection.extend({
+
+  model: function(attrs, options) {
+    if (condition) {
+      return new PublicDocument(attrs, options);
+    } else {
+      return new PrivateDocument(attrs, options);
+    }
+  }
+
+});
+</pre>
+
+    <p id="Collection-constructor">
+      <b class="header">constructor / initialize</b><code>new Collection([models], [options])</code>
+      <br />
+      При создании экземпляра коллекции можно передать начальный массив моделей (в параметре <b>models</b>).
+      В <b>options</b> может быть передана <a href="#Collection-comparator">функция-компаратор</a>.
+      Чтобы отключить сортировку, нужно передать <tt>false</tt> как значение функции-компаратора.
+      Метод <b>initialize</b> вызывается после создания экземпляра коллекции.
+      Если следующие опции указаны, они автоматически станут свойствами коллекции: <tt>url</tt>, <tt>model</tt> и <tt>comparator</tt>.
+    </p>
+
+<pre>
+var tabs = new TabSet([tab1, tab2, tab3]);
+var spaces = new Backbone.Collection([], {
+  model: Space,
+  url: '/spaces'
+});
+</pre>
+
+    <p id="Collection-models">
+      <b class="header">models</b><code>collection.models</code>
+      <br />
+      Прямой доступ к массиву моделей коллекции. Обычно используются методы
+      <tt>get</tt>, <tt>at</tt> или <b>методы Underscore</b>, чтобы получить модели,
+      но порой необходима прямая ссылка на массив.
+    </p>
+
+    <p id="Collection-toJSON">
+      <b class="header">toJSON</b><code>collection.toJSON()</code>
+      <br />
+      Возвращает массив, содержащий хэш атрибутов каждой модели в коллекции.
+      Используется в сериализации и сохранении коллекции целиком.
+      Название несколько сбивает с толку потому, что соответствует
+      <a href="https://developer.mozilla.org/en/JSON#toJSON()_method">JSON API</a>.
+    </p>
+
+<pre class="runnable">
+var collection = new Backbone.Collection([
+  {name: "Тим", age: 5},
+  {name: "Ида", age: 26},
+  {name: "Роб", age: 55}
+]);
+
+alert(JSON.stringify(collection));
+</pre>
+
+    <p id="Collection-sync">
+      <b class="header">sync</b><code>collection.sync(method, collection, [options])</code>
+      <br />
+      Использует <a href="#Sync">Backbone.sync</a> для обеспечения персистентности состояния коллекции с сервером.
+      Может быть переопределён для пользовательского поведения.
+    </p>
+
+    <p id="Collection-Underscore-Methods">
+      <b class="header">Методы Underscore (28)</b>
+      <br />
+      Backbone проксирует методы <b>Underscore.js</b>, чтобы предоставить 
+      доступ к 28 функциям, итерирующим по <b>Backbone.Collection</b>.
+      Они не все документированы здесь; см. <a href="http://underscorejs.ru/">документацию Underscore</a>.
+    </p>
+
+    <ul class="small">
+      <li><a href="http://underscorejs.ru/#each">forEach (each)</a></li>
+      <li><a href="http://underscorejs.ru/#map">map (collect)</a></li>
+      <li><a href="http://underscorejs.ru/#reduce">reduce (foldl, inject)</a></li>
+      <li><a href="http://underscorejs.ru/#reduceRight">reduceRight (foldr)</a></li>
+      <li><a href="http://underscorejs.ru/#find">find (detect)</a></li>
+      <li><a href="http://underscorejs.ru/#filter">filter (select)</a></li>
+      <li><a href="http://underscorejs.ru/#reject">reject</a></li>
+      <li><a href="http://underscorejs.ru/#every">every (all)</a></li>
+      <li><a href="http://underscorejs.ru/#some">some (any)</a></li>
+      <li><a href="http://underscorejs.ru/#contains">contains (include)</a></li>
+      <li><a href="http://underscorejs.ru/#invoke">invoke</a></li>
+      <li><a href="http://underscorejs.ru/#max">max</a></li>
+      <li><a href="http://underscorejs.ru/#min">min</a></li>
+      <li><a href="http://underscorejs.ru/#sortBy">sortBy</a></li>
+      <li><a href="http://underscorejs.ru/#groupBy">groupBy</a></li>
+      <li><a href="http://underscorejs.ru/#sortedIndex">sortedIndex</a></li>
+      <li><a href="http://underscorejs.ru/#shuffle">shuffle</a></li>
+      <li><a href="http://underscorejs.ru/#toArray">toArray</a></li>
+      <li><a href="http://underscorejs.ru/#size">size</a></li>
+      <li><a href="http://underscorejs.ru/#first">first (head, take)</a></li>
+      <li><a href="http://underscorejs.ru/#initial">initial</a></li>
+      <li><a href="http://underscorejs.ru/#rest">rest (tail)</a></li>
+      <li><a href="http://underscorejs.ru/#last">last</a></li>
+      <li><a href="http://underscorejs.ru/#without">without</a></li>
+      <li><a href="http://underscorejs.ru/#indexOf">indexOf</a></li>
+      <li><a href="http://underscorejs.ru/#lastIndexOf">lastIndexOf</a></li>
+      <li><a href="http://underscorejs.ru/#isEmpty">isEmpty</a></li>
+      <li><a href="http://underscorejs.ru/#chain">chain</a></li>
+    </ul>
+
+<pre>
+books.each(function(book) {
+  book.publish();
+});
+
+var titles = books.map(function(book) {
+  return book.get("title");
+});
+
+var publishedBooks = books.filter(function(book) {
+  return book.get("published") === true;
+});
+
+var alphabetical = books.sortBy(function(book) {
+  return book.author.get("name").toLowerCase();
+});
+</pre>
+
+    <p id="Collection-add">
+      <b class="header">add</b><code>collection.add(models, [options])</code>
+      <br />
+      Добавляет модель (или массив моделей) в коллекцию, при этом запускает событие <tt>"add"</tt>.
+      Если свойство <a href="#Collection-model">model</a> определено, можно передавать «сырые» атрибуты
+      и они будут оживлены в экземпляры моделей.
+      Чтобы вставить модель по специфичному индексу, передайте <tt>{at: index}</tt>.
+      Если вы добавляете в коллекцию модели, которые <i>уже</i> предствлены в коллекции, они будут пропущены,
+      только если не передана опция <tt>{merge: true}</tt>, в этом случае их атрибуты будут совмещены в существующую модель,
+      и запущено событие <tt>"change"</tt> для всех изменённых атрибутов.
+    </p>
+
+<pre class="runnable">
+var ships = new Backbone.Collection;
+
+ships.on("add", function(ship) {
+  alert("«" + ship.get("name") + "» прямо по курсу!");
+});
+
+ships.add([
+  {name: "Летучий Голландец"},
+  {name: "Черная жемчужина"}
+]);
+</pre>
+
+    <p class="warning">
+      Стоит отметить, что добавление одной и той же модели (моделей с одинаковыми <tt>id</tt>) в
+      коллекцию является бесполезной процедурой.
+    </p>
+
+    <p id="Collection-remove">
+      <b class="header">remove</b><code>collection.remove(models, [options])</code>
+      <br />
+      Удаляет модель (или массив моделей) из коллекции. Запускает событие <tt>"remove"</tt>,
+      которое вы можете подавить наличием ключа <tt>silent</tt> в хэше <b>options</b>.
+      Если есть обработчик события <tt>"remove"</tt>,
+      в него будет передан индекс, под которым находилась удалённая модель — в параметре <tt>options.index</tt>.
+    </p>
+
+    <p id="Collection-reset">
+      <b class="header">reset</b><code>collection.reset(models, [options])</code>
+      <br />
+      Добавлять и удалять модели по одной — хорошо и правильно, но иногда
+      надо изменить столько моделей, что проще обновить коллекцию целиком.
+      Используйте <b>reset</b>, чтобы заменить коллекцию новым массивом моделей
+      (или хэшей атрибутов). При этом сработает одно событие <tt>"reset"</tt>
+      в конце. Для удобства при использовании <tt>"reset"</tt> список моделей,
+        находившихся в коллекции, доступны как <tt>options.previousModels</tt>.
+    </p>
+
+    <p>
+      Вот пример использования <b>reset</b> для предзагрузки коллекции в приложении на Rails:
+    </p>
+
+<pre>
+&lt;script&gt;
+  var accounts = new Backbone.Collection;
+  accounts.reset(&lt;%= @accounts.to_json %&gt;);
+&lt;/script&gt;
+</pre>
+
+    <p>
+      Вызов <tt>collection.reset()</tt> без передачи каких-либо моделей сделает коллекцию пустой.
+    </p>
+
+    <p id="Collection-set">
+      <b class="header">set</b><code>collection.set(models, [options])</code>
+      <br />
+      Метод <b>set</b> выполняет "интеллектуальное" обновление коллекции переданным списком моделей.
+      Если модель из списка не присутствует в коллекции, она будет добавлена; если модель уже присутствует в коллекции,
+      её атрибуты будут объединены с имеющейся моделью; оставшиеся в коллекции модели, которые
+      <i>не&nbsp;присутствуют</i> в списке, будут удалены. При этом все соответствующие события &mdash;
+      <tt>"add"</tt>, <tt>"remove"</tt> и <tt>"change"</tt> &mdash; будут вызываться по мере происходящего.
+      Если вы хотите настроить поведение, вы можете выключить соответствующие операции, передав в опциях:
+      <tt>{add: false}</tt>, <tt>{remove: false}</tt> или <tt>{merge: false}</tt>.
+    </p>
+
+<pre>
+var vanHalen = new Collection([igor, alex, max, andy]);
+
+vanHalen.set([igor, alex, max, jonny]);
+
+// Будет вызвано событие "remove" для andy, и событие "add" для jonny.
+// Будут обновлены атрибуты для igor, alex, max
+</pre>
+
+    <p id="Collection-get">
+      <b class="header">get</b><code>collection.get(id)</code>
+      <br />
+      Возвращает модель из коллекции по её <a href="#Model-id">id</a>,
+       <a href="#Model-cid">cid</a> или по переданной модели.
+    </p>
+
+<pre>
+var book = library.get(110);
+</pre>
+
+    <p id="Collection-at">
+      <b class="header">at</b><code>collection.at(index)</code>
+      <br />
+      Возвращает модель из коллекции по индексу. Полезно, если ваша коллекция отсортирована;
+      если нет, то этот метод возвращает модели по порядку вставки.
+    </p>
+
+    <p id="Collection-push">
+      <b class="header">push</b><code>collection.push(model, [options])</code>
+      <br />
+      Добавляет модель в конец коллекции. Принимает те же аргументы,
+      что и <a href="#Collection-add">add</a>.
+    </p>
+
+    <p id="Collection-pop">
+      <b class="header">pop</b><code>collection.pop([options])</code>
+      <br />
+      Удаляет последнюю модель из коллекции и возвращает её. Принимает те же аргументы,
+      что и <a href="#Collection-remove">remove</a>.
+    </p>
+
+    <p id="Collection-unshift">
+      <b class="header">unshift</b><code>collection.unshift(model, [options])</code>
+      <br />
+      Добавляет модель в начало коллекции. Принимает те же аргументы,
+      что и <a href="#Collection-add">add</a>.
+    </p>
+
+    <p id="Collection-shift">
+      <b class="header">shift</b><code>collection.shift([options])</code>
+      <br />
+      Удаляет первую модель из коллекции и возвращает её. Принимает те же аргументы,
+      что и <a href="#Collection-remove">remove</a>.
+    </p>
+
+    <p id="Collection-slice">
+      <b class="header">slice</b><code>collection.slice(begin, end)</code>
+      <br />
+      Вернет неполную коллекцию моделей этой коллекции, используя те же параметры что и
+      <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/slice">Array#slice</a>.
+    </p>
+
+    <p id="Collection-length">
+      <b class="header">length</b><code>collection.length</code>
+      <br />
+      Подобно массивам, коллекции поддерживают свойство <tt>length</tt>,
+      равное количеству моделей, которые они содержат.
+    </p>
+
+    <p id="Collection-comparator">
+      <b class="header">comparator</b><code>collection.comparator</code>
+      <br />
+      По умолчанию коллекции не определяют функцию-компаратор.
+      Если вы определяете компаратор, он будет использован, чтобы поддерживать
+      коллекцию в отсортированном виде. Это означает, что когда модели добавляются,
+      они вставляются по корректному индексу в <tt>collection.models</tt>.
+      <tt>comparator</tt> может быть определён как функция, подходящая для
+      <a href="http://underscorejs.ru/#sortBy">sortBy</a> из Underscore
+      (функция одного аргумента), или как функция, подходящая для
+      <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/sort">Array.sort</a>
+      (функция двух аргументов), а также может быть определён как строка, указывающая атрибут для сортировки.
+    </p>
+
+    <p>
+      Компараторы типа "sortBy" принимают модель и возвращают численное или строковое
+      значение, по которому модель должна быть отсортирована относительно других.
+      Компараторы типа "sort" принимают две модели, и должны возвращать: <tt>-1</tt>, если
+      первая модель должна идти перед второй; <tt>0</tt>, если у них одинаковая позиция;
+      и <tt>1</tt>, если первая модель должна идти после второй.
+    </p>
+
+    <p>
+      Отметьте, что хотя главы в данном примере добавляются в обратном порядке,
+      в коллекции они расположены в верном порядке:
+    </p>
+
+<pre class="runnable">
+var Chapter  = Backbone.Model;
+var chapters = new Backbone.Collection;
+
+chapters.comparator = function(chapter) {
+  return chapter.get("page");
+};
+
+chapters.add(new Chapter({page: 9, title: "Конец"}));
+chapters.add(new Chapter({page: 5, title: "Середина"}));
+chapters.add(new Chapter({page: 1, title: "Начало"}));
+
+alert(chapters.pluck('title'));
+</pre>
+
+    <p class="warning">
+      Коллекции с компаратором не будут автоматически пересортировываться, если
+      вы измените атрибуты моделей, которые влияют на сортировку. В этом случае следует
+      вызвать <tt>sort</tt> вручную.
+    </p>
+
+    <p id="Collection-sort">
+      <b class="header">sort</b><code>collection.sort([options])</code>
+      <br />
+      Заставляет модель выполнить пересортировку. Обычно нет необходимости вызывать этот метод вручную,
+      так как коллекции с <a href="#Collection-comparator">компаратором</a> всегда сами сортируются при добавлении моделей.
+      Чтобы отключить сортировку при добавлении моделей, передайте <tt>{sort: false}</tt> при вызове метода <tt>add</tt>.
+      При вызове метода <b>sort</b> срабатывает событие коллекции <tt>"sort"</tt>.
+    </p>
+
+    <p id="Collection-pluck">
+      <b class="header">pluck</b><code>collection.pluck(attribute)</code>
+      <br />
+      Собирает значения атрибута из каждой модели в коллекции. Эквивалентно вызову
+      <tt>map</tt> с возвратом одного атрибута из итератора.
+    </p>
+
+<pre class="runnable">
+var stooges = new Backbone.Collection([
+  {name: "Curly"},
+  {name: "Larry"},
+  {name: "Moe"}
+]);
+
+var names = stooges.pluck("name");
+
+alert(JSON.stringify(names));
+</pre>
+
+    <p id="Collection-where">
+      <b class="header">where</b><code>collection.where(attributes)</code>
+      <br />
+      Возвращает массив всех моделей, подходящих под переданный хэш <b>attributes</b>.
+      Полезно для простой фильтрации.
+    </p>
+
+<pre class="runnable">
+var friends = new Backbone.Collection([
+  {name: "Атос",       job: "Мушкетер"},
+  {name: "Портос",     job: "Мушкетер"},
+  {name: "Арамис",     job: "Мушкетер"},
+  {name: "д'Артаньян", job: "Гвардеец короля"},
+]);
+
+var musketeers = friends.where({job: "Мушкетер"});
+
+alert(musketeers.length);
+</pre>
+
+    <p id="Collection-findWhere">
+      <b class="header">findWhere</b><code>collection.findWhere(attributes)</code>
+      <br />
+      Ведёт себя так же, как <a href="#Collection-where">where</a>, но возвращает только первую модель в коллекции,
+      которая подходит под переданный хэш <b>attributes</b>.
+    </p>
+
+    <p id="Collection-url">
+      <b class="header">url</b><code>collection.url или collection.url()</code>
+      <br />
+      Свойство (или функция) <b>url</b> предназначена для того, чтобы указывать положение
+      коллекции на сервере. Модели в коллекциях с определённым <b>url</b>
+      будут использовать его, чтобы конструировать свои собственные URL'ы.
+    </p>
+
+<pre>
+var Notes = Backbone.Collection.extend({
+  url: '/notes'
+});
+
+// Или чуть сложнее:
+
+var Notes = Backbone.Collection.extend({
+  url: function() {
+    return this.document.url() + '/notes';
+  }
+});
+</pre>
+
+    <p id="Collection-parse">
+      <b class="header">parse</b><code>collection.parse(response, options)</code>
+      <br />
+      <b>parse</b> вызывается каждый раз, когда модели коллекции
+      приходят с сервера, в методе <a href="#Collection-fetch">fetch</a>.
+      Функция принимает «сырой» объект <tt>response</tt> и должна вернуть
+      массив атрибутов моделей, которые будут добавлены в коллекцию
+      методом <a href="#Collection-add">add</a>. Реализация по умолчанию
+      просто пробрасывает JSON-ответ.
+      Переопределите этот метод, если вы работаете с уже существующим API,
+      или чтобы лучше заворачивать в пространства имён ответы сервера.
+    </p>
+
+<pre>
+var Tweets = Backbone.Collection.extend({
+  // API поиска Twitter возвращает твиты в поле "results".
+  parse: function(response) {
+    return response.results;
+  }
+});
+</pre>
+
+    <p id="Collection-clone">
+      <b class="header">clone</b><code>collection.clone()</code>
+      <br />
+      Вернёт новый экземпляр коллекции с идентичным списком моделей.
+    </p>
+
+    <p id="Collection-fetch">
+      <b class="header">fetch</b><code>collection.fetch([options])</code>
+      <br />
+      Получает дефолтный набор моделей с сервера
+      и <a href="#Collection-set">применяет</a> его для этой коллекции.
+      В хэш <b>options</b> могут быть переданы коллбэки
+      <tt>success</tt> и <tt>error</tt>, которым передаются коллекция, ответ сервера, и опции
+      <tt>(collection, response, options)</tt> в качестве аргументов.
+      Когда данные моделей придут с сервера, коллекция вызовет метод <a href="#Collection-set">set</a>
+      для "интеллектуального" совмещения полученных моделей, изменить это поведение можно, передав <tt>{reset: true}</tt>,
+      тогда будет вызван метод <a href="#Collection-reset">reset</a>.
+      Внутри <tt>fetch</tt> обращается к <a href="#Sync">Backbone.sync</a>,
+      чтобы можно было создать свою стратегию персистентности, и возвращает
+      <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">jqXHR</a>-объект.
+      Серверный обработчик запросов <b>fetch</b> должен возвращать JSON-массив моделей.
+    </p>
+
+<pre class="runnable">
+Backbone.sync = function(method, model) {
+  alert(method + ": " + model.url);
+};
+
+var accounts = new Backbone.Collection;
+accounts.url = '/accounts';
+
+accounts.fetch();
+</pre>
+    <p>
+      Поведение метода <b>fetch</b> можно изменить, используя опции метода
+      <a href="#Collection-set">set</a>. Например, чтобы при получении данных с сервера
+      для всех новых моделей срабатывало событие <tt>"add"</tt>, а для уже существующих,
+      изменённых моделей срабатывало событие <tt>"change"</tt>, но при этом с
+      удалёнными моделями ничего не происходило, можно сделать так: <tt>collection.fetch({remove: false})</tt>
+    </p>
+
+    <p>
+      Опции <b>jQuery.ajax</b> также могут быть напрямую переданы в <b>fetch</b>,
+      чтобы, например, получить определённую страницу пагинированной коллекции:
+      <tt>documents.fetch({data: {page: 3}})</tt>
+    </p>
+
+    <p>
+      Заметьте, что <b>fetch</b> не должен использоваться, чтобы наполнять коллекции на этапе
+      загрузки страницы — все модели, необходимые во время загрузки должны быть
+      <a href="#FAQ-bootstrap">предзагружены</a>. <b>fetch</b> предназначен
+      для «ленивой» загрузки моделей для интерфейсов, которые не нужны
+      немедленно: например, документы с коллекциями заметок, которые могут быть открыты или закрыты.
+    </p>
+
+    <p id="Collection-create">
+      <b class="header">create</b><code>collection.create(attributes, [options])</code>
+      <br />
+      Удобное создание модели внутри коллекции.
+      Эквивалентно созданию экземпляра модели с хэшем <b>attributes</b>,
+      сохранению модели на сервер и добавлению модели в набор после успешного создания.
+      Возвращает новую модель. Если валидация на клиенте не проходит, модель не будет сохранена с ошибкой валидации.
+      Для корректной работы у коллекции должно быть свойство <a href="#Collection-model">model</a>.
+      Метод <b>create</b> может принимать либо хэш атрибутов, либо существующую несохранённую модель.
+    </p>
+
+    <p>
+      Создание модели немедленно и автоматически запускает событие <tt>"add"</tt>,
+      событие <tt>"request"</tt> будет вызвано, как только модель отправлена на сервер
+      и событие <tt>"sync"</tt>, как только модель успешно создастся на сервере.
+      Передайте <tt>{wait: true}</tt>, если вы хотите подождать ответа сервера перед добавлением.
+    </p>
+
+<pre>
+var Library = Backbone.Collection.extend({
+  model: Book
+});
+
+var nypl = new Library;
+
+var othello = nypl.create({
+  title: "Отелло",
+  author: "Вильям Шекспир"
+});
+</pre>
+
+    <h2 id="Router">Backbone.Router</h2>
+
+    <p>
+      Веб-приложения часто предоставляют возможность
+      зафиксировать своё состояние, сделав закладку. Это делается с помощью добавления
+      к URL фрагмента определённого вида. 
+      До недавнего времени для этих целей использовались исключительно хэши (<tt>#page</tt>),
+      но с появлением History API стало возможно использовать URL обычного вида (<tt>/page</tt>).
+      <b>Backbone.Router</b> предоставляет методы для маршрутизации на стороне клиента,
+      а также связывания этих действий с событиями. Для браузеров, которые не поддерживают
+      History API, Router весьма элегантно проделает то же самое, используя фрагментарную структуру URL.
+    </p>
+
+    <p>
+      Во время загрузки страницы, после того, как ваше приложение создаст все необходимые ему
+      роутеры, не забудьте вызвать <tt>Backbone.history.start()</tt> или
+      <tt>Backbone.history.start({pushState: true})</tt>, чтобы задать начальное состояние приложения.
+    </p>
+
+    <p id="Router-extend">
+      <b class="header">extend</b><code>Backbone.Router.extend(properties, [classProperties])</code>
+      <br />
+      Создавая свой класс-маршрутизатор, нужно расширить <b>Backbone.Router</b>. 
+      Определите для него actions &mdash; действия, которые будут выполнены,
+      когда часть текущего URL совпадет с заданным фрагментом, &mdash; 
+      и предоставьте хэш
+      <a href="#Router-routes">роутов (routes)</a>, в котором будут описаны паттерны URL и 
+      соответствующие им действия.<br/>
+      На заметку: нельзя начинать название роута со слэша.
+    </p>
+
+<pre>
+var Workspace = Backbone.Router.extend({
+
+  routes: {
+    "help":                 "help",    // #help
+    "search/:query":        "search",  // #search/kiwis
+    "search/:query/p:page": "search"   // #search/kiwis/p7
+  },
+
+  help: function() {
+    ...
+  },
+
+  search: function(query, page) {
+    ...
+  }
+
+});
+</pre>
+
+    <p id="Router-routes">
+      <b class="header">routes</b><code>router.routes</code>
+      <br />
+      Хэш роутов описывает соответствие паттернов URL функциям вашего роутера
+      с аргументами, аналогично тому, как это происходит с
+      <a href="#View-delegateEvents">хэшем событий</a> <a href="#View">представлений</a>.
+      Роут может содержать параметрические части, <tt>:param</tt>, 
+      каждая из которых будет соответствовать единственному фрагменту 
+      URL между слэшами, и <tt>*splat</tt>-части, 
+      которые могут соответствовать любому количеству фрагментов URL. Чтобы пометить часть
+      роута как опциональную, нужно обернуть её в круглые скобки, например <tt>(/:optional)</tt>.
+    </p>
+
+    <p>
+      Например, роут <tt>"search/:query/p:page"</tt> соответствует фрагменту <tt>"#search/obama/p2"</tt>, и аргументы <tt>obama</tt> и <tt>p2</tt>
+      будут переданы в action.
+    </p>
+
+    <p>
+      Роут <tt>"file/*path"</tt> соответствует <tt>#file/nested/folder/file.txt</tt> и в action
+      в качестве аргумента будет передана строка <tt>"nested/folder/file.txt"</tt>.
+    <p>
+
+    <p>
+      Роут <tt>"docs/:section(/:subsection)"</tt> соответствует
+      <tt>#docs/faq</tt> и <tt>#docs/faq/installing</tt>, в первом случае
+      в action в качестве аргумента будет передан <tt>"faq"</tt>, во втором случае
+      будут переданы два аргумента <tt>"faq"</tt> и <tt>"installing"</tt>.
+    </p>
+
+    <p>
+      Слеш в конце фрагмента рассматривается как чаcть URL и поэтому будет обработан как отдельный роут.
+      <tt>docs</tt> и <tt>docs/</tt> вызовут разные колбэки. Если вы хотите этого избежать,
+      оберните слеш в круглые скобки <tt>"docs(/)"</tt>, такой роут будет соответствовать обоим фрагментам.
+    </p>
+
+    <p>
+      Когда пользователь нажимает кнопки «назад/вперёд» или вводит в адресную строку URL, который
+      соответствует какому-либо роуту, будет сгенерировано <a href="#Events">событие (event)</a>, одноимённое action'у этого роута,
+      таким образом, другие объекты тоже могут слушать роутер и «быть в курсе» происходящих событий.
+      В приведённом ниже примере посещение <tt>"#help/uploading"</tt> приведёт к тому, что роутер 
+      сгенерирует событие <tt>route:help</tt>.
+    </p>
+
+<pre>
+routes: {
+  "help/:page":         "help",
+  "download/*path":     "download",
+  "folder/:name":       "openFolder",
+  "folder/:name-:mode": "openFolder"
+}
+</pre>
+
+<pre>
+router.on("route:help", function(page) {
+  ...
+});
+</pre>
+
+    <p id="Router-constructor">
+      <b class="header">constructor / initialize</b><code>new Router([options])</code>
+      <br />
+      Создавая роутер, вы можете задать его роуты, передав их в качестве свойства объекта <tt>options</tt>, 
+      если хотите. Кроме того, объект <tt>options</tt> целиком будет передан в определённую вами
+      функцию <tt>initialize</tt>.
+    </p>
+
+    <p id="Router-route">
+      <b class="header">route</b><code>router.route(route, name, [callback])</code>
+      <br />
+      С помощью этого метода можно добавить новый роут к объекту после инициализации.
+      Аргумент <tt>route</tt> может быть <a href="#Router-routes">строкой-роутом</a> или регулярным выражением.
+      Части URL, соответствующие заданному роуту или регулярному выражению, будут
+      переданы функции <tt>callback</tt> в качестве аргументов. Аргумент <tt>name</tt> будет использован
+      для того, чтобы сгенерировать события вида <tt>"route:name"</tt> при совпадении фрагмента URL и роута.
+      Если аргумент <tt>callback</tt> опущен, то будет использована <tt>router[name]</tt>.
+      Последний добавленный роут может переопределить добавленный раннее.
+    </p>
+
+<pre>
+initialize: function(options) {
+
+  // совпадает с #page/10, в function будет передано "10"
+  this.route("page/:number", "page", function(number){ ... });
+
+  // совпадает с /117-a/b/c/open, в this.open будет передано "117-a/b/c"
+  this.route(/^(.*?)\/open$/, "open");
+
+},
+
+open: function(id) { ... }
+</pre>
+
+    <p id="Router-navigate">
+      <b class="header">navigate</b><code>router.navigate(fragment, [options])</code>
+      <br />
+      Когда вы решите, что ваше приложение находится в состоянии, которое желательно было бы сохранить,
+      вызовите <b>navigate</b> чтобы обновить URL, передав в качестве аргумента <tt>fragment</tt> необходимый фрагмент URL.
+      Если при этом вы хотите вызвать функцию роутера, то установите свойство <b>trigger</b>
+      в <tt>true</tt>.
+      Для того, чтобы обновить URL без создания записи в истории браузера, установите свойство
+      <b>replace</b> в <tt>true</tt>.
+    </p>
+
+<pre>
+openPage: function(pageNumber) {
+  this.document.pages.at(pageNumber).open();
+  this.navigate("page/" + pageNumber);
+}
+
+# или ...
+
+app.navigate("help/troubleshooting", {trigger: true});
+
+# или ...
+
+app.navigate("help/troubleshooting", {trigger: true, replace: true});
+</pre>
+
+    <h2 id="History">Backbone.history</h2>
+
+    <p>
+      <b>History</b> служит глобальным роутером (в пределах фрейма), обрабатывая события <tt>hashchange</tt>
+      или вызовы <tt>pushState</tt>, находя сопоставление с подходящим роутом и запуская коллбэки.
+      Вам не надо даже вручную создавать ничего из этого — просто используйте ссылку на <tt>Backbone.history</tt>.
+    </p>
+
+    <p>
+      Поддержка <b>pushState</b> существует в Backbone в сугубо опциональной форме.
+      Старые браузеры, которые не поддерживают <tt>pushState</tt> будут продолжать использовать
+      хэш-фрагменты адресов, и если поддерживающий <tt>pushState</tt> браузер зайдёт на URL с хэшем,
+      этот URL будет прозрачно заменён настоящим URL'ом. Отметьте, что использование таких адресов
+      требует от веб-сервера корректной отдачи таких страниц, так что могут потребоваться изменения и на сервере.
+      Например, если у вас есть роут <tt>/documents/100</tt>,
+      ваш сервер должен отдать эту страницу, если браузер зайдёт на неё напрямую.
+      Для полной индексации поисковиками лучше всего, если сервер генерирует полный HTML 
+      для страницы, но если речь идёт о веб-приложении, достаточно просто отдавать тот же контент, что 
+      и для корневой страницы, и дополнять оставшееся с помощью JS и представлений Backbone.
+    </p>
+
+    <p id="History-start">
+      <b class="header">start</b><code>Backbone.history.start([options])</code>
+      <br />
+      Когда созданы все ваши <a href="#Router">роутеры</a> и все роуты корректно
+      установлены, вызовите <tt>Backbone.history.start()</tt>
+      чтобы начать отслеживать события <tt>hashchange</tt> и диспетчеризовать роуты.
+    </p>
+
+    <p>
+      Чтобы обозначить, что вы хотите использовать поддержку <tt>pushState</tt> из HTML5 
+      в вашем приложении, вызовите <tt>Backbone.history.start({pushState: true})</tt>.
+      Если вы хотите использовать <tt>pushState</tt> для современных браузеров, но чтобы устаревшие браузеры
+      полностью перезагружали страницу, как при обычных переходах по ссылкам,
+      передайте опцию <tt>{hashChange: false}</tt> в хеше options.
+    </p>
+
+    <p>
+      Если приложение отдаётся не с корневого адреса (<tt>/</tt>)
+      домена, обязательно укажите History, где находится корень, с помощью опции
+      <tt>Backbone.history.start({pushState: true, root: "/public/search/"})</tt>
+    </p>
+
+    <p>
+      Во время вызова, если в роутах находится соответствие с текущим адресом,
+      <tt>Backbone.history.start()</tt> возвращает <tt>true</tt>. Если ни один 
+      из существующих роутов не подходит к текущему адресу, будет возвращено значение <tt>false</tt>.
+    </p>
+
+    <p>
+      Если сервер уже отрисовал всю страницу, и вы не хотите, чтобы начальный роут сработал, 
+      когда стартует History, передайте <tt>silent: true</tt>.
+    </p>
+
+    <p>
+      Так как хэш-навигация в IE полагается на <tt>&lt;iframe&gt;</tt>,
+      вызывайте <tt>start()</tt> только после готовности DOM.
+    </p>
+
+<pre>
+$(function(){
+  new WorkspaceRouter();
+  new HelpPaneRouter();
+  Backbone.history.start({pushState: true});
+});
+</pre>
+
+    <h2 id="Sync">Backbone.sync</h2>
+
+    <p>
+      <b>Backbone.sync</b> — функция, которую Backbone вызывает каждый раз, 
+      когда пытается прочитать/сохранить модель с/на сервер. По умолчанию она использует 
+      <tt>(jQuery).ajax</tt>, чтобы делать RESTful JSON-запросы, и возвращает
+      <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">jqXHR</a>. Её можно переопределить, чтобы 
+      использовать другую стратегию персистентности — WebSocket'ы,
+      XML-транспорт, или localStorage.
+    </p>
+
+    <p>
+      Сигнатура метода — <tt>sync(method, model, [options])</tt>
+    </p>
+
+    <ul>
+      <li><b>method</b> — метод CRUD (<tt>"create"</tt>, <tt>"read"</tt>, <tt>"update"</tt>, or <tt>"delete"</tt>)</li>
+      <li><b>model</b> — модель для сохранения (или коллекция для чтения)</li>
+      <li><b>options</b> — коллбэки <tt>success</tt> и <tt>error</tt> на успех и на ошибку,
+      и любые другие опции, которые принимает jQuery.ajax.</li>
+    </ul>
+
+    <p>
+      В реализации по умолчанию, когда <b>Backbone.sync</b> посылает запрос на сохранение
+      модели, её атрибуты будут переданы, сериализованные как JSON, и посланы в теле HTTP
+      с контент-типом <tt>application/json</tt>. Возвращая JSON-ответ,
+      посылайте атрибуты модели, которые были изменены сервером, и должны быть 
+      обновлены на клиенте. Отвечая на запрос <tt>"read"</tt> от коллекции
+      (<a href="#Collection-fetch">Collection#fetch</a>), посылайте массив
+      атрибутов моделей.
+    </p>
+
+    <p>
+      Всякий раз, когда модель или коллекция начинает синхронизацию с сервером,
+      генерируется событие <tt>"request"</tt>. Если запрос завершился успешно,
+      будет вызвано событие <tt>"sync"</tt>, в противном случае — <tt>"error"</tt>.
+    </p>
+
+    <p>
+      Функция <b>sync</b> может быть переопределена глобально как <tt>Backbone.sync</tt>
+      или на более тонком уровне — добавлением метода <tt>sync</tt> в коллекцию Backbone
+      или в отдельную модель.
+    </p>
+
+    <p>
+      Обработчик <b>sync</b> по умолчанию мапит CRUD в REST таким образом:
+    </p>
+
+    <ul>
+      <li><b>create &rarr; POST &nbsp; </b><tt>/collection</tt></li>
+      <li><b>read &rarr; GET &nbsp; </b><tt>/collection[/id]</tt></li>
+      <li><b>update &rarr; PUT &nbsp; </b><tt>/collection/id</tt></li>
+      <li><b>delete &rarr; DELETE &nbsp; </b><tt>/collection/id</tt></li>
+    </ul>
+
+    <p>
+      Для примера, обработчик в Rails, отвечающий на вызов <tt>"update"</tt> из
+      Backbone, может выглядеть так: <i>(В настоящем коде никогда не используйте 
+      </i><tt>update_attributes</tt><i> слепо и всегда перечисляйте атрибуты, 
+      разрешённые к изменению, с помощью «белого списка».)</i>
+    </p>
+
+<pre>
+def update
+  account = Account.find params[:id]
+  account.update_attributes params
+  render :json => account
+end
+</pre>
+
+    <p>
+      Ещё один совет по интеграции с Rails версии 3.1 и ниже: отключить заворачивание в пространство имён для
+      вызовов <tt>to_json</tt> на моделях, установив <tt>ActiveRecord::Base.include_root_in_json = false</tt>
+    </p>
+
+    <p id="Sync-ajax">
+      <b class="header">ajax</b><code>Backbone.ajax = function(request) { ... };</code>
+      <br />
+      Если хотите использовать собственную AJAX-функцию, или ваш сервер по какой-то причине не поддерживает
+      взаимодействие при помощи <a href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax</a> API,
+      вы можете определить свою функцию <tt>Backbone.ajax</tt>.
+    </p>
+
+    <p id="Sync-emulateHTTP">
+      <b class="header">emulateHTTP</b><code>Backbone.emulateHTTP = true</code>
+      <br />
+      Если необходимо работать со старым сервером, который не поддерживает подход 
+      по умолчанию REST/HTTP, можно включить эмуляцию HTTP-действий <tt>Backbone.emulateHTTP</tt>.
+      Установка этой опции будет подделывать запросы <tt>PUT</tt> и <tt>DELETE</tt> 
+      с помощью HTTP <tt>POST</tt>, устанавливая заголовок <tt>X-HTTP-Method-Override</tt> 
+      в настоящий метод. Если опция <tt>emulateJSON</tt> также включена, 
+      настоящий метод будет передан, как дополнительный параметр <tt>_method</tt>.
+    </p>
+
+<pre>
+Backbone.emulateHTTP = true;
+
+model.save();  // POST to "/collection/id", with "_method=PUT" + header.
+</pre>
+
+    <p id="Sync-emulateJSON">
+      <b class="header">emulateJSON</b><code>Backbone.emulateJSON = true</code>
+      <br />
+      Если необходимо работать со старым сервером, который не может обрабатывать 
+      запросы, закодированные как <tt>application/json</tt>, выставление <tt>Backbone.emulateJSON = true;</tt>
+      заставит JSON сериализоваться в параметр <tt>model</tt>, и запрос будет сделан
+      с MIME-типом <tt>application/x-www-form-urlencoded</tt>, как если бы это была HTML-форма.
+    </p>
+
+    <h2 id="View">Backbone.View</h2>
+
+    <p>
+      Представления в Backbone — это скорее соглашение, нежели код: они никак не влияют
+      на ваш HTML и CSS, и могут быть использованы с любой шаблонной библиотекой.
+      Основная идея — организовать ваш интерфейс в логически выделенные представления,
+      опирающиеся на модели, каждое из которых может быть обновлено независимо, когда
+      модель изменяется, без необходимости перерисовывать страницу. Вместо того, чтобы копаться
+      в JSON-объекте, выискивать элемент в DOM-дереве и обновлять HTML вручную,
+      вы привязываете метод <tt>render</tt> представления к событию <tt>"change"</tt> модели —
+      и теперь везде, где бы ни отображались данные модели, они немедленно становятся актуальными.
+    </p>
+
+    <p id="View-extend">
+      <b class="header">extend</b><code>Backbone.View.extend(properties, [classProperties])</code>
+      <br />
+      Создание своего класса представления. Нужно переопределить метод <a href="#View-render">render</a>,
+      декларативно указать <a href="#View-delegateEvents">события</a> и, возможно,
+      <tt>tagName</tt>, <tt>className</tt> или <tt>id</tt> корневого элемента представления.
+    </p>
+
+<pre>
+var DocumentRow = Backbone.View.extend({
+
+  tagName: "li",
+
+  className: "document-row",
+
+  events: {
+    "click .icon":          "open",
+    "click .button.edit":   "openEditDialog",
+    "click .button.delete": "destroy"
+  },
+
+  initialize: function() {
+    this.listenTo(this.model, "change", this.render);
+  },
+
+  render: function() {
+    ...
+  }
+
+});
+</pre>
+
+    <p>
+      Свойства <tt>tagName</tt>, <tt>id</tt>, <tt>className</tt>,
+      <tt>el</tt>, и <tt>events</tt> могут быть переданы как функции, если
+      вы хотите, чтобы они были заданы во время исполнения.
+    </p>
+
+    <p id="View-constructor">
+      <b class="header">constructor / initialize</b><code>new View([options])</code>
+      <br />
+      При создании экземпляра представления опции, которые вы передаёте в хэше <b>options</b>,
+      объединяются с уже имеющимися опциями представления
+      и после этого будут доступны как <tt>this.options</tt> внутри него. Есть несколько особенных опций,
+      которые, будучи переданы, будут доступны как прямые свойства представления:
+      <tt>model</tt>, <tt>collection</tt>,
+      <tt>el</tt>, <tt>id</tt>, <tt>className</tt>, <tt>tagName</tt> и <tt>attributes</tt>.
+      Если представление определяет метод <b>initialize</b>, он будет вызван
+      в момент создания экземпляра. Если вы хотите создать представление, которое
+      ссылается на элемент, <i>уже присутствующий</i> в DOM, передайте его в опциях:
+      <tt>new View({el: existingElement})</tt>. В дальнейшем он так же будет доступен как <tt>this.el</tt>.
+    </p>
+
+<pre>
+var doc = documents.first();
+
+new DocumentRow({
+  model: doc,
+  id: "document-row-" + doc.id
+});
+</pre>
+
+    <p id="View-el">
+      <b class="header">el</b><code>view.el</code>
+      <br />
+      Все представления всегда имеют DOM-элемент в любой момент времени (свойство <b>el</b>),
+      вставлены они в документ или нет. Таким образом, представления могут быть отрендерены в любое время
+      и вставлены в DOM-дерево все разом — это приводит к высокопроизводительному интерфейсу
+      с минимальным количеством переформатирований и перерисовываний (reflows and repaints).
+      Свойство <tt>this.el</tt> создаётся из свойств <tt>tagName</tt>, <tt>className</tt>, <tt>id</tt> и <tt>attributes</tt>,
+      если они указаны. Если нет — <b>el</b> будет пустым <tt>div</tt>'ом.
+    </p>
+
+<pre class="runnable">
+var ItemView = Backbone.View.extend({
+  tagName: 'li'
+});
+
+var BodyView = Backbone.View.extend({
+  el: 'body'
+});
+
+var item = new ItemView();
+var body = new BodyView();
+
+alert(item.el + ' ' + body.el);
+</pre>
+
+    <p id="View-$el">
+      <b class="header">$el</b><code>view.$el</code>
+      <br />
+      Закешированный объект jQuery c элементом данного представления — то же самое, что <tt>$(this.el)</tt>.
+      Удобная ссылка — замена постоянному оборачиванию DOM-элемента.
+    </p>
+
+<pre>
+view.$el.show();
+
+listView.$el.append(itemView.el);
+</pre>
+
+    <p id="View-setElement">
+      <b class="header">setElement</b><code>view.setElement(element)</code>
+      <br />
+      Если вы хотите применить Backbone-представление к другому DOM-элементу, используйте
+      <b>setElement</b>, который также создаст закешированную ссылку <tt>$el</tt>
+      и перенесёт делегированные события со старого элемента на новый.
+    </p>
+
+    <p id="View-attributes">
+      <b class="header">attributes</b><code>view.attributes</code>
+      <br />
+      Хэш атрибутов, которые будут установлены DOM-элементу <tt>el</tt> (id, класс, data-атрибуты, и т.д.),
+      или функция, которая возвращает такой хэш.
+    </p>
+
+    <p id="View-dollar">
+      <b class="header">$ (jQuery)</b><code>view.$(selector)</code>
+      <br />
+      Если jQuery подключён на странице, каждое представление имеет
+      функцию <b>$</b>, которая выполняет DOM-запросы внутри элемента представления.
+      Используя эту функцию, вы не нуждаетесь в использовании id модели как части вашего запроса, чтобы
+      получить определённые элементы в списке, и можете полагаться на HTML-класс.
+      Это эквивалентно такому вызову: <tt>view.$el.find(selector)</tt>
+    </p>
+
+<pre>
+ui.Chapter = Backbone.View.extend({
+  serialize : function() {
+    return {
+      title: this.$(".title").text(),
+      start: this.$(".start-page").text(),
+      end:   this.$(".end-page").text()
+    };
+  }
+});
+</pre>
+
+    <p id="View-render">
+      <b class="header">render</b><code>view.render()</code>
+      <br />
+      Метод <b>render</b> по умолчанию реализован как пустая функция. Переопределите её
+      своим кодом отрисовки шаблона с данными модели и обновления <tt>this.el</tt> новым HTML.
+      Хорошее соглашение — делать <tt>return this</tt> в конце <b>render</b>, чтобы иметь возможность
+      делать цепочные вызовы.
+    </p>
+
+<pre>
+var Bookmark = Backbone.View.extend({
+  template: _.template(…),
+  render: function() {
+    this.$el.html(this.template(this.model.attributes));
+    return this;
+  }
+});
+</pre>
+
+    <p>
+      Backbone ничего не знает о ваших предпочтениях создания HTML.
+      Ваш метод <b>render</b> может просто конкатенировать HTML-строку или использовать
+      <tt>document.createElement</tt>, чтобы генерировать DOM-дерево. Как бы то ни было, мы предлагаем
+      выбрать хорошую шаблонную библиотеку.
+      <a href="http://github.com/janl/mustache.js">Mustache.js</a>,
+      <a href="http://github.com/creationix/haml-js">Haml-js</a> и
+      <a href="http://github.com/sstephenson/eco">Eco</a> являются хорошими альтернативами.
+      Так как на странице уже присутствует <a href="http://underscorejs.ru/">Underscore.js</a>,
+      доступная функция <a href="http://underscorejs.ru/#template">_.template</a>
+      является превосходным выбором, если вы предпочитаете шаблоны с простыми включениями JavaScript.
+    </p>
+
+    <p>
+      На какой бы стратегии шаблонизации вы бы не остановились, она хороша, если вы <i>никогда</i>
+      не помещаете строки с HTML в ваш JavaScript. В DocumentCloud мы используем
+      <a href="http://documentcloud.github.com/jammit/">Jammit</a>, чтобы упаковать
+      наши JS-шаблоны, хранящиеся в <tt>/app/views</tt>, как часть нашего
+      главного пакета ассетов в <tt>core.js</tt>.
+    </p>
+
+    <p id="View-remove">
+      <b class="header">remove</b><code>view.remove()</code>
+      <br />
+      Удаляет представление из DOM, после этого вызывает
+      <a href="#Events-stopListening">stopListening</a> для удаления событий,
+      которые представление <a href="#Events-listenTo">прослушивает</a>.
+    </p>
+
+    <p id="View-delegateEvents">
+      <b class="header">delegateEvents</b><code>delegateEvents([events])</code>
+      <br />
+      Использует функцию <tt>on</tt> из jQuery для декларативного описания обработчиков DOM-событий
+      внутри представления.
+      Если хэш <b>events</b> не передан явно, используется <tt>this.events</tt>.
+      События записываются в следующем формате <tt>{"событие селектор": "обработчик"}</tt>.
+      Обработчик может быть как именем метода представления, так и напрямую функцией.
+      Если опустить <tt>селектор</tt>, то событие будет привязано к корневому элементу представления
+      (<tt>this.el</tt>). По умолчанию <tt>delegateEvents</tt> вызывается внутри конструктора за вас,
+      так что если ваш хэш <tt>events</tt> прост, все ваши DOM-события уже будут снабжены обработчиками,
+      и вам не придётся вызывать этот метод вручную.
+    </p>
+
+    <p>
+      Свойство <tt>events</tt> может так же быть определено как функция, которая
+      возвращает соответствующий хэш, чтобы было проще программно описать ваши
+      события, так же как и унаследовать их от родительского представления.
+    </p>
+
+    <p>
+      Использование <b>delegateEvents</b> предоставляет несколько преимуществ перед ручным
+      навешиванием обработчиков с помощью jQuery во время <a href="#View-render">рендеринга</a>. Все присоединённые
+      коллбэки привязываются к представлению перед передачей их в jQuery, так что при их вызове
+      <tt>this</tt> продолжает ссылаться на экземпляр представления. Когда
+      <b>delegateEvents</b> запускается снова (возможно, с другим хэшем событий)
+      все коллбэки удаляются и делегируются заново, что удобно для представлений,
+      которым нужно менять поведение в разных режимах.
+    </p>
+
+    <p>
+      Представление, которое отображает документ в результатах поиска может
+      выглядеть примерно так:
+    </p>
+
+<pre>
+var DocumentView = Backbone.View.extend({
+
+  events: {
+    "dblclick"                : "open",
+    "click .icon.doc"         : "select",
+    "contextmenu .icon.doc"   : "showMenu",
+    "click .show_notes"       : "toggleNotes",
+    "click .title .lock"      : "editAccessLevel",
+    "mouseover .title .date"  : "showTooltip"
+  },
+
+  render: function() {
+    this.$el.html(this.template(this.model.attributes));
+    return this;
+  },
+
+  open: function() {
+    window.open(this.model.get("viewer_url"));
+  },
+
+  select: function() {
+    this.model.set({selected: true});
+  },
+
+  ...
+
+});
+</pre>
+
+    <p id="View-undelegateEvents">
+      <b class="header">undelegateEvents</b><code>undelegateEvents()</code>
+      <br />
+      Удаляет все делегированные события. Применяется, если нужно временно деактивировать либо
+      удалить представление из DOM.
+    </p>
+
+    <h2 id="Utility">Utility</h2>
+
+    <p id="Utility-Backbone-noConflict">
+      <b class="header">Backbone.noConflict</b><code>var backbone = Backbone.noConflict();</code>
+      <br />
+      Откатывает объект <tt>Backbone</tt> в предыдущее значение. Можно
+      использовать возвращенное из <tt>Backbone.noConflict()</tt> значение, чтобы хранить
+      ссылку на Backbone. Находит применение при внедрении Backbone на сторонние сайты,
+      где вы не хотите испортить существующий Backbone.
+    </p>
+
+<pre>
+var localBackbone = Backbone.noConflict();
+var model = localBackbone.Model.extend(...);
+</pre>
+
+    <p id="Utility-Backbone-$">
+      <b class="header">Backbone.$</b><code>Backbone.$ = $;</code>
+      <br />
+      Если у вас несколько копий <tt>jQuery</tt> на странице или если вы хотите
+      приказать Backbone использовать определённый объект в качестве библиотеки DOM / Ajax,
+      то это функция для вас.
+    </p>
+
+    <h2 id="examples">Примеры</h2>
+
+    <p>
+      Нижеследующий список примеров крайне неполон, так как мы (переводчики) 
+      не хотели переводить длинный список неизвестных в рунете приложений. 
+      Если вы используете Backbone в русскоязычном веб-приложении, пожалуйста, дайте нам знать.
+      Вы можете взглянуть на <a href="http://backbonejs.org/#examples">оригинальный список примеров</a> или посетить
+      <a href="https://github.com/jashkenas/backbone/wiki/Projects-and-Companies-using-Backbone">вики-страницу приложений на Backbone</a>.
+    </p>
+    
+    <p>
+    	<a href="http://www.bookfinder.com.ua/">www.bookfinder.com.ua</a> &mdash; это книжный поисковый сервис по интернет-магазинам Украины. Веб-приложение базируется на Backbone.js.<br>
+    	<br>
+    	Разработчик: Кащеев Сергей (<a href="https://github.com/ginger/">github.com/ginger/</a>)
+    	
+    	<b>Основные модели:</b><br>
+	- книга (название, авторы, url, url картинки, описание, цена, валюта, магазин и др.)<br>
+	- состояние поиска (запрос, выбранный фильтр, сортировка, текущая страницы и др.)<br>
+	<br>
+	<b>Представления:</b><br>
+	- форма поиска;<br>
+	- книга;<br>
+	- книги, сгруппированные по магазинам;<br>
+	- форма фильтрации;<br>
+	- постраничная навигация;<br>
+	- попап с закладками;<br>
+	- попап с обратной связью.<br>
+	<br>
+	Широко используются коллекции книг с методами для подсчёта цен, сортировок и др. и один основной роутер, который маршрутизирует запросы вида #!/search/запрос/фильтр/сортировка/номер_страницы<br>
+	<br>
+	Приложение также использует jQuery, RequireJS, Underscore.js, localStorage (jStorage &mdash; для хранения закладок). Серверная сторона &mdash; это ASP.NET 2.0 с JSON для обмена данными. 
+    </p>
+
+    <p id="examples-todos">
+      <a href="http://jgn.me/">Jérôme Gravel-Niquet</a> создал пример приложения
+      <a href="examples/todos/index.html">списков Todo</a>, которое находится в репозитории.
+      Если вы не знаете, с чего вообще начать в Backbone, потратьте минутку,
+      <a href="docs/todos.html">чтобы прочесть исходный код с аннотациями</a>. Это приложение использует
+      <a href="docs/backbone-localstorage.html">адаптер к localStorage</a>,
+      чтобы прозрачно сохранять все ваши todo в браузере, вместо отсылки их на сервер.
+      Также есть версия, расположенная 
+      <a href="http://localtodos.com/">localtodos.com</a>.
+    </p>
+
+    <div style="text-align: center;">
+      <a href="examples/todos/index.html">
+        <img src="docs/images/todos.png" alt="Todos" class="example_image" />
+      </a>
+    </div>
+
+    <h2 id="examples-documentcloud">DocumentCloud</h2>
+
+    <p>
+      <a href="http://www.documentcloud.org/public/#search/">Рабочее пространство DocumentCloud</a>
+      построено на Backbone.js, и <i>Документы</i>, <i>Проекты</i>,
+      <i>Заметки</i>, и <i>Счета</i> — все являются моделями и коллекциями Backbone.
+      Если вам интересна история — и Underscore.js и Backbone.js
+      были изначально извлечены из кода DocumentCloud codebase и упакованы, как самостоятельные JS-библиотеки.
+    </p>
+
+    <div style="text-align: center;">
+      <a href="http://www.documentcloud.org/public/#search/">
+        <img width="550" height="453" data-original="docs/images/dc-workspace.png" alt="DocumentCloud Workspace" class="example_image" />
+      </a>
+    </div>
+
+    <h2 id="examples-linkedin">LinkedIn Mobile</h2>
+
+    <p>
+      <a href="http://www.linkedin.com/">LinkedIn</a> использует Backbone.js, чтобы создать 
+      их <a href="http://www.linkedin.com/static?key=mobile">HTML5 мобильное веб-приложение следующего поколения</a>.
+      С Backbone просто сохранять приложение модульным, организованным и расширяемым,
+      что сделало возможным запрограммировать сложности UX LinkedIn.
+      Приложение также использует <a href="http://zeptojs.com/">Zepto</a>,
+      <a href="http://documentcloud.github.com/underscore/">Underscore.js</a>,
+      <a href="http://sass-lang.com/">SASS</a>, <a href="http://cubiq.org/iscroll">iScroll</a>,
+      localStorage и сanvas.
+    </p>
+
+    <div style="text-align: center;">
+      <a href="http://www.linkedin.com/static?key=mobile">
+        <img src="docs/images/linkedin-mobile.png" alt="LinkedIn Mobile" class="example_image" />
+      </a>
+    </div>
+
+    <h2 id="examples-foursquare">Foursquare</h2>
+
+    <p>
+      Foursquare — небольшой забавный стартап, который помогает встречаться с друзьями,
+      открывать новые места и экономить деньги.
+      Модели Backbone широко используются в ядре API, а представления движут многие популярные фичи, 
+      как <a href="https://foursquare.com">карта на домашней странице</a> и 
+      <a href="https://foursquare.com/seriouseats/list/the-best-doughnuts-in-ny">списки</a>.
+    </p>
+
+    <div style="text-align: center;">
+      <a href="http://foursquare.com">
+        <img src="docs/images/foursquare.png" alt="Foursquare" class="example_image" />
+      </a>
+    </div>
+
+    <h2 id="examples-khan-academy">Khan Academy</h2>
+
+    <p>
+      <a href="http://www.khanacademy.org">Khan Academy</a> выполняет миссию 
+      предоставления бесплатного образования мирового уровня всем и везде.
+      С тысячью видео, сотнями работающих на JS упражнений, и большими планами на будущее,
+      Khan Academy использует Backbone, чтобы сохранять фронтенд-код модульным и организованным.
+      <a href="https://khanacademy.kilnhg.com/Code/Website/Group/stable/Files/javascript/profile-package?rev=tip">Профили пользователей</a>
+      и <a href="https://khanacademy.kilnhg.com/Code/Website/Group/stable/File/javascript/shared-package/goals.js?rev=tip">установка целей</a>
+      рализованы с помощью Backbone, <a href="http://jquery.com/">jQuery</a> и <a href="http://handlebarsjs.com/">Handlebars</a>, 
+      и большая часть работы по новым фичам сдвигается на клиентскую сторону, сильно увеличивая качество 
+      <a href="https://github.com/Khan/khan-api/">API</a>.
+    </p>
+
+    <div style="text-align: center;">
+      <a href="http://www.khanacademy.org">
+        <img src="docs/images/khan-academy.png" alt="Khan Academy" class="example_image" />
+      </a>
+    </div>
+
+    <h2 id="examples-basecamp">Basecamp Mobile</h2>
+
+    <p>
+      <a href="http://37signals.com/">37Signals</a> использовали Backbone.js, чтобы создать
+      <a href="http://basecamphq.com/mobile">Basecamp Mobile</a>, мобильную версию 
+      их популярного ПО управления проектами. Есть доступ ко всем вашим проектам в Basecamp,
+      можно постить новые сообщения и комментировать майлстоны (все они внутри представлены
+      как модели Backbone.js).
+    </p>
+
+    <div style="text-align: center;">
+      <a href="http://basecamphq.com/mobile">
+        <img src="docs/images/basecamp-mobile.png" alt="Basecamp Mobile" class="example_image" />
+      </a>
+    </div>
+
+    <h2 id="faq">F.A.Q.</h2>
+
+    <p id="FAQ-tim-toady">
+      <b class="header">Больше чем один способ сделать это</b>
+      <br />
+      Часто люди начинают обращаться с примерами, приведёнными на этой странице,
+      как с какой-то божественной истиной. На самом деле Backbone.js предназначен
+      быть довольно агностичным насчёт многих частых паттернов клиентского кода.
+      Например:
+    </p>
+
+    <p>
+      <b>Отношения между моделями и представлениями</b> могут осуществляться многими способами.
+      Некоторым нравится иметь прямые указатели, когда представления соотносятся 1:1 с моделями
+      <tt>model.view</tt> и <tt>view.model</tt>). Другие предпочитают иметь промежуточный 
+      "контроллер", который дирижирует созданием и организацией представлений в иерархию.
+      Другие всё ещё предпочитают событийный подход и всегда запускают события вместо
+      прямого вызова методов. Всё это прекрасно работает.
+    </p>
+
+    <p>
+      <b>Групповые операции</b> над моделями часто встречаются, но лучший способ обработки
+      зависит от серверной стороны. Некоторых не заботят индивидуальные AJAX-запросы.
+      Другие создают явные ресурсы для RESTful групповых операций:
+      <tt>/notes/batch/destroy?ids=1,2,3,4</tt>. Третьи туннелируют REST через JSON созданием
+      запросов "changeset":
+    </p>
+
+<pre>
+  {
+    "create":  [массив моделей для создания]
+    "update":  [массив моделей для обновления]
+    "destroy": [массив id моделей для уничтожения]
+  }
+</pre>
+
+    <p>
+      <b>Создавайте свои события.</b> <a href="#Events">Backbone.Events</a>
+      спроектирован так, что вы можете внедрять его в любой объект или прототип.
+      Так как можно использовать любую строку в качестве имени события, часто 
+      удобно привязываться и запускать свои собственные события: <tt>model.on("selected:true")</tt> или
+      <tt>model.on("editing")</tt>
+    </p>
+
+    <p>
+      <b>Отрисовывайте UI</b>, как считаете нужным. Backbone ничего не знает о том, 
+      используете вы <a href="http://underscorejs.ru/#template">шаблоны Underscore</a>,
+      <a href="https://github.com/janl/mustache.js">Mustache.js</a>, прямые DOM-манипуляции,
+      сгенерированные на сервере кусочки HTML или <a href="http://jqueryui.com/">jQuery UI</a>
+      в методе <tt>render</tt>.
+      Иногда вы создаёте представление для каждой модели, иногда есть представление,
+      которое отображает тысячи моделей разом, в одном цикле. Оба подхода могут 
+      подходить одному приложению в зависимости от количества данных и сложности UI.
+    </p>
+
+    <p id="FAQ-nested">
+      <b class="header">Вложенные модели и коллекции</b>
+      <br />
+      Нередко коллекции вкладываются внутрь моделей в Backbone. Например,
+      рассмотрим модель <tt>Mailbox</tt>, которая содержит много моделей <tt>Message</tt>.
+      Есть хороший паттерн организации этого всего: иметь коллекцию <tt>this.messages</tt> для
+      каждого ящика, делая возможным ленивую загрузку сообщений, когда ящик открывается первый раз.
+      Возможно, в паре с представлениями <tt>MessageList</tt>, слушающими события
+      <tt>"add"</tt> и <tt>"remove"</tt>.
+    </p>
+
+<pre>
+var Mailbox = Backbone.Model.extend({
+
+  initialize: function() {
+    this.messages = new Messages;
+    this.messages.url = '/mailbox/' + this.id + '/messages';
+    this.messages.on("reset", this.updateCounts);
+  },
+
+  ...
+
+});
+
+var inbox = new Mailbox;
+
+// И потом, когда Inbox открывается:
+
+inbox.messages.fetch({reset: true});
+</pre>
+
+    <p>
+      Если нужно что-то более строгое — 
+      <a href="https://github.com/jashkenas/backbone/wiki/Extensions%2C-Plugins%2C-Resources">существует много плагинов</a>,
+      которые добавляют сложные ассоциации между моделями.
+    </p>
+
+    <p>
+      Backbone не включает прямой поддержки вложенных моделей и коллекций
+      или связей "has many", так как существует много хороших паттернов
+      моделирования сложных структур на клиенте, и 
+      <i>Backbone должен предоставлять фундамент для реализации любого из них.</i>
+      Вам может понадобиться:
+    </p>
+
+    <ul>
+      <li>
+        Отражать структуру SQL БД или структуру NoSQL БД.
+      </li>
+      <li>
+        Использовать модели с массивами "внешних ключей" и джойнить
+        их в коллекции верхнего уровня (a-la таблицы).
+      </li>
+      <li>
+        Для многочисленных связей использовать диапазоны id вместо явного списка.
+      </li>
+      <li>
+        Избегать id и использовать прямые ссылки, создавая частичный граф,
+        представляющий ваш набор данных.
+      </li>
+      <li>
+        Лениво подгружать объединённые модели с сервера или лениво десериализовать вложенные
+        модели из JSON-документов.
+      </li>
+    </ul>
+
+    <p id="FAQ-bootstrap">
+      <b class="header">Предзагрузка моделей</b>
+      <br />
+      Когда ваше приложение грузится, обычно имеется набор начальных моделей,
+      которые точно понадобятся, чтобы отобразить страницу.
+      Вместо того чтобы сделать ещё один AJAX-запрос с помощью <a href="#Collection-fetch">fetch</a>,
+      лучшим паттерном будет иметь их данные уже загруженными в страницу.
+      Тогда можно будет использовать <a href="#Collection-reset">reset</a>, чтобы наполнить коллекции 
+      начальными данными. В DocumentCloud в
+      <a href="http://en.wikipedia.org/wiki/ERuby">ERB</a>-шаблоне для рабочего пространства
+      мы делаем так:
+    </p>
+
+<pre>
+&lt;script&gt;
+  var accounts = new Backbone.Collection;
+  accounts.reset(&lt;%= @accounts.to_json %&gt;);
+  var projects = new Backbone.Collection;
+  projects.reset(&lt;%= @projects.to_json(:collaborators => true) %&gt;);
+&lt;/script&gt;
+</pre>
+
+    <p>Не забудьте сделать <a href="http://mathiasbynens.be/notes/etago">escape</a>
+    <tt>&lt;/</tt> внутри JSON-строки, чтобы предотвратить атаки с помощью внедрения JS.
+
+    <p id="FAQ-extending">
+      <b class="header">Расширяя Backbone</b>
+      <br />
+      Многие JS-библиотеки созданы быть отгороженными и замкнутыми.
+      Вы взаимодействуете с ними, вызывая их публичный API, но никогда не заглядываете
+      во внутренности. Backbone.js <i>не является</i> такой библиотекой.
+    </p>
+
+    <p>
+      Так как она служит фундаментом вашего приложения, подразумевается что вы
+      будете расширять и улучшать её под себя — весь исходный код
+      <a href="docs/backbone.html">аннотирован</a>, чтобы облегчить это.
+      Вы обнаружите, что там не так уж много всего, помимо функций ядра,
+      и большинство из них может быть переопределено или улучшено, если вам нужно.
+      Если вы поймаете себя на том, что добавляете методы в <tt>Backbone.Model.prototype</tt>,
+      или создаёте свои собственные базовые субклассы, не беспокойтесь — так и было задумано.
+    </p>
+
+    <p id="FAQ-mvc">
+      <b class="header">Как Backbone соотносится с «традиционным» MVC?</b>
+      <br />
+      Разные имплементации паттерна
+      <a href="http://ru.wikipedia.org/wiki/Model–View–Controller">Model-View-Controller</a>
+      имеют тенденцию расходиться в определениях контроллера. Если это поможет — в
+      Backbone класс <a href="#View">представления</a> может считаться чем-то вроде
+      контроллера, диспетчиризуя события, которые идут от UI, а HTML-шаблон — настоящим представлением.
+      Мы назвали его «View», так как он отвечает за логически выделенный кусок UI,
+      ответственный за контент одного DOM-элемента.
+    </p>
+
+    <p>
+      Сравнивая общую структуру Backbone с серверным MVC-фреймворком, как <b>Rails</b>,
+      получим примерно следующее:
+    </p>
+
+    <ul>
+      <li>
+        <b>Backbone.Model</b> подобна моделям в Rails, минус методы класса. Оборачивает строчку данных в бизнес-логику.
+      </li>
+      <li>
+        <b>Backbone.Collection</b> — группа моделей на клиентской стороне, с сортировкой/фильтрацией/аггрегацией.
+      </li>
+      <li>
+        <b>Backbone.Router</b> — <tt>routes.rb</tt> в Rails + экшены контроллера. Мапит адреса на функции.
+      </li>
+      <li>
+        <b>Backbone.View</b> — логически выделенный, готовый к повторному использованию кусочек интерфейса. Часто, но не всегда, связан с моделью.
+      </li>
+      <li>
+        <b>Клиентские шаблоны</b> — шаблоны <tt>*.html.erb</tt> из Rails, отрисовывающие кусочки HTML.
+      </li>
+    </ul>
+
+    <p id="FAQ-this">
+      <b class="header">Привязка "this"</b>
+      <br />
+      Вероятно, самая общая засада в JavaScript — это тот факт, 
+      что когда функция передается как коллбэк, её оригинальный контекст (<tt>this</tt>) теряется.
+      С Backbone, имея дело с <a href="#Events">событиями</a> и коллбэками,
+      часто полезно полагаться на 
+      <a href="http://underscorejs.ru/#bind">_.bind</a> и
+      <a href="http://underscorejs.ru/#bindAll">_.bindAll</a>
+      из Underscore.js.
+    </p>
+
+    <p>
+      Назначая обработчики на события Backbone, можно передать опциональный
+      третий параметр, чтобы указать контекст <tt>this</tt>, с которым обработчик
+      будет потом вызван:
+    </p>
+
+<pre>
+var MessageList = Backbone.View.extend({
+
+  initialize: function() {
+    var messages = this.collection;
+    messages.on("reset", this.render, this);
+    messages.on("add", this.addMessage, this);
+    messages.on("remove", this.removeMessage, this);
+  }
+
+});
+
+// Потом в приложении…
+
+inbox.messages.add(newMessage);
+</pre>
+
+    <p id="FAQ-rails">
+      <b class="header">Работа Rails</b>
+      <br />
+      Backbone.js изначально был извлечён из
+      <a href="http://www.documentcloud.org">Rails-приложения</a>; заставить 
+      модели на клиенте (в Backbone) корректно синхронизироваться с серверными
+      (Rails) моделями не составляет никакого труда, но всё же есть несколько вещей,
+      о которых следует знать.
+    </p>
+
+    <p>
+      По умолчанию, Rails версии 3.1 и ниже добавляет ещё одну обёртку в JSON-представлении
+      моделей. Вы можете отключить это оборачивание, установив:
+    </p>
+
+<pre>
+ActiveRecord::Base.include_root_in_json = false
+</pre>
+
+    <p>
+      в конфигурации. Или переопределите 
+      <a href="#Model-parse">parse</a> таким образом, чтобы вытаскивать атрибуты моделей из
+      обёртки. Похожим способом Backbone делает PUT и POST запросы с прямым JSON-представлением
+      моделей, хотя Rails ожидает атрибуты завёрнутыми в пространство имён. Можно заставить
+      контроллеры фильтровать атрибуты прямо из <tt>params</tt>, или переопределить 
+      метод <a href="#Model-toJSON">toJSON</a> в Backbone, добавив 
+      дополнительную обертку, которую ждёт Rails.
+    </p>
+
+    <p>
+      <br />
+      <a href="http://documentcloud.org/" title="A DocumentCloud Project" style="background:none;">
+        <img src="http://jashkenas.s3.amazonaws.com/images/a_documentcloud_project.png" alt="A DocumentCloud Project" style="position:relative;left:-10px;" />
+      </a>
+    </p>
+
+  </div>
+
+  <script src="test/vendor/underscore.js"></script>
+  <script src="test/vendor/jquery.js"></script>
+  <script src="docs/js/jquery.lazyload.js"></script>
+  <script src="test/vendor/json2.js"></script>
+  <script src="backbone.js"></script>
+
+  <script>
+    // Set up the "play" buttons for each runnable code example.
+    $(function() {
+      $('.runnable').each(function() {
+        var code = this;
+        var button = '<div class="run" title="Run"></div>';
+        $(button).insertBefore(code).bind('click', function(){
+          eval($(code).text());
+        });
+      });
+      $('[data-original]').lazyload();
+    });
+  </script>
+  
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6538950-11']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  </script>
+  
+  
+
+</body>
+</html>

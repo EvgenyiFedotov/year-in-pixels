@@ -1,0 +1,26 @@
+//- Роут страницы
+mixin routepage()
+   script !{"config.shim['Pages/" . $namePage ."/Router'] = {deps: ['Backbone']}; config.shim.Router.deps.push('Pages/" . $namePage .  "/Router');"}
+
+doctype html
+html
+   head
+      title="Events|time"
+      meta(name="viewport", http-equiv="content-type", content="text/html, charset=utf-8, width=device-width, initial-scale=1.0")
+      link(href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=cyrillic", rel="stylesheet")
+      link(href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded:400,700", rel="stylesheet")
+      link(href="https://fonts.googleapis.com/css?family=Pacifico", rel="stylesheet")
+      link(href="https://fonts.googleapis.com/css?family=Press+Start+2P", rel="stylesheet")
+
+      script(src="Client/Pages/Config.js")
+
+      //- Блок вставки кода ДО загрускии requirejs
+      block headBefore
+
+      script(data-main="Client/Librarys/Require/require-load", src="Client/Librarys/Require/require.js")
+
+      //- Блок вставки кода ПОСЛЕ загрускии requirejs
+      block headAfter
+
+   body(style="visibility: hidden; overflow: hidden;")
+      block body
