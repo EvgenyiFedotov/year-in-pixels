@@ -1,9 +1,10 @@
 {
    "configs": ["Configs/Service.json"],
    "include": [
-      "less-css",
+      "Libs/[Medoo].php",
+      "Libs/NinjPhp/*",
       "jade",
-      "resp-errors",
+      "less-css",
       "r::resp/*"
    ]
 }

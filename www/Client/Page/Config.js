@@ -15,8 +15,7 @@
          'Underscore': 'Librarys/Underscore/underscore',
          'Backbone': 'Librarys/Backbone/backbone',
 
-         'Page': 'Pages/Page',
-         'Router': 'Pages/Router'
+         'Router': 'Page/Router'
       },
       'shim': {
          'Backbone' : {

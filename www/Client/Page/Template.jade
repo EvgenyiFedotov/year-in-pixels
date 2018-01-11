@@ -1,6 +1,7 @@
 //- Роут страницы
 mixin routepage()
-   script !{"config.shim['Pages/" . $namePage ."/Router'] = {deps: ['Backbone']}; config.shim.Router.deps.push('Pages/" . $namePage .  "/Router');"}
+   if $namePage
+      script !{"config.shim['Pages/" . $namePage ."/Router'] = {deps: ['Backbone']}; config.shim.Router.deps.push('Pages/" . $namePage .  "/Router');"}
 
 doctype html
 html
@@ -12,7 +13,7 @@ html
       link(href="https://fonts.googleapis.com/css?family=Pacifico", rel="stylesheet")
       link(href="https://fonts.googleapis.com/css?family=Press+Start+2P", rel="stylesheet")
 
-      script(src="Client/Pages/Config.js")
+      script(src="Client/Page/Config.js")
 
       //- Блок вставки кода ДО загрускии requirejs
       block headBefore

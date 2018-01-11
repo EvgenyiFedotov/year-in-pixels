@@ -1,4 +1,4 @@
-define('Page', function () {
+define(function () {
    'use strict';
 
    var $html = $('html');

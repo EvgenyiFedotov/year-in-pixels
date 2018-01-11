@@ -1,32 +1,11 @@
 {
    "paths": {
-      "Pages": "Client/Pages",
-      "Core": "Service/Core",
       "Libs": "Service/Librarys",
       "Pug": "Service/Librarys/tale-pug",
-      "PathConv": "Service/Librarys/Path-converter/src",
       "resp": "Service/Responses",
-      "rSuccess": "Service/Responses/Success",
-      "rErrors": "Service/Responses/Errors",
-      "Obj": "Service/Objects",
-      "Pageproc": "Service/PagesPreprocess"
+      "Obj": "Service/Objects"
    },
    "modules": {
-      "less-css": {
-         "include": [
-            "Libs/Lessphp/lessc.inc.php",
-            "Core/[LessCSS].php"
-         ]
-      },
-      "min-files": {
-         "include": [
-            "PathConvConverterInterface.php",
-            "PathConvConverter.php",
-            "sMinify/Minify.php",
-            "sMinify/CSS.php",
-            "sMinify/JS.php"
-         ]
-      },
       "jade": {
          "include": [
             "Libs/tale-config/ConfigurableTrait.php",
@@ -40,6 +19,12 @@
             "Pug/Renderer/AdapterBase.php",
             "Pug/Renderer/Adapter/File.php",
             "Pug/Renderer.php"
+         ]
+      },
+      "less-css": {
+         "include": [
+            "Libs/Lessphp/lessc.inc.php",
+            "Service/Core/LessCSS.php"
          ]
       }
    }

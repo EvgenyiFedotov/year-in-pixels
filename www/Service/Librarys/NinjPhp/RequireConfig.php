@@ -69,7 +69,7 @@
          // Если нужно собрать рекурсионно
          if ($recursion) {
             foreach ($result["dirs"] as $index => $path) {
-               $recResult = $this->pathFilesDir($path);
+               $recResult = $this->pathFilesDir($path, true);
 
                $result["dirs"] = array_merge($result["dirs"], $recResult["dirs"]);
                $result["files"] = array_merge($result["files"], $recResult["files"]);
@@ -112,7 +112,7 @@
          // Проверим, не модуль ли это
          // Если модуль подключим необходимые для него файлы
          if (in_array($path, array_keys($this->modules))) {
-            $this->includeFiles($this->modules[$path]);
+            $this->includeFiles($this->modules[$path]->include);
 
          // Проверим существование файла
          } elseif (file_exists($path)) {
