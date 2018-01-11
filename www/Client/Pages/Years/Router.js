@@ -1,44 +1,21 @@
 define([
+   'Pages/Years/Views/Year',
+   'Pages/Years/Views/Palette',
    'Views/FloatArea/FloatArea',
+   'Pages/Years/Helpers',
    'jade!Pages/Years/Templates/Palette',
 
    'css!Pages/Years/Styles/Main',
    'css!Pages/Years/Styles/Palette'
-], function (FloatArea, tPalette) {
+], function (Year, Palette, FloatArea, Helpers, tPalette) {
    'use strict';
 
-   var styleColorBlock = function(color) {
-      return [
-         ['border: 1px solid ', '; '].join(color),
-         ['background: repeating-linear-gradient(-45deg, white, white 5px, ', ' 5px, ', ' 10px);'].join(color)
-      ].join('');
-   };
-
-   var ViewPalette = Backbone.View.extend({
-      /**
-       * @config {String}
-       */
-      date: null,
-
-      /**
-       * @config {jQuery}
-       */
+   var vPalette = new Palette({
       el: $(tPalette({
          palette: window.palette,
-         style: styleColorBlock
-      })),
-
-      /**
-       * @config {Object}
-       */
-      events: {
-         'click .palette-item': function(e) {
-            this.trigger('click', this.date, $(e.target).closest('.palette-item').data());
-         }
-      }
+         style: Helpers.styleColorBlock
+      }))
    });
-
-   var vPalette = new ViewPalette();
 
    /**
     * Экземпляр пелетки с цветами
@@ -48,56 +25,32 @@ define([
       $border: $('.content .table')
    });
 
-   var Years = Backbone.View.extend({
-      /**
-       * @config {jQuery}
-       */
-      el: $('body'),
-
-      /**
-       * @config {Object}
-       */
-      events: {
-         'click .table .block-color': function(e) {
-            e.stopPropagation();
-
-            var $target = $(e.target);
-
-            floatArea.show($target);
-            vPalette.date = $target.data().date;
-
-            this.setBlur(true);
-         },
-
-         'click': function() {
-            floatArea.hide();
-            this.setBlur(false);
-         }
-      },
-
-      /**
-       * Установить размытие контента
-       * @param  {Boolean} value
-       */
-      setBlur: function(value) {
-         this.$('.content').attr('data-blur', value + '');
-      },
-
-      /**
-       * Установить цвет для определенной даты (дня)
-       * @param  {String} date
-       * @param  {String} color
-       */
-      colorDay: function(date, color) {
-         this.$('.content .table .block-color[data-date=' + date + ']')
-            .attr('style', styleColorBlock(color));
-      }
+   var year = new Year({
+      el: $('body')
    });
 
-   var years = new Years();
-
-   years.listenTo(vPalette, 'click', function (date, data) {
+   year.listenTo(vPalette, 'click', function(date, data) {
       this.colorDay(date, data.color);
+
+      console.log(arguments);
+   });
+
+   // ОБработчик клика по цветному блоку
+   year.on('clickBlockColor', function(e) {
+      e.stopPropagation();
+
+      var $target = $(e.target);
+
+      floatArea.show($target);
+      vPalette.date = $target.data().date;
+
+      this.setBlur(true);
+   });
+
+   // Обработчик клика по всей области
+   year.on('click', function(e) {
+      floatArea.hide();
+      this.setBlur(false);
    });
 
    if (window.palette) {

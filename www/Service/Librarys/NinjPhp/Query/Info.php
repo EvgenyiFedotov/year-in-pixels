@@ -15,6 +15,13 @@
       }
 
       /**
+       * Получить путь запроса
+       */
+      public function requestUrl() {
+         return $this->server()["REDIRECT_URL"];
+      }
+
+      /**
        * Получить route
        * Похоже на uri, только отфильтрованы параметры
        */
@@ -54,7 +61,7 @@
          if ($method) {
             $method = explode(".", $method);
 
-            return (object) [
+            return [
                "object" => $method[0],
                "method" => $method[1]
             ];
@@ -77,18 +84,8 @@
       /**
        * Получить данные в виде uri-строки
        */
-      public function dataUri () {
-         $result = "";
-
-         foreach ($this->data() as $key => $value) {
-            if ($result !== "") {
-               $result .= "&";
-            }
-
-            $result .= $key . "=" . $value;
-         }
-
-         return $result;
+      public function dataString () {
+         return $this->server()["REDIRECT_QUERY_STRING"];
       }
    }
 ?>

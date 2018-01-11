@@ -1,7 +1,7 @@
 .float-area-palette
    .content
       if palette
-         each paletteItem, id in palette
-            .palette-item(data-color=paletteItem.color, data-color-id=id)
+         each paletteItem, status in palette
+            .palette-item(data-color=paletteItem.color, data-status=status)
                .block-color(style=style(paletteItem.color))
                .note=paletteItem.note

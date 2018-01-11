@@ -36,17 +36,17 @@
       }
 
       // Если есть темплейт страницы, отобразим его
-      // if (file_exists($template)) {
-      //    echo $renderer->render($template, $templateParams);
+      if (file_exists($template)) {
+         echo $renderer->render($template, $templateParams);
 
-      // // Иначе подгрузим дефолтный темлейт
-      // } elseif (file_exists($templateMain)) {
-      //    echo $renderer->render($templateMain, $templateParams);
+      // Иначе подгрузим дефолтный темлейт
+      } elseif (file_exists($templateMain)) {
+         echo $renderer->render($templateMain, $templateParams);
 
-      // // Если не найдем и основной темлейт
-      // } else {
-      //    $query->error(404, true);
-      // }
+      // Если не найдем и основной темлейт
+      } else {
+         $query->error(404, true);
+      }
 
       exit;
    });
