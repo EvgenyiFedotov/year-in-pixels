@@ -64,6 +64,14 @@
          if ($isMain && !isset($GLOBALS["query"])) {
             $GLOBALS["query"] = $this;
          }
+
+         // Настроим обработчики, если такие создали заранаее
+         // До объеявления глобалного запроса
+         if (isset($GLOBALS["queryresponse"])) {
+            foreach ($GLOBALS["queryresponse"] as $index => $config) {
+               $this->addHandler($config[0], $config[1], $config[2], $config[3]);
+            }
+         }
       }
 
       /**
@@ -235,9 +243,14 @@
        * @param {String} $method
        * @param {String} $route
        * @param {Array} $handler
+       * @param {Boolean} [$isError]
        */
-      public function addHandler ($method, $route, $handler) {
-         $this->addHandlerByProp("handlers", $method, $route, $handler);
+      public function addHandler($method, $route, $handler, $isError = false) {
+         if ($isError) {
+            $this->addHandlerError($method, $route, $handler);
+         } else {
+            $this->addHandlerByProp("handlers", $method, $route, $handler);
+         }
       }
 
       /**

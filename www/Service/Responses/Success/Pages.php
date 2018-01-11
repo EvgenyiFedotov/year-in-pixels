@@ -4,7 +4,7 @@
     */
    use Tale\Pug;
 
-   response("GET", "page={0,1}(.*)", function ($app, $ninjphp, $query, $route) {
+   Query\response("GET", "page={0,1}(.*)", function ($app, $ninjphp, $query, $route) {
       $config = $app->config;
       $configRenderer = (array) $config->renderer;
       $configRenderer["args"] = (array) $configRenderer["args"];

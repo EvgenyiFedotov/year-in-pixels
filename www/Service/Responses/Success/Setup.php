@@ -2,7 +2,7 @@
    /**
     * Настройка БД
     */
-   response("GET", "setup", function ($app, $ninjphp, $query) {
+    Query\response("GET", "setup", function ($app, $ninjphp, $query) {
       // Подключим модуль для работы с БД
       $ninjphp->including(["data-base"]);
 

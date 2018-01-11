@@ -83,15 +83,17 @@
       $query = $GLOBALS["query"];
 
       if (isset($query)) {
-         if ($isError) {
-            $query->addHandlerError($method, $route, [
-               "callback" => $callback
-            ]);
-         } else {
-            $query->addHandler($method, $route, [
-               "callback" => $callback
-            ]);
+         $this->addHandler($method, $route, [
+            "callback" => $callback
+         ], $isError);
+      } else {
+         if (!isset($GLOBALS["queryresponse"])) {
+            $GLOBALS["queryresponse"] = [];
          }
+
+         $GLOBALS["queryresponse"][] = [$method, $route, [
+            "callback" => $callback
+         ], $isError];
       }
    }
 ?>

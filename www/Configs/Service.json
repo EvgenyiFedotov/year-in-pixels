@@ -5,6 +5,7 @@
       "Libs": "Service/Librarys",
       "Pug": "Service/Librarys/tale-pug",
       "PathConv": "Service/Librarys/Path-converter/src",
+      "resp": "Service/Responses",
       "rSuccess": "Service/Responses/Success",
       "rErrors": "Service/Responses/Errors",
       "Obj": "Service/Objects",

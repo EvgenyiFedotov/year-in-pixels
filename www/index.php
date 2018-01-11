@@ -3,6 +3,7 @@
    include "Service/Librarys/Medoo/Medoo.php";
    include "Service/Librarys/NinjPhp/Connect.php";
    include "Service/Librarys/NinjPhp/Query.php";
+   include "Service/Librarys/NinjPhp/RequireConfig.php";
 
    $config = new Config("Configs/Index.json");
    $users = new Table("Configs/Tables/users.json");
@@ -13,6 +14,11 @@
    // $connect->query($users->sqlCreate());
    // echo "</br></br>";
 
+   // Настроим приложение (Подключим конфиг и все необходимые файлы)
+   $require = new RequireConfig("Configs/Index.json");
+
+   // print_r($GLOBALS["queryresponse"]);
+
    echo "BEGIN";
    $query = new Query\Query();
    echo "</br></br>";
@@ -20,15 +26,14 @@
    // Проврим uri, чтобы корректно обработать запросы
    $query->checkUri();
 
-   Query\response("ALL", "^asd", function() {
-      echo "asd";
-   });
-   Query\response("ALL", "", function() {
-      echo "aaa";
-   });
+   // Query\response("ALL", "^asd", function($require) {
+   //    echo "ASD";
+   // });
 
    // Запустим обработку запроса
-   $query->run();
+   $query->run([
+      "arguments" => [$require]
+   ]);
 
    // echo "</br></br>";
 

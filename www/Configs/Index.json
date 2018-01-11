@@ -4,7 +4,6 @@
       "less-css",
       "jade",
       "resp-errors",
-      "rErrors/*",
-      "rSuccess/*"
+      "r::resp/*"
    ]
 }
