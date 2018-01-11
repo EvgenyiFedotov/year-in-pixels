@@ -83,7 +83,7 @@
       $query = $GLOBALS["query"];
 
       if (isset($query)) {
-         $this->addHandler($method, $route, [
+         $query->addHandler($method, $route, [
             "callback" => $callback
          ], $isError);
       } else {

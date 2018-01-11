@@ -14,6 +14,10 @@
    // $connect->query($users->sqlCreate());
    // echo "</br></br>";
 
+   Query\response("ALL", "^asd", function($require) {
+      echo "ASD";
+   });
+
    // Настроим приложение (Подключим конфиг и все необходимые файлы)
    $require = new RequireConfig("Configs/Index.json");
 
@@ -25,10 +29,6 @@
 
    // Проврим uri, чтобы корректно обработать запросы
    $query->checkUri();
-
-   // Query\response("ALL", "^asd", function($require) {
-   //    echo "ASD";
-   // });
 
    // Запустим обработку запроса
    $query->run([
