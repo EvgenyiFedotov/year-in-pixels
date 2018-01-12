@@ -2,6 +2,8 @@
    use Tale\Pug;
 
    Query\response("ALL", "(.*)", function($app, $query, $route) {
+      print_r($route);
+
       // Преобразуем Less в CSS
       $lesscss = new LessCSS([
          "inportDirs" => ["Client/"],

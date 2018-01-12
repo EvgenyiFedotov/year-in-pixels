@@ -285,7 +285,9 @@
       public function run () {
          $queryRoute =  $this->data();
          $queryRoute = $queryRoute->route;
-         $this->runByProp("handlers", $queryRoute);
+         // $this->runByProp("handlers", $queryRoute);
+         
+         $this->runByProp("handlers", $this->requestUrl(true));
 
          $this->error(503, true);
       }

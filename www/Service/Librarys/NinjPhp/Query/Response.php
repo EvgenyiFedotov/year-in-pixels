@@ -10,26 +10,21 @@
       /**
        * Проверить uri и перенапровить на корректную страницу
        */
-      public function checkUri () {
-         $uri = $this->dataUri();
-         $route = $this->route();
-         $issetRoute = isset($route) && $route !== "";
+      public function checkUrl () {
+         $url = $this->requestUrl(true);
+         $dataString = $this->dataString();
+         $route = "";
 
-         // Настроим строку роутинга
-         if ($uri !== "") {
-            $uri = "?" . $uri;
+         if (isset($dataString)) {
+            $route .= "?" . $dataString;
          }
 
-         if ($issetRoute) {
-            if ($uri === "") {
-               $uri = "?";
-            } else {
-               $uri .= "&";
-            }
+         if (isset($url)) {
+            $route .= "#" . $url;
+         }
 
-            $uri .= "route=" . $route /**. "#" . $route */;
-
-            header("Location: /" . $uri);
+         if ($route) {
+            header("Location: /" . $route);
             exit;
          }
       }

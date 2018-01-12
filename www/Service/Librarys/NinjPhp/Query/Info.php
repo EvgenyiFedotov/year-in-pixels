@@ -16,9 +16,18 @@
 
       /**
        * Получить путь запроса
+       * @param {Boolean} $removeFirstSlash
        */
-      public function requestUrl() {
-         return $this->server()["REDIRECT_URL"];
+      public function requestUrl($removeFirstSlash = false) {
+         $result = $this->server()["REDIRECT_URL"];
+
+         if ($removeFirstSlash) {
+            $arrResult = explode("/", $result);
+            array_shift($arrResult);
+            $result = join("/", $arrResult);
+         }
+
+         return $result;
       }
 
       /**
