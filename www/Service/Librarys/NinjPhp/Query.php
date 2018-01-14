@@ -283,13 +283,30 @@
        * Запустить обработку запроса с помощью установленных обработчиков
        */
       public function run () {
-         $queryRoute =  $this->data();
-         $queryRoute = $queryRoute->route;
-         // $this->runByProp("handlers", $queryRoute);
-         
-         $this->runByProp("handlers", $this->requestUrl(true));
+         // Вычислим откуда было обращение
+         $headers = $this->headers();
 
-         $this->error(503, true);
+         // Если уже ьбыла переадресация, обработаем запрашиваемый путь
+         if ($headers["Referer"]) {
+            $url = $this->requestUrlByReferer("year-in-pixels");
+
+            header("Content-Type: " . $headers["Accept"]);
+
+            // Если дополнительный запрос от клиента (ajax)
+            if ($headers["X-Requested-With"]) {
+               $this->error(404, true);
+
+            // Если запрос при загрузке страницы
+            } elseif (file_exists($url)) {
+               echo file_get_contents($url);
+            }
+         } else {
+            // Найдем обработчик url
+            $this->runByProp("handlers", $this->requestUrl(true));
+   
+            // Если не найден обработчик
+            $this->error(503, true);
+         }
       }
    }
 ?>
