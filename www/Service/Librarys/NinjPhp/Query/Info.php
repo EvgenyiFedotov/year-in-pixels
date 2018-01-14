@@ -15,19 +15,47 @@
       }
 
       /**
+       * Убрать слэш из пути
+       * @param {String} $path
+       */
+      public function shiftSlash($path) {
+         $arrPath = explode("/", $path);
+         array_shift($arrPath);
+         return join("/", $arrPath);
+      }
+
+      /**
        * Получить путь запроса
        * @param {Boolean} $removeFirstSlash
        */
       public function requestUrl($removeFirstSlash = false) {
-         $result = $this->server()["REDIRECT_URL"];
+         $url = $this->server()["REDIRECT_URL"];
 
          if ($removeFirstSlash) {
-            $arrResult = explode("/", $result);
-            array_shift($arrResult);
-            $result = join("/", $arrResult);
+            $url = $this->shiftSlash($url);
          }
 
-         return $result;
+         return $url;
+      }
+
+      /**
+       * Получить путь относительно пути запроса
+       * @param {String} $host
+       */
+      public function requestUrlByReferer($host) {
+         $referer = $this->headers()["Referer"];
+         $url = $this->requestUrl(true);
+
+         $matches = [];
+         preg_match_all('/.*' . $host . '\/(.*)/', $referer, $matches);
+
+         $dirname = pathinfo($matches[1][0])["dirname"];
+
+         if ($dirname) {
+            $url = str_replace($dirname . "/", "", $url);
+         }
+
+         return $url;
       }
 
       /**
@@ -60,11 +88,18 @@
       }
 
       /**
+       * Получить заголовки запроса
+       */
+      public function headers() {
+         return apache_request_headers();
+      }
+
+      /**
        * Получить путь до объекта из заголовка
        * @return {Object}
        */
       public function pathToObject () {
-         $headers = apache_request_headers();
+         $headers = $this->headers();
          $method = $headers["Method"];
 
          if ($method) {

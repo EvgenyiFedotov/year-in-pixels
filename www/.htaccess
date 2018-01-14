@@ -1,0 +1,7 @@
+Options -Indexes
+RewriteEngine On
+
+RewriteCond %{ENV:REDIRECT_FINISH} !^$
+RewriteRule ^ - [L]
+
+RewriteRule ^(.*)$ / [E=FINISH:1,L]
