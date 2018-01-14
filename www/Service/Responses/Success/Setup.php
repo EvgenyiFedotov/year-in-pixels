@@ -2,7 +2,7 @@
    /**
     * Настройка БД
     */
-    Query\response("GET", "setup", function ($app, $query) {
+    Query\route("GET", "setup", function ($app, $query) {
       // Настроим коннект с БД
       $connect = new Connect("Configs/Connect.json");
 

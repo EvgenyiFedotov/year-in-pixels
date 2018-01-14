@@ -8,28 +8,6 @@
     */
    class Response extends Info {
       /**
-       * Проверить uri и перенапровить на корректную страницу
-       */
-      public function checkUrl () {
-         $url = $this->requestUrl(true);
-         $dataString = $this->dataString();
-         $route = "";
-
-         if (isset($dataString)) {
-            $route .= "?" . $dataString;
-         }
-
-         if (isset($url)) {
-            $route .= "#" . $url;
-         }
-
-         if ($route) {
-            header("Location: /" . $route);
-            exit;
-         }
-      }
-
-      /**
        * Сформировать корректный ответ с сервера
        * @param {Array|String} [$data]
        */
@@ -73,22 +51,25 @@
     * @param {Function} $callback
     * @param {Boolean} [$isError]
     */
-   function response($method, $route, $callback, $isError = false) {
+   // function route($method, $route, $callback, $isError = false) {
+   function route($m) {
+      // echo "route " . $m . "</br>";
+
       // Если уже есть основной обработчик запроса
-      $query = $GLOBALS["query"];
+      // $query = $GLOBALS["query"];
 
-      if (isset($query)) {
-         $query->addHandler($method, $route, [
-            "callback" => $callback
-         ], $isError);
-      } else {
-         if (!isset($GLOBALS["queryresponse"])) {
-            $GLOBALS["queryresponse"] = [];
-         }
+      // if (isset($query)) {
+      //    $query->addHandler($method, $route, [
+      //       "callback" => $callback
+      //    ], $isError);
+      // } else {
+      //    if (!isset($GLOBALS["queryresponse"])) {
+      //       $GLOBALS["queryresponse"] = [];
+      //    }
 
-         $GLOBALS["queryresponse"][] = [$method, $route, [
-            "callback" => $callback
-         ], $isError];
-      }
+      //    $GLOBALS["queryresponse"][] = [$method, $route, [
+      //       "callback" => $callback
+      //    ], $isError];
+      // }
    }
 ?>

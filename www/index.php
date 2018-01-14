@@ -6,10 +6,14 @@
    $require = new RequireConfig("Configs/Index.json");
 
    // Обработка запроса
-   $query = new Query\Query([
-      "arguments" => [$require]
+   $query = new Query\Query("Configs/Routes.json", [
+      // "arguments" => [$require]
+      "arguments" => ["All"]
    ]);
 
    // Запустим обработку запроса
-   $query->run();
+   $query->autoResponse();
+
+   // Запустим обработку запроса
+   // $query->run();
 ?>

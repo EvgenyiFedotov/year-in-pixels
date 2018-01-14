@@ -1,0 +1,14 @@
+{
+   "routes": [
+      {
+         "route": "/years(.*)/",
+         "method": "GET",
+         "type": "success"
+      }, {
+         "route": "/users/"
+      }, {
+         "type": "success"
+      }
+   ],
+   "arguments": ["app", "query"]
+}

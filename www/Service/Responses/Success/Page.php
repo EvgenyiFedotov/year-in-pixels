@@ -1,7 +1,7 @@
 <?php
    use Tale\Pug;
 
-   Query\response("ALL", "(.*)", function($app, $query, $route) {
+   Query\route("ALL", "(.*)", function($app, $query, $route) {
       // print_r($route);
 
       // Преобразуем Less в CSS

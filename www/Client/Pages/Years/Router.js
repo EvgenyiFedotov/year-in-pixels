@@ -31,6 +31,10 @@ define([
 
    year.listenTo(vPalette, 'click', function(date, data) {
       this.colorDay(date, data.color);
+      
+      Backbone.ajax({
+         url: 'service.php'
+      });
 
       console.log(arguments);
    });
