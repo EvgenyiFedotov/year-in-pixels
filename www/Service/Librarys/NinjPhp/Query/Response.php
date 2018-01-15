@@ -40,36 +40,4 @@
          exit;
       }
    }
-
-   /**
-    * Функция, позволяющая навесить обработчики на основной запрос
-    * Не устанавливая их в параметрах конструтора запроса
-    * Или при ручной вставке
-    *
-    * @param {String} $method
-    * @param {String} $route
-    * @param {Function} $callback
-    * @param {Boolean} [$isError]
-    */
-   // function route($method, $route, $callback, $isError = false) {
-   function route($m) {
-      // echo "route " . $m . "</br>";
-
-      // Если уже есть основной обработчик запроса
-      // $query = $GLOBALS["query"];
-
-      // if (isset($query)) {
-      //    $query->addHandler($method, $route, [
-      //       "callback" => $callback
-      //    ], $isError);
-      // } else {
-      //    if (!isset($GLOBALS["queryresponse"])) {
-      //       $GLOBALS["queryresponse"] = [];
-      //    }
-
-      //    $GLOBALS["queryresponse"][] = [$method, $route, [
-      //       "callback" => $callback
-      //    ], $isError];
-      // }
-   }
 ?>

@@ -10,31 +10,8 @@
     * Можно добавить обработчики запросов и ошибкок при их обработке
     * Обработчики можно добавить как на определнный метод (GET|POST|...),
     * так и на все сразу просто передав "ALL" вместо определнного метода
-    *
-    *
     */
    class Query extends Response {
-      /**
-       * Роуты
-       * @config {Array}
-       * 
-       * @config {Array} Element
-       * @config {String} Element.route Регулярное выражение
-       * @config {String} Element.method Метод запроса (POST|GET|PUT|DELETE)
-       *    ! Если метод не указан, то обработчик будет применен к любому методу
-       * @config {String} Element.type Тип обработчика,
-       *    чтобы можно разграничить обработчики под разные нужды
-       *    например обратка корректных запросов, обработка ошибок и т.д.
-       *    По-умолчанию в классе Query используется 3 типа:
-       *       1. success; 2. error; 3. service
-       *    ! Если тип не указан, то обработчик будет применен к любому типу
-       * @config {String|Function} Element.handler Путь до обработчика или сам обработчик
-       * @config {Array} Element.arguments Агрументы,
-       *    которые будут переданы именно в этот метод
-       * @config {Number} Element.priority Приоритет выполенения
-       */
-      public $routes;
-
       /**
        * Аргументы, которые будут переданы в каждый обработчик
        */
@@ -45,20 +22,6 @@
        * @param {stdClass} $params
        */
       protected function setupConfig ($params = []) {
-         // Роуты
-         if (!is_array($this->routes)) {
-            $this->routes = [];
-         }
-
-         if (is_array($params["routes"])) {
-            $this->routes = array_merge($this->routes, $params["routes"]);
-         }
-
-         // Глобальные роуты
-         if (!isset($GLOBALS["routes"])) {
-            $GLOBALS["routes"] = [];
-         }
-
          // Аргументы
          if (!is_array($this->arguments)) {
             $this->arguments = [];
@@ -111,25 +74,41 @@
        * @param {String} [$type]
        */
       protected function checkRoutes($url, $type = null) {
-         $routes = $this->routes;
-         $routesGlobal = $GLOBALS["routes"];
+         $routes = (array) $GLOBALS["routes"];
          $routesResult = [];
 
          // Пройдем по роутам и вычислим которые подходят
          foreach ($routes as $index => $configRoute) {
-            if ($this->checkRoute($url, $configRoute, $type)) {
-               echo "TRUE";
-            }
+            $checkResult = $this->checkRoute($url, $configRoute, $type);
 
-            echo "</br>";
+            if (is_callable($configRoute["handler"]) && $checkResult) {
+               $routesResult[] = [
+                  "configRoute" => $configRoute,
+                  "checkResult" => $checkResult
+               ];
+            }
          }
 
-         foreach ($routesGlobal as $index => $configRoute) {
-            if ($this->checkRoute($url, $configRoute, $type)) {
-               echo "TRUE";
-            }
+         if (count($routesResult)) {
+            // Отсортируем роутеры по приоритету
+            uasort($routesResult, function($a, $b) {
+               $aPriority = $a["configRoute"]["priority"];
+               $bPriority = $b["configRoute"]["priority"];
+   
+               if ($aPriority == $bPriority) {
+                  return 0;
+               }
+   
+               return ($aPriority < $bPriority) ? 1 : -1;
+            });
 
-            echo "</br>";
+            // Пройдем по корректным роутерам
+            foreach ($routesResult as $index => $configRoute) {
+               echo $configRoute["configRoute"]["route"] . "</br>";
+               echo $configRoute["configRoute"]["priority"] . "</br>";
+
+               echo "</br>";
+            }
          }
       }
 
@@ -142,17 +121,25 @@
       protected function checkRoute($url, $configRoute, $type = null) {
          $configRoute = (array) $configRoute;
          $result = false;
+         $check = [
+            // Подходит ли роут
+            "route" => $configRoute["route"]
+               ? $this->checkUrl($url, $configRoute["route"])
+               : true,
 
-         print_r($configRoute);
-         echo "</br>";
+            // Подходит ли метод
+            "method" => $configRoute["method"]
+               ? $configRoute["method"] === $this->method()
+               : true,
 
-         // Подходит ли роут
-         if ((!$configRoute["route"] || ($configRoute["route"] && $this->checkUrl($url, $configRoute["route"])))
-         // Подходит ли метод
-         && (!$configRoute["method"] || ($configRoute["method"] && $configRoute["method"] === $this->method()))
-         // Подходит ли тип
-         && (!$type || !$configRoute["type"] || ($type && $configRoute["type"] && $type === $configRoute["type"]))) {
-            $result = true;
+            // Подходит ли тип
+            "type" => !$type
+               || !$configRoute["type"]
+               || ($type && $configRoute["type"] && $type === $configRoute["type"])
+         ];
+
+         if ($check["route"] && $check["method"] && $check["type"]) {
+            $result = $check;
          }
 
          return $result;
@@ -175,5 +162,35 @@
             return null;
          }
       }
+   }
+
+   /**
+    * Функция, позволяющая навесить обработчики на основной запрос
+    * Не устанавливая их в параметрах конструтора запроса
+    * Или при ручной вставке
+    *
+    * @config {Array} Route
+    * @config {String} Route.route Регулярное выражение
+    * @config {String} Route.method Метод запроса (POST|GET|PUT|DELETE)
+    *    ! Если метод не указан, то обработчик будет применен к любому методу
+    * @config {String} Route.type Тип обработчика,
+    *    чтобы можно разграничить обработчики под разные нужды
+    *    например обратка корректных запросов, обработка ошибок и т.д.
+    *    По-умолчанию в классе Query используется 3 типа:
+    *       1. success; 2. error; 3. service
+    *    ! Если тип не указан, то обработчик будет применен к любому типу
+    * @config {Function} Route.handler Обработчик
+    * @config {Array} Route.arguments Агрументы,
+    *    которые будут переданы именно в этот метод
+    * @config {Number} Route.priority Приоритет выполенения
+    */
+   // function route($method, $route, $callback, $isError = false) {
+   function route($route) {
+      // Создадим глобальный массив роутов
+      if (!isset($GLOBALS["routes"])) {
+         $GLOBALS["routes"] = [];
+      }
+
+      $GLOBALS["routes"][] = (array) $route;
    }
 ?>

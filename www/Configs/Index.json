@@ -5,6 +5,9 @@
       "Libs/NinjPhp/*",
       "jade",
       "less-css",
-      "r::resp/*"
+      "resp/Success/Test.php",
+      "resp/Success/Test2.php",
+      "resp/Success/Test3.php",
+      "resp/Success/Test4.php"
    ]
 }
