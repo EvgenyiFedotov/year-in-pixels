@@ -1,7 +1,8 @@
 {
    "name": "days",
    "columns": {
+      "id": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
       "date": "TIMESTAMP NOT NULL",
-      "status": "VARCHAR(255) NOT NULL"
+      "status": "INT NOT NULL"
    }
 }

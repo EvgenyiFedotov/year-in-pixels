@@ -4,10 +4,11 @@ define([
    'Views/FloatArea/FloatArea',
    'Pages/Years/Helpers',
    'jade!Pages/Years/Templates/Palette',
+   'Core/Service',
 
    'css!Pages/Years/Styles/Main',
    'css!Pages/Years/Styles/Palette'
-], function (Year, Palette, FloatArea, Helpers, tPalette) {
+], function (Year, Palette, FloatArea, Helpers, tPalette, service) {
    'use strict';
 
    var vPalette = new Palette({
@@ -31,6 +32,21 @@ define([
 
    year.listenTo(vPalette, 'click', function(date, data) {
       this.colorDay(date, data.color);
+
+      service.post('Days.Write', {
+         date: date,
+         status: data.status
+      }, {
+         success: function(result) {
+            console.log(result);
+         }
+      });
+
+      service.get('Days.List', null, {
+         success: function(result) {
+            console.log(result);
+         }
+      });
 
       console.log(arguments);
    });

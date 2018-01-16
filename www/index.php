@@ -1,6 +1,6 @@
 <?php
-   include "Service/Librarys/NinjPhp/Query.php";
    include "Service/Librarys/NinjPhp/RequireConfig.php";
+   include "Service/Librarys/NinjPhp/Query.php";
 
    // Настроим приложение (Подключим конфиг и все необходимые файлы)
    $require = new RequireConfig("Configs/Index.json");
@@ -11,5 +11,5 @@
    ]);
 
    // Запустим обработку запроса
-   $query->run();
+   $query->autoResponse();
 ?>

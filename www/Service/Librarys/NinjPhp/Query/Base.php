@@ -1,10 +1,13 @@
 <?php
    namespace Query;
+   use Config;
+
+   include_once(__DIR__ . "/../Config.php");
 
    /**
     * Базовый класс запроса
     */
-   class Base {
+   class Base extends Config {
       /**
        * Список статусов
        * @cfg {Array}
