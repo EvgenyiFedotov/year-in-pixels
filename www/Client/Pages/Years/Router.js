@@ -4,7 +4,7 @@ define([
    'Views/FloatArea/FloatArea',
    'Pages/Years/Helpers',
    'jade!Pages/Years/Templates/Palette',
-   'Client/Core/Service',
+   'Core/Service',
 
    'css!Pages/Years/Styles/Main',
    'css!Pages/Years/Styles/Palette'
@@ -33,7 +33,20 @@ define([
    year.listenTo(vPalette, 'click', function(date, data) {
       this.colorDay(date, data.color);
 
-      service('Days.List', {});
+      service.post('Days.Write', {
+         date: date,
+         status: data.status
+      }, {
+         success: function(result) {
+            console.log(result);
+         }
+      });
+
+      service.get('Days.List', null, {
+         success: function(result) {
+            console.log(result);
+         }
+      });
 
       console.log(arguments);
    });

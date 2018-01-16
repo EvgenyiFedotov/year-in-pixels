@@ -34,4 +34,8 @@
       return "border: 1px solid " . $color . "; "
          . "background: repeating-linear-gradient(-45deg, white, white 5px, " . $color .  " 5px, " . $color .  " 10px);";
    };
+
+   $require->includeFiles(["Object/Days.php"]);
+   $days = new Days();
+   $templateParams["days"] = json_encode($days->List($query));
 ?>

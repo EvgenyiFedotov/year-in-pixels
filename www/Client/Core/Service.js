@@ -1,45 +1,93 @@
 define(function() {
    'use strict';
 
-   /**
-    * Получить строку запроса по объекту параметров
-    * @param {Object} data
-    */
-   var queryStr = function(data) {
-      if (data instanceof Object) {
-         return '';
-      } else {
-         return '';
+   return {
+      /**
+       * Ajax вызов
+       * @param {String} method
+       * @param {Object} data
+       * @param {Object} addOptions
+       */
+      call: function(method, data, addOptions) {
+         data = (data instanceof Object) ? data : {};
+         addOptions = (addOptions instanceof Object) ? addOptions : {};
+   
+         var options = _.defaults(addOptions, {
+            url: 'service/service',
+            headers: {
+               Method: method
+            },
+            data: data
+         });
+   
+         return Backbone.ajax(options);
+      },
+
+      /**
+       * get-запрос
+       * @param {String} method
+       * @param {Object} data
+       * @param {Object} callbacks
+       * @param {Function} callbacks.success
+       * @param {Function} callbacks.error
+       */
+      get: function(method, data, callbacks) {
+         return this.call(method, data, {
+            dataType: 'json',
+            success: callbacks && callbacks.success,
+            error: callbacks && callbacks.error
+         });
+      },
+
+      /**
+       * post-запрос
+       * @param {String} method
+       * @param {Object} data
+       * @param {Object} callbacks
+       * @param {Function} callbacks.success
+       * @param {Function} callbacks.error
+       */
+      post: function(method, data, callbacks) {
+         return this.call(method, data, {
+            type: 'POST',
+            dataType: 'json',
+            success: callbacks && callbacks.success,
+            error: callbacks && callbacks.error
+         });
+      },
+
+      /**
+       * put-запрос
+       * @param {String} method
+       * @param {Object} data
+       * @param {Object} callbacks
+       * @param {Function} callbacks.success
+       * @param {Function} callbacks.error
+       */
+      put: function(method, data, callbacks) {
+         return this.call(method, data, {
+            type: 'PUT',
+            dataType: 'json',
+            success: callbacks && callbacks.success,
+            error: callbacks && callbacks.error
+         });
+      },
+
+      /**
+       * delete-запрос
+       * @param {String} method
+       * @param {Object} data
+       * @param {Object} callbacks
+       * @param {Function} callbacks.success
+       * @param {Function} callbacks.error
+       */
+      delete: function(method, data, callbacks) {
+         return this.call(method, data, {
+            type: 'DELETE',
+            dataType: 'json',
+            success: callbacks && callbacks.success,
+            error: callbacks && callbacks.error
+         });
       }
-   };
-
-   console.log(11111111111111111111);
-
-   /**
-    * @param {Object} data
-    * @param {Object} params
-    */
-   return function(method, data, params) {
-      options = (options instanceof Object) ? options : {};
-      params = (params instanceof Object) ? params : {};
-
-      var dataStr = {};
-
-      return Backbone.ajax({
-         url: ['service/service', queryStr(dataStr)].join('?'),
-         headers: {
-            Method: method
-         },
-         data: {}
-      });
-
-      // return Backbone.ajax({
-      //    type: "DELETE",
-      //    url: 'service/service?c=3&d=4',
-      //    headers: {
-      //       Method: method
-      //    },
-      //    data: {}
-      // });
    };
 });

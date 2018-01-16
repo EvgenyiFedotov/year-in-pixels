@@ -3,6 +3,7 @@ include ../../../Page/Template.jade
 block headBefore
    +routepage()
    script !{"window.palette = " . $paletteJSON . ";"}
+   script !{"window.days = " . $days . ";"}
 
 block body
    .content

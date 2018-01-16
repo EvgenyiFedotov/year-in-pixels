@@ -116,13 +116,13 @@
        * Получить входящие данные
        */
       public function data () {
-         $data = json_decode(file_get_contents("php://input"));
-
-         if (!$data) {
+         if ($this->method("GET")) {
             $data = $_GET;
+         } else {
+            parse_str(file_get_contents('php://input', false , null, -1 , $_SERVER['CONTENT_LENGTH'] ), $data);
          }
 
-         return $_REQUEST;
+         return (array) $data;
       }
 
       /**

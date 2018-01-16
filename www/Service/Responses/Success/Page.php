@@ -6,7 +6,7 @@
       "type" => "success",
       "priority" => 500,
       "handler" => function($require, $route, $configRoute, $query) {
-         $require->includeFiles(["less-css", "jade"]);
+         $require->includeFiles(["data-base", "less-css", "jade"]);
 
          // Преобразуем Less в CSS
          $lesscss = new LessCSS([
