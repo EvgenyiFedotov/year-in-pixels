@@ -49,8 +49,9 @@
 
             // Если дополнительный запрос от клиента (ajax)
             if ($headers["X-Requested-With"]) {
-               // $this->error(404, true);
-               echo $url;
+               if (!$this->service($url)) {
+                  $this->error(503, true);
+               }
 
             // Если запрос при загрузке страницы
             } elseif (file_exists($url)) {

@@ -3,6 +3,7 @@
 
    Query\route([
       "route" => ".*",
+      "type" => "success",
       "priority" => 500,
       "handler" => function($require, $route, $configRoute, $query) {
          $require->includeFiles(["less-css", "jade"]);

@@ -119,10 +119,10 @@
          $data = json_decode(file_get_contents("php://input"));
 
          if (!$data) {
-            $data = (object) $_GET;
+            $data = $_GET;
          }
 
-         return $data;
+         return $_REQUEST;
       }
 
       /**

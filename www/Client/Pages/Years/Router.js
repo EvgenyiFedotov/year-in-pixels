@@ -4,10 +4,11 @@ define([
    'Views/FloatArea/FloatArea',
    'Pages/Years/Helpers',
    'jade!Pages/Years/Templates/Palette',
+   'Client/Core/Service',
 
    'css!Pages/Years/Styles/Main',
    'css!Pages/Years/Styles/Palette'
-], function (Year, Palette, FloatArea, Helpers, tPalette) {
+], function (Year, Palette, FloatArea, Helpers, tPalette, service) {
    'use strict';
 
    var vPalette = new Palette({
@@ -31,10 +32,8 @@ define([
 
    year.listenTo(vPalette, 'click', function(date, data) {
       this.colorDay(date, data.color);
-      
-      Backbone.ajax({
-         url: 'service.php'
-      });
+
+      service('Days.List', {});
 
       console.log(arguments);
    });
