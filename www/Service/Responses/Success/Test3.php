@@ -1,9 +1,12 @@
 <?php
    Query\route([
-      "route" => "/test(.*)/",
-      "method" => "POST",
+      "route" => "test(.*)",
+      "type" => "success",
+      "priority" => 20,
       "handler" => function() {
-         echo "Test-3";
+         echo "Test-3:999</br>";
+
+         // exit;
       }
    ]);
 ?>

@@ -30,11 +30,11 @@
       public function status ($status = 503, $message = null) {
          // Если не передали сообщение, поставим дефолтное
          if (!$message) {
-            $message = $this->status[$status];
+            $message = $this->statusList[$status];
          }
 
          // Сфоримируем сообщение
-         $message =$this->server()["SERVER_PROTOCOL"]. " " . $status ." " . $message;
+         $message = $this->server()["SERVER_PROTOCOL"]. " " . $status ." " . $message;
 
          header($message, false, $status);
          exit;

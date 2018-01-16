@@ -1,10 +1,9 @@
 <?php
    Query\route([
-      "route" => "/test-4/",
-      "priority" => 50,
+      "route" => "test-4",
       "type" => "error",
-      "handler" => function() {
-         echo "Test-4";
+      "handler" => function($p) {
+         echo "Test-4:50</br>";
       }
    ]);
 ?>

@@ -3,9 +3,17 @@
       "Libs": "Service/Librarys",
       "Pug": "Service/Librarys/tale-pug",
       "resp": "Service/Responses",
-      "Obj": "Service/Objects"
+      "Obj": "Service/Objects",
+      "NinjPhp": "Service/Librarys/NinjPhp"
    },
    "modules": {
+      "data-base": {
+         "include": [
+            "Libs/[Medoo].php",
+            "NinjPhp/Connect.php",
+            "NinjPhp/Table.php"
+         ]
+      },
       "jade": {
          "include": [
             "Libs/tale-config/ConfigurableTrait.php",

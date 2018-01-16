@@ -2,21 +2,33 @@
    /**
     * Настройка БД
     */
-    Query\route("GET", "setup", function ($app, $query) {
-      // Настроим коннект с БД
-      $connect = new Connect("Configs/Connect.json");
+   Query\route([
+      "route" => "setup",
+      "type" => "success",
+      "priority" => 1000,
+      "handler" => function($require) {
+         echo "<b>SETUP</b></br></br>";
 
-      // Конфиги таблиц
-      $tablePaths = $app->pathFilesDir("Configs/Tables");
+         // Подключим файлы необходимые для работы с БД
+         $require->includeFiles(["data-base"]);
 
-      // Удалим и создадим таблицы
-      foreach ($tablePaths["files"] as $index => $path) {
-         $table = new Table($path);
+         // Настроим коннект с БД
+         $connect = new Connect("Configs/Connect.json");
 
-         $connect->query($table->sqlDrop());
-         $connect->query($table->sqlCreate());
+         // Конфиги таблиц
+         $tablePaths = $require->pathFilesDir("Configs/Tables");
+
+         // Удалим и создадим таблицы
+         foreach ($tablePaths["files"] as $index => $path) {
+            $table = new Table($path);
+
+            echo "Table: " . $table->name . "</br>";
+
+            $connect->query($table->sqlDrop());
+            $connect->query($table->sqlCreate());
+         }
+
+         exit;
       }
-
-      exit;
-   });
+   ]);
 ?>
