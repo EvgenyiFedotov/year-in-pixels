@@ -10,7 +10,7 @@ define(function() {
       styleColorBlock: function(color) {
          return [
             ['border: 1px solid ', '; '].join(color),
-            ['background: repeating-linear-gradient(-45deg, white, white 5px, ', ' 5px, ', ' 10px);'].join(color)
+            ['background-color: ', color].join('')
          ].join('');
       }
    }

@@ -8,11 +8,10 @@
   cursor: pointer;
   border-radius: 4px;
   border: 1px solid #eeeeee;
-  background: repeating-linear-gradient(-45deg,white,white 5px,#eeeeee 5px,#eeeeee 10px);
 }
 .block-color:hover {
   border-color: #e0e0e0;
-  background: repeating-linear-gradient(-45deg,white,white 5px,#e0e0e0 5px,#e0e0e0 10px);
+  background-color: #e0e0e0;
 }
 body > .content {
   height: 100%;
@@ -34,12 +33,27 @@ body > .content .block-null {
   cursor: pointer;
 }
 body > .content .content-top {
-  font-size: 14px;
-  line-height: 1rem;
-  font-family: 'Pacifico', cursive;
   font-size: 2rem;
   height: 5rem;
   padding: 2rem 0;
+  display: flex;
+}
+body > .content .content-top .name {
+  width: 100%;
+}
+body > .content .content-top .buttons {
+  display: flex;
+  height: 1rem;
+  margin-top: 0.3rem;
+}
+body > .content .content-top .buttons .button {
+  color: #757575;
+  font-size: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+body > .content .content-top .buttons .button:hover {
+  text-decoration: underline;
 }
 body > .content .content-center {
   display: flex;

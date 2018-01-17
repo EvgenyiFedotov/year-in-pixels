@@ -11,11 +11,19 @@ define([
 ], function (Year, Palette, FloatArea, Helpers, tPalette, service) {
    'use strict';
 
+   var $body = $('body');
+
+   var palette = tPalette({
+      palette: window.palette,
+      style: Helpers.styleColorBlock
+   });
+
    var vPalette = new Palette({
-      el: $(tPalette({
-         palette: window.palette,
-         style: Helpers.styleColorBlock
-      }))
+      el: $(palette)
+   });
+
+   var paletteButton = new Palette({
+      el: $(palette)
    });
 
    /**
@@ -26,39 +34,38 @@ define([
       $border: $('.content .table')
    });
 
+   var paletteButtonFA = new FloatArea({
+      $el: paletteButton.$el,
+      $border: $body
+   });
+
    var year = new Year({
-      el: $('body')
+      el: $body
    });
 
    year.listenTo(vPalette, 'click', function(date, data) {
-      this.colorDay(date, data.color);
-
+      // Отправим данные на сервер
       service.post('Days.Write', {
          date: date,
          status: data.status
       }, {
          success: function(result) {
-            console.log(result);
-         }
+            this.colorDay(date, data.color);
+         }.bind(this)
       });
-
-      service.get('Days.List', null, {
-         success: function(result) {
-            console.log(result);
-         }
-      });
-
-      console.log(arguments);
    });
 
    // ОБработчик клика по цветному блоку
    year.on('clickBlockColor', function(e) {
-      e.stopPropagation();
-
       var $target = $(e.target);
 
+      e.stopPropagation();
+
       floatArea.show($target);
+
       vPalette.date = $target.data().date;
+
+      paletteButtonFA.hide();
 
       this.setBlur(true);
    });
@@ -66,7 +73,17 @@ define([
    // Обработчик клика по всей области
    year.on('click', function(e) {
       floatArea.hide();
+      paletteButtonFA.hide();
       this.setBlur(false);
+   });
+
+   // Клик по кнопке с палеткой
+   year.$('.button[name="palette"]').click(function(e) {
+      var $target = $(e.target);
+
+      e.stopPropagation();
+
+      paletteButtonFA.show($target);
    });
 
    if (window.palette) {

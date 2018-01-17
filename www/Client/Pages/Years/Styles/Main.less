@@ -2,6 +2,7 @@
 
 @color0: #eeeeee;
 @color1: #e0e0e0;
+@color-text: #757575;
 
 .block() {
    width: 1.5rem;
@@ -17,11 +18,10 @@
    .block();
    border-radius: 4px;
    border: 1px solid @color0;
-   background: repeating-linear-gradient(-45deg, white, white 5px, @color0 5px, @color0 10px);
 
    &:hover {
       border-color: @color1;
-      background: repeating-linear-gradient(-45deg, white, white 5px, @color1 5px, @color1 10px);
+      background-color: @color1;
    }
 }
 
@@ -31,7 +31,7 @@ body {
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      color: #757575;
+      color: @color-text;
 
       &[data-blur="true"] {
          filter: blur(1px);
@@ -42,10 +42,31 @@ body {
       }
 
       .content-top {
-         .font-pacifico();
          font-size: 2rem;
          height: 5rem;
          padding: 2rem 0;
+         display: flex;
+
+         .name {
+            width: 100%;
+         }
+
+         .buttons {
+            display: flex;
+            height: 1rem;
+            margin-top: 0.3rem;
+
+            .button {
+               color: @color-text;
+               font-size: 1rem;
+               margin-left: 1rem;
+               cursor: pointer;
+
+               &:hover {
+                  text-decoration: underline;
+               }
+            }
+         }
       }
 
       .content-center {
