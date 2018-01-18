@@ -8,6 +8,11 @@ define([
 
    return Backbone.View.extend({
       /**
+       * @config {Backbone.Router}
+       */
+      router: null,
+
+      /**
        * @config {Object}
        */
       events: {
@@ -78,12 +83,26 @@ define([
       },
 
       /**
+       * Записать url
+       * @param {String} url
+       * @param {Object} [options]
+       */
+      navigate: function(url, options) {
+         if (this.router) {
+            this.router.navigate(url, options);
+         }
+      },
+
+      /**
        * Обработчик клика в любую область представления
        */
       _click: function() {
          this.daysPaletteFloatArea.hide();
          this.buttonPaletteFloatArea.hide();
          this.setBlur(false);
+
+         // Запишем в навигацию
+         this.navigate(null);
       },
 
       /**
@@ -91,17 +110,21 @@ define([
        */
       _clickBlockColor: function(e) {
          var $target = $(e.target);
+         var date = $target.data().date;
 
          e.stopPropagation();
 
          this.daysPaletteFloatArea.show($target);
-         this.daysPaletteFloatArea.date = $target.data().date;
+         this.daysPaletteFloatArea.date = date;
 
          // Скроем палетку для кнопки
          this.buttonPaletteFloatArea.hide();
 
          // Размытие контента
          this.setBlur(true);
+
+         // Запишем в навигацию
+         this.navigate('date=' + date);
       },
 
       /**
@@ -115,6 +138,9 @@ define([
          this.daysPaletteFloatArea.hide();
          this.setBlur(false);
          this.buttonPaletteFloatArea.show($target);
+
+         // Запишем в навигацию
+         this.navigate('palette');
       }
    });
 });

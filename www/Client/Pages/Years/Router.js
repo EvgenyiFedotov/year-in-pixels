@@ -4,21 +4,22 @@ define([
 ], function (Year) {
    'use strict';
 
+   var year = new Year({
+      el: $('body')
+   });
+
    var Router = Backbone.Router.extend({
       routes: {
-         // '/(.*)/': 'main'
+         'date=:date': 'date',
+         'palette': 'palette'
       },
-      initialize: function(options) {
-         this.route(/(.*)/, 'main');
+      date: function(date) {
+         year.$('.block-color[data-date="' + date + '"]').click();
       },
-      main: function(path) {
-         console.log('main', arguments);
-
-         new Year({
-            el: $('body')
-         });
+      palette: function() {
+         year.$('.button[name="palette"]').click();
       }
    });
 
-   new Router();
+   year.router = new Router();
 });
