@@ -25,16 +25,6 @@ body > .content .block-null {
   box-sizing: border-box;
   cursor: pointer;
 }
-body > .content .content-top {
-  font-size: 2rem;
-  height: 5rem;
-  padding: 2rem 0;
-  display: flex;
-}
-body > .content .content-top .name {
-  width: 100%;
-  cursor: default;
-}
 body > .content .content-top .buttons {
   display: flex;
   height: 1rem;

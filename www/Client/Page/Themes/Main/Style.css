@@ -10,7 +10,7 @@ html {
   font-family: 'Encode Sans Expanded', sans-serif;
   height: 100%;
   overflow: hidden;
-  background-color: #212121;
+  background-color: #FFFFFF;
 }
 body {
   font-size: 14px;
@@ -33,6 +33,10 @@ body > .content .content-top {
   height: 5rem;
   padding: 2rem 0;
   display: flex;
+}
+body > .content .content-top .name {
+  width: 100%;
+  cursor: default;
 }
 body > .content .content-center {
   display: flex;

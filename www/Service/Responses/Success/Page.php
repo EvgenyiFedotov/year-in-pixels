@@ -22,6 +22,10 @@
          // Имя страницы
          $namePage = ucfirst($route[0]);
 
+         // Установим, чтобы всегда подгружалась страница "years"
+         $namePage = "Years";
+         $namePage = "Auth";
+
          // Путь до темплейта
          $template = $require->pathFile("Client/Pages/" . $namePage . "/Templates/Main.jade");
 

@@ -56,6 +56,11 @@
             // Если запрос при загрузке страницы
             } elseif (file_exists($url)) {
                echo file_get_contents($url);
+
+            // Если не нашли файл
+            } else {
+               // Пока ничего не будем выдавать
+               // $this->error(503, true);
             }
          } else {
             /**
