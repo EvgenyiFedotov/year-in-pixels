@@ -13,13 +13,6 @@
   border-color: #e0e0e0;
   background-color: #e0e0e0;
 }
-body > .content {
-  height: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  color: #757575;
-}
 body > .content[data-blur="true"] {
   filter: blur(1px);
 }
@@ -40,6 +33,7 @@ body > .content .content-top {
 }
 body > .content .content-top .name {
   width: 100%;
+  cursor: default;
 }
 body > .content .content-top .buttons {
   display: flex;
@@ -54,10 +48,6 @@ body > .content .content-top .buttons .button {
 }
 body > .content .content-top .buttons .button:hover {
   text-decoration: underline;
-}
-body > .content .content-center {
-  display: flex;
-  height: 100%;
 }
 body > .content .content-center .table {
   overflow: hidden;
@@ -102,7 +92,4 @@ body > .content .content-center .palette .palette-item {
 }
 body > .content .content-center .palette .palette-item .note {
   line-height: 1.5rem;
-}
-body > .content .content-bottom {
-  height: 3rem;
 }

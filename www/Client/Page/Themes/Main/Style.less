@@ -1,0 +1,55 @@
+@import "Fonts";
+@import "Colors";
+
+.html-body() {
+   .font-encode-sans();
+   height: 100%;
+   overflow: hidden;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   cursor: default;
+}
+
+html {
+   .html-body();
+   background-color: @color-background;
+}
+
+body {
+   .html-body();
+   display: flex;
+   flex-direction: column;
+
+   & > .content {
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      color: @color-text;
+
+      .content-top {
+         font-size: 2rem;
+         height: 5rem;
+         padding: 2rem 0;
+         display: flex;
+      }
+
+      .content-center {
+         display: flex;
+         height: 100%;
+      }
+
+      .content-bottom {
+         height: 3rem;
+      }
+   }
+
+   .glyphicon {
+      font-size: 1rem;
+      color: @color-text;
+   }
+}

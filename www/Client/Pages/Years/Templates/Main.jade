@@ -5,48 +5,38 @@ block headBefore
    if $paletteJSON
       script !{"window.palette = " . $paletteJSON . ";"}
 
-block body
-   .content
-      .content-top
-         .name
-            ="Year in pixels"
-         .buttons
-            .button(name="palette")
-               ="Palette"
-            .button(name="options")
-               ="Options"
-      .content-center
-         .table
-            .names-months
-               .block-null
-               each $nameMonth, $key in $namesMonths
-                  .name-month
-                     =$nameMonth
-            .days
-               .days-month
-                  - $index = 0;
-                  while $index < 31
-                     .day-number
-                        = $index + 1;
-                     - $index++;
-               - $monthIndex = 0;
+block contentTop
+   .name
+      ="Year in pixels"
+   .buttons
+      .button(name="palette")
+         ="Palette"
+      .button(name="options")
+         ="Options"
 
-               $indexDay
+block contentCenter
+   .table
+      .names-months
+         .block-null
+         each $nameMonth, $key in $namesMonths
+            .name-month
+               =$nameMonth
+      .days
+         .days-month
+            - $index = 0;
+            while $index < 31
+               .day-number
+                  = $index + 1;
+               - $index++;
+         - $monthIndex = 0;
 
-               while $monthIndex < 12
-                  .days-month
-                     - $index = 0;
-                     while $index < 31
-                        - $date = $getDate(2018, $monthIndex + 1, $index + 1);
-                        .block-color(title=$date, data-date=$date, style=$dayColor($palette[$daysByDates[$date]["status"]]["color"]))
-                        //- .block-color(title=$date, data-date=$date, s=$daysByDates[$date]["status"])
-                        - $index++;
-                  - $monthIndex++;
+         $indexDay
 
-         //- .palette
-            each $paletteItem, $id in $palette
-               .palette-item
-                  .block-color(style=$dayColor($paletteItem["color"]))
-                  .note
-                     =$paletteItem["note"]
-      .content-bottom
+         while $monthIndex < 12
+            .days-month
+               - $index = 0;
+               while $index < 31
+                  - $date = $getDate(2018, $monthIndex + 1, $index + 1);
+                  .block-color(title=$date, data-date=$date, style=$dayColor($palette[$daysByDates[$date]["status"]]["color"]))
+                  - $index++;
+            - $monthIndex++;

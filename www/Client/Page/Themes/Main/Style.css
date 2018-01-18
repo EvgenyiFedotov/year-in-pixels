@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: default;
+}
+html {
+  font-size: 14px;
+  line-height: 1rem;
+  font-family: 'Encode Sans Expanded', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  background-color: #212121;
+}
+body {
+  font-size: 14px;
+  line-height: 1rem;
+  font-family: 'Encode Sans Expanded', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+body > .content {
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  color: #757575;
+}
+body > .content .content-top {
+  font-size: 2rem;
+  height: 5rem;
+  padding: 2rem 0;
+  display: flex;
+}
+body > .content .content-center {
+  display: flex;
+  height: 100%;
+}
+body > .content .content-bottom {
+  height: 3rem;
+}
+body .glyphicon {
+  font-size: 1rem;
+  color: #757575;
+}

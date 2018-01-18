@@ -1,8 +1,4 @@
-@import "Styles/Main/Resources/Fonts";
-
-@color0: #eeeeee;
-@color1: #e0e0e0;
-@color-text: #757575;
+@import "Page/Themes/Main/Colors";
 
 .block() {
    width: 1.5rem;
@@ -17,22 +13,16 @@
 .block-color {
    .block();
    border-radius: 4px;
-   border: 1px solid @color0;
+   border: 1px solid @color-border;
 
    &:hover {
-      border-color: @color1;
-      background-color: @color1;
+      border-color: @color-hover;
+      background-color: @color-hover;
    }
 }
 
 body {
    & > .content {
-      height: 100%;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      color: @color-text;
-
       &[data-blur="true"] {
          filter: blur(1px);
       }
@@ -49,6 +39,7 @@ body {
 
          .name {
             width: 100%;
+            cursor: default;
          }
 
          .buttons {
@@ -70,9 +61,6 @@ body {
       }
 
       .content-center {
-         display: flex;
-         height: 100%;
-
          .table {
             overflow: hidden;
             display: flex;
@@ -114,10 +102,6 @@ body {
                }
             }
          }
-      }
-
-      .content-bottom {
-         height: 3rem;
       }
    }
 }

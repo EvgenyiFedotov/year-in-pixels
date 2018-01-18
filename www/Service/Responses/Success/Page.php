@@ -12,6 +12,7 @@
          $lesscss = new LessCSS([
             "inportDirs" => ["Client/"],
             "convertDirs" => [
+               "Client/Page",
                "Client/Pages",
                "Client/Styles"
             ]
