@@ -2,14 +2,19 @@ include ../../../Page/Template.jade
 
 block headBefore
    +routepage()
-   script !{"window.palette = " . $paletteJSON . ";"}
-   script !{"window.days = " . $days . ";"}
+   if $paletteJSON
+      script !{"window.palette = " . $paletteJSON . ";"}
 
 block body
    .content
       .content-top
-         ="Year in "
-         ="pixels"
+         .name
+            ="Year in pixels"
+         .buttons
+            .button(name="palette")
+               ="Palette"
+            .button(name="options")
+               ="Options"
       .content-center
          .table
             .names-months
@@ -26,16 +31,19 @@ block body
                      - $index++;
                - $monthIndex = 0;
 
+               $indexDay
+
                while $monthIndex < 12
                   .days-month
                      - $index = 0;
                      while $index < 31
                         - $date = $getDate(2018, $monthIndex + 1, $index + 1);
-                        .block-color(title=$date, data-date=$date)
+                        .block-color(title=$date, data-date=$date, style=$dayColor($palette[$daysByDates[$date]["status"]]["color"]))
+                        //- .block-color(title=$date, data-date=$date, s=$daysByDates[$date]["status"])
                         - $index++;
                   - $monthIndex++;
 
-         .palette
+         //- .palette
             each $paletteItem, $id in $palette
                .palette-item
                   .block-color(style=$dayColor($paletteItem["color"]))

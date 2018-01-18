@@ -68,6 +68,11 @@ define(['css!Views/FloatArea/FloatArea'], function() {
       $border: null,
 
       /**
+       * @config {Object}
+       */
+      offset: {},
+
+      /**
        * @param  {Object} options
        * @param  {jQuery} options.$target
        */
@@ -84,7 +89,11 @@ define(['css!Views/FloatArea/FloatArea'], function() {
          // Если передали target, то закиним в него панель
          this.setTarget(options.$target);
 
+         // Элемент ограницения
          this.setTargetBorder(options.$border);
+
+         // Оффсет
+         this.setOffset(options.offset);
       },
 
       /**
@@ -140,14 +149,30 @@ define(['css!Views/FloatArea/FloatArea'], function() {
       },
 
       /**
-       * Оторбразить панель
-       * @param  {jQuery} [$target]
+       * Установить оффсет
+       * @param {Object} offset
        */
-      show: function($target) {
+      setOffset: function(offset) {
+         this.offset = offset instanceof Object ? offset : this.offset;
+
+         var top = this.offset.top || 0;
+         var left = this.offset.left || 0;
+
+         this.$el.css('top', parseInt(this.$el.css('top')) + top);
+         this.$el.css('left', parseInt(this.$el.css('left')) + left);
+      },
+
+      /**
+       * Оторбразить панель
+       * @param {jQuery} [$target]
+       * @param {Object} offset
+       */
+      show: function($target, offset) {
          this.setTarget($target);
 
          if (this.$target) {
             this.$el.attr('data-show', 'true');
+            this.setOffset(offset);
             this.checkPosition();
          }
       },

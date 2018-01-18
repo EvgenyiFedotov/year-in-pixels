@@ -1,27 +1,33 @@
 <?php
-   class Days {
-      public function Write($query) {
-         if ($query->method("POST")) {
-            $connect = new Connect("Configs/Connect.json");
+   include_once("Protected/Days.php");
 
+   class Days {
+      public function write($query) {
+         if ($query->method("POST")) {
+            $pDays = new PDays();
             $data = $query->data();
 
-            $connect->insert("days", [
-               "date" => $data["date"],
-               "status" => $data["status"]
-            ]);
-            
+            // Проверим, может уже существует запись
+            $id = $pDays->has($data["date"]);
+
+            if ($id) {
+               $pDays->write($data, [
+                  "date" => $data["date"]
+               ]);
+            } else {
+               $id = $pDays->write($data);
+            }
+
             $query->response([
-               "id" => $connect->id()
+               "id" => $id
             ]);
          }
       }
 
-      public function List($query) {
+      public function list($query) {
          if ($query->method("GET")) {
-            $connect = new Connect("Configs/Connect.json");
-            $list = $connect->select("days", '*');
-            $query->response($list);
+            $pDays = new PDays();
+            $query->response($pDays->list());
          }
       }
    }

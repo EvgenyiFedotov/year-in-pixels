@@ -31,11 +31,16 @@
    };
 
    $templateParams["dayColor"] = function ($color) {
-      return "border: 1px solid " . $color . "; "
-         . "background: repeating-linear-gradient(-45deg, white, white 5px, " . $color .  " 5px, " . $color .  " 10px);";
+      if ($color) {
+         return "border: 1px solid " . $color . "; "
+            . "background-color: " . $color .  ";";
+      } else {
+         return "";
+      }
    };
 
-   $require->includeFiles(["Object/Days.php"]);
-   $days = new Days();
-   $templateParams["days"] = json_encode($days->List($query));
+   // Загрузим данные по дням
+   $require->includeFiles(["PObject/Days.php"]);
+   $pDays = new PDays();
+   $templateParams["daysByDates"] = $pDays->listByDates($pDays->list());
 ?>
