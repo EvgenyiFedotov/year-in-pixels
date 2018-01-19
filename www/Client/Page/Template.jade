@@ -21,12 +21,14 @@ html
       block headAfter
 
    body(style="visibility: hidden; overflow: hidden;")
+      block bodyBeforeContent
       .content
          .content-top
-            .name
+            .name-project
                ="Year in pixels"
             block contentTop
          .content-center
             block contentCenter
          .content-bottom
             block contentBottom
+      block bodyAfterContent

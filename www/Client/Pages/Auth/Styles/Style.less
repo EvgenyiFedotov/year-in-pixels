@@ -1,7 +1,37 @@
+@import "Page/Themes/Main/Colors";
+
 body {
    & > .content {
       .content-top {
          margin-top: 45vh;
+      }
+   }
+
+   .buttons-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      display: flex;
+      padding: 1rem 0;
+
+      .button {
+         margin-right: 1rem;
+      }
+   }
+
+   .forms {
+      width: 200px;
+      position: fixed;
+      top: calc(~"40%");
+      left: calc(~"50% - 100px");
+
+      .form {
+         background-color: @color-background;
+         text-align: right;
+
+         input {
+            margin-bottom: 1rem;
+         }
       }
    }
 }

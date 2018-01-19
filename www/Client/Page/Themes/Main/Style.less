@@ -1,5 +1,6 @@
 @import "Fonts";
 @import "Colors";
+@import "Views";
 
 .html-body() {
    .font-encode-sans();
@@ -24,6 +25,15 @@ body {
    display: flex;
    flex-direction: column;
 
+   .name-project {
+      width: 100%;
+      cursor: default;
+      font-size: 2rem;
+      color: @color-text;
+      padding: 2rem 0;
+      text-align: center;
+   }
+
    & > .content {
       height: 100%;
       margin: 0 auto;
@@ -32,15 +42,8 @@ body {
       color: @color-text;
 
       .content-top {
-         font-size: 2rem;
          height: 5rem;
-         padding: 2rem 0;
          display: flex;
-
-         .name {
-            width: 100%;
-            cursor: default;
-         }
       }
 
       .content-center {
@@ -57,4 +60,18 @@ body {
       font-size: 1rem;
       color: @color-text;
    }
+}
+
+// selection
+.selection() {
+   background-color: @color-text;
+   color: @color-background;
+}
+
+::selection {
+   .selection();
+}
+
+::-moz-selection {
+   .selection();
 }

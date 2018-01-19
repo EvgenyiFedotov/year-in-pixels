@@ -1,0 +1,42 @@
+.button {
+  color: #757575;
+  cursor: pointer;
+  display: inline-block;
+}
+.button[type="link"]:hover {
+  text-decoration: underline;
+}
+.button[type="block"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  line-height: 2rem;
+}
+.button[type="block"]:hover {
+  background-color: #757575;
+  color: #FFFFFF;
+}
+input[type="text"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  width: 100%;
+}
+input[type="password"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  width: 100%;
+}

@@ -1,3 +1,26 @@
 body > .content .content-top {
   margin-top: 45vh;
 }
+body .buttons-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  padding: 1rem 0;
+}
+body .buttons-nav .button {
+  margin-right: 1rem;
+}
+body .forms {
+  width: 200px;
+  position: fixed;
+  top: calc(40%);
+  left: calc(50% - 100px);
+}
+body .forms .form {
+  background-color: #FFFFFF;
+  text-align: right;
+}
+body .forms .form input {
+  margin-bottom: 1rem;
+}

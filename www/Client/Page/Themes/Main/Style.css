@@ -1,3 +1,45 @@
+.button {
+  color: #757575;
+  cursor: pointer;
+  display: inline-block;
+}
+.button[type="link"]:hover {
+  text-decoration: underline;
+}
+.button[type="block"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  line-height: 2rem;
+}
+.button[type="block"]:hover {
+  background-color: #757575;
+  color: #FFFFFF;
+}
+input[type="text"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  width: 100%;
+}
+input[type="password"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  width: 100%;
+}
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +63,14 @@ body {
   display: flex;
   flex-direction: column;
 }
+body .name-project {
+  width: 100%;
+  cursor: default;
+  font-size: 2rem;
+  color: #757575;
+  padding: 2rem 0;
+  text-align: center;
+}
 body > .content {
   height: 100%;
   margin: 0 auto;
@@ -29,14 +79,8 @@ body > .content {
   color: #757575;
 }
 body > .content .content-top {
-  font-size: 2rem;
   height: 5rem;
-  padding: 2rem 0;
   display: flex;
-}
-body > .content .content-top .name {
-  width: 100%;
-  cursor: default;
 }
 body > .content .content-center {
   display: flex;
@@ -48,4 +92,12 @@ body > .content .content-bottom {
 body .glyphicon {
   font-size: 1rem;
   color: #757575;
+}
+::selection {
+  background-color: #757575;
+  color: #FFFFFF;
+}
+::-moz-selection {
+  background-color: #757575;
+  color: #FFFFFF;
 }
