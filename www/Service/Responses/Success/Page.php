@@ -14,7 +14,7 @@
             "convertDirs" => [
                "Client/Page",
                "Client/Pages",
-               "Client/Styles"
+               "Client/Views"
             ]
          ]);
          $lesscss->convert();

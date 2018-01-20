@@ -1,12 +1,13 @@
 define([
-], function() {
+   'Views/Informer/Informer'
+], function(Informer) {
    'use strict';
 
    return Backbone.View.extend({
       events: {
          'click .buttons-nav .button': '_clickNavButton',
-         'click .button[name="send"]': '_clickButtonSend',
-         'click .button[name="close"]': '_clickButtonClose'
+         'click .form .button[name="send"]': '_clickButtonSend',
+         'click .form .button[name="close"]': '_clickButtonClose'
       },
 
       /**
@@ -34,6 +35,20 @@ define([
          } else if (formState === 'sing-in') {
             $form.attr('show', false);
          }
+
+         new Informer({
+            type: "success",
+            autoHide: false
+         }).show();
+
+         new Informer({
+            type: "error"
+         }).show();
+
+         new Informer({
+            type: "info",
+            timeout: 1
+         }).show();
       },
 
       /**
