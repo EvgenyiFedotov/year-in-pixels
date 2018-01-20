@@ -1,10 +1,17 @@
 @import "Page/Themes/Main/Colors";
 
+.form() {
+   width: 200px;
+   position: fixed;
+   top: calc(~"40%");
+   left: calc(~"50% - 100px");
+}
+
 body {
-   & > .content {
-      .content-top {
-         margin-top: 45vh;
-      }
+   .name-project-fixed {
+      position: fixed;
+      top: 50%;
+      margin-top: -2.5rem;
    }
 
    .buttons-nav {
@@ -19,18 +26,41 @@ body {
       }
    }
 
-   .forms {
-      width: 200px;
-      position: fixed;
-      top: calc(~"40%");
-      left: calc(~"50% - 100px");
+   .form {
+      .form();
+      background-color: @color-background;
+      display: none;
+      opacity: 0;
 
-      .form {
-         background-color: @color-background;
-         text-align: right;
+      &[show="true"] {
+         display: block;
+         opacity: 1;
+      }
 
-         input {
-            margin-bottom: 1rem;
+      &[state="sing-in"] {
+         input[name="password-2"] {
+            display: none;
+         }
+      }
+
+      input {
+         margin-bottom: 1rem;
+      }
+
+      .buttons {
+         display: flex;
+         text-align: center;
+
+         .button {
+            width: 100%;
+         }
+
+         .button[name="close"] {
+            margin-right: .5rem;
+         }
+
+         .button[name="send"] {
+            margin-left: .5rem;
          }
       }
    }

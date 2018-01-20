@@ -1,7 +1,10 @@
 define([
+   'Pages/Auth/Views/Auth',
    'css!Pages/Auth/Styles/Style'
-], function () {
+], function(Auth) {
    'use strict';
 
-   console.log('Auth');
+   new Auth({
+      el: $('body')
+   });
 });

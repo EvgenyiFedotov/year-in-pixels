@@ -1,5 +1,7 @@
-body > .content .content-top {
-  margin-top: 45vh;
+body .name-project-fixed {
+  position: fixed;
+  top: 50%;
+  margin-top: -2.5rem;
 }
 body .buttons-nav {
   position: fixed;
@@ -11,16 +13,35 @@ body .buttons-nav {
 body .buttons-nav .button {
   margin-right: 1rem;
 }
-body .forms {
+body .form {
   width: 200px;
   position: fixed;
   top: calc(40%);
   left: calc(50% - 100px);
-}
-body .forms .form {
   background-color: #FFFFFF;
-  text-align: right;
+  display: none;
+  opacity: 0;
 }
-body .forms .form input {
+body .form[show="true"] {
+  display: block;
+  opacity: 1;
+}
+body .form[state="sing-in"] input[name="password-2"] {
+  display: none;
+}
+body .form input {
   margin-bottom: 1rem;
+}
+body .form .buttons {
+  display: flex;
+  text-align: center;
+}
+body .form .buttons .button {
+  width: 100%;
+}
+body .form .buttons .button[name="close"] {
+  margin-right: .5rem;
+}
+body .form .buttons .button[name="send"] {
+  margin-left: .5rem;
 }
