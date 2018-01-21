@@ -84,14 +84,14 @@
       /**
        * Проверить error-роуты
        * @param {String|Number} $url
-       * @param {Boolean} $status Отправлять ли статус
+       * @param {Boolean|String} $status Отправлять ли статус
        */
       public function error($url, $status = false) {
          $result = $this->checkRoutes((string) $url, "error");
 
          // Если необходимо отправить статус
          if ($status) {
-            $this->status($url);
+            $this->status($url, $status);
          }
 
          return $result;

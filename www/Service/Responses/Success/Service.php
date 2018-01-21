@@ -10,14 +10,25 @@
             "Object/" . $pathObject["object"] . ".php"
          ]);
 
-         // Создадим экземпляр объекта и вызовем метод
-         $classObject = new ReflectionClass($pathObject["object"]);
-         $instObject = $classObject->newInstanceArgs([]);
-         $methodObject = new ReflectionMethod($pathObject["object"], $pathObject["method"]);
+         // Проверим, подключи ли вызываемый класс
+         if (class_exists($pathObject["object"])) {
+            // Создадим экземпляр объекта и вызовем метод
+            $classObject = new ReflectionClass($pathObject["object"]);
 
-         // Проверим публичность вызываемого метода, если вызвали не пудличный, отдим ошибку
-         if ($methodObject->isPublic()) {
-            $methodObject->invokeArgs($instObject, [$query, $require, $pathObject]);
+            // Проверим наличие вызываемого метода
+            if ($classObject->hasMethod($pathObject["method"])) {
+               $instObject = $classObject->newInstanceArgs([]);
+               $methodObject = new ReflectionMethod($pathObject["object"], $pathObject["method"]);
+
+               // Проверим публичность вызываемого метода, если вызвали не пудличный, отдим ошибку
+               if ($methodObject->isPublic()) {
+                  $methodObject->invokeArgs($instObject, [$query, $require, $pathObject]);
+               } else {
+                  $query->error(503, true);
+               }
+            } else {
+               $query->error(503, true);
+            }
          } else {
             $query->error(503, true);
          }

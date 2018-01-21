@@ -4,6 +4,8 @@ define([
 ], function(template) {
    'use strict';
 
+   var $body = $('body');
+
    var count = 0;
 
    /**
@@ -30,10 +32,6 @@ define([
    };
 
    return Backbone.View.extend({
-      el: template(),
-
-      $body: null,
-
       /**
        * @config {String}
        */
@@ -61,7 +59,7 @@ define([
        * Максимальное количиство информеров
        * @config {Number}
        */
-      maxCount: 7,
+      maxCount: 3,
 
       events: {
          'click .button[name="close"]': '_clickButtonClose'
@@ -71,8 +69,12 @@ define([
        * @param {Object} options
        */
       initialize: function(options) {
-         this.$body = $('body');
-         this.$body.append(this.$el);
+         this.$el = $(template({
+            header: options.header !== undefined ? options.header : '',
+            note: options.note !== undefined ? options.note : ''
+         }));
+
+         $body.append(this.$el);
 
          this.type = options.type || this.type;
          this.$el.attr('type', this.type);
@@ -87,7 +89,7 @@ define([
       },
 
       informers: function() {
-         return this.$body.find('.informer[destroy!="true"]');
+         return $body.find('.informer[destroy!="true"]');
       },
 
       show: function() {

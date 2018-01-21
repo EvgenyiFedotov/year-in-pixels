@@ -1,6 +1,7 @@
 define([
+   'Core/Service',
    'Views/Informer/Informer'
-], function(Informer) {
+], function(Service, Informer) {
    'use strict';
 
    return Backbone.View.extend({
@@ -30,25 +31,29 @@ define([
          var $form = this.$('.form');
          var formState = $form.attr('state');
 
-         if (formState === 'sing-up') {
-            $form.attr('state', 'sing-in');
-         } else if (formState === 'sing-in') {
-            $form.attr('show', false);
-         }
+         Service.post('Auth.' + formState.replace('-', ''), {
 
-         new Informer({
-            type: "success",
-            autoHide: false
-         }).show();
+         }, {
+            success: function(result, textStatus, jqXHR) {
+               if (formState === 'sing-up') {
+                  $form.attr('state', 'sing-in');
 
-         new Informer({
-            type: "error"
-         }).show();
-
-         new Informer({
-            type: "info",
-            timeout: 1
-         }).show();
+                  new Informer({
+                     type: "success",
+                     note: jqXHR.statusText
+                  }).show();
+               } else if (formState === 'sing-in') {
+                  $form.attr('show', false);
+               }
+            },
+            error: function(jqXHR, textStatus, message) {
+               new Informer({
+                  type: "error",
+                  autoHide: false,
+                  note: message
+               }).show();
+            }
+         });
       },
 
       /**
