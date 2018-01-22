@@ -11,12 +11,16 @@
    right: 1rem;
    bottom: -5.5rem;
    width: 20rem;
-   height: 5rem;
+   height: 3rem;
    background-color: @color-background;
    border-radius: 3px;
    box-shadow: 0 0 .75rem @color-text-30;
    transition: bottom .5s;
    overflow: hidden;
+
+   &[rows="2"] {
+      height: 5rem;
+   }
 
    .color-indicator {
       position: absolute;

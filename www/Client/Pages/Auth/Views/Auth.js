@@ -50,6 +50,7 @@ define([
                new Informer({
                   type: "error",
                   autoHide: false,
+                  header: 'ERROR',
                   note: message
                }).show();
             }
