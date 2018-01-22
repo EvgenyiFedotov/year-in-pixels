@@ -41,8 +41,8 @@
          // Вычислим откуда было обращение
          $headers = $this->headers();
 
-         // Если уже ьбыла переадресация, обработаем запрашиваемый путь
-         if ($headers["Referer"]) {
+         // Если уже была переадресация, обработаем запрашиваемый путь
+         if ($headers["Referer"] && !$headers["Cache-Control"]) {
             $url = $this->requestUrlByReferer("year-in-pixels");
 
             header("Content-Type: " . $headers["Accept"]);
@@ -67,11 +67,18 @@
              * Найдем обработчик url
              * Если обработчик не найден отдадим ошибку
              */
+            $this->findAndRunHandler();
+         }
+      }
+
+      /**
+       * Поиск обрабочика url
+       */
+      public function findAndRunHandler() {
             if (!$this->success($this->requestUrl(true), "success")) {
                $this->error(503, true);
             }
          }
-      }
 
       /**
        * Проверить success-роуты

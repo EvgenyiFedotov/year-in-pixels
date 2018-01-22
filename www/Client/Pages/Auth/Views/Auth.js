@@ -48,6 +48,7 @@ define([
                   }).show();
                } else if (formState === 'sing-in') {
                   $form.attr('show', false);
+                  window.location.reload();
                }
 
                console.log(result);
