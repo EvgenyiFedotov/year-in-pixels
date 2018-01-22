@@ -1,27 +1,15 @@
 <?php
-   class PDays {
-      /**
-       * Получить коннект с БД
-       */
-      public function connect() {
-         return new Connect("Configs/Connect.json");
-      }
+   include_once("Object.php");
+
+   class PDays extends Object {
 
       /**
        * Записть (перезаписать) данные о дне
        * @param {Array} $data
-       * @param {Array} $where
+       * @param {Array} [$where]
        */
       public function write($data, $where = []) {
-         $connect = $this->connect();
-
-         if (count($where)) {
-            $connect->update("days", $data, $where);
-         } else {
-            $connect->insert("days", $data);
-         }
-
-         return $connect->id();
+         return $this->writeRow("days", $data, $where);
       }
 
       /**
@@ -29,21 +17,28 @@
        * @param {String} $date YYYY-MM-DD HH:MM:SS
        */
       public function has($date) {
-         $connect = $this->connect();
-
-         $result = $connect->get("days", ["id"], [
+         return $this->hasRow("days", [
             "date" => $date
          ]);
-
-         return $result["id"];
       }
 
       /**
-       * Список дней
+       * Список дней за год для пользователя
+       * @param {String} $login
+       * @param {Number} [$year]
        */
-      public function list() {
+      public function list($login, $year = null) {
          $connect = $this->connect();
-         return $connect->select("days", '*');
+
+         if (!isset($year)) {
+            $year = date("Y");
+         }
+
+         return $connect->select("days", "*", [
+            "login" => $login,
+            "date[>=]" => date("Y-m-d", mktime(0, 0, 0, 0, 0, $year)),
+            "date[<]" => date("Y-m-d", mktime(0, 0, 0, 0, 0, $year + 1))
+         ]);
       }
 
       /**

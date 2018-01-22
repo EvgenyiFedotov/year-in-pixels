@@ -2,6 +2,7 @@
    "name": "days",
    "columns": {
       "id": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+      "login": "VARCHAR(255) NOT NULL",
       "date": "TIMESTAMP NOT NULL",
       "status": "INT NOT NULL"
    }

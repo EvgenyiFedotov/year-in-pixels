@@ -4,6 +4,8 @@ block headBefore
    +routepage()
    if $paletteJSON
       script !{"window.palette = " . $paletteJSON . ";"}
+   if $days
+      script !{"window.days = " . $days . ";"}
 
 block contentTop
    .name-project
@@ -36,7 +38,7 @@ block contentCenter
             .days-month
                - $index = 0;
                while $index < 31
-                  - $date = $getDate(2018, $monthIndex + 1, $index + 1);
+                  - $date = $getDate($year, $monthIndex + 1, $index + 1);
                   .block-color(title=$date, data-date=$date, style=$dayColor($palette[$daysByDates[$date]["status"]]["color"]))
                   - $index++;
             - $monthIndex++;

@@ -22,9 +22,12 @@
          // Имя страницы
          $namePage = ucfirst($route[0]);
 
-         // Установим, чтобы всегда подгружалась страница "years"
-         $namePage = "Years";
-         $namePage = "Auth";
+         // Если пользователь еще не залогинился, выдадим страницу "Auth", иначе "Years"
+         if (isset($_SESSION["user"])) {
+            $namePage = "Years";
+         } else {
+            $namePage = "Auth";
+         }
 
          // Путь до темплейта
          $template = $require->pathFile("Client/Pages/" . $namePage . "/Templates/Main.jade");

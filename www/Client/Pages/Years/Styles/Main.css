@@ -27,6 +27,7 @@ body > .content .block-null {
 }
 body > .content .content-top .buttons {
   display: flex;
+  padding-top: 2rem;
   height: 1rem;
   margin-top: 0.3rem;
 }

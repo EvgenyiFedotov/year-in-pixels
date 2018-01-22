@@ -1,4 +1,14 @@
 <?php
+   $data = $query->data();
+
+   // Вычислим год или установим текущий
+   $year = date("Y");
+   if (isset($data["year"])) {
+      $year = (int) $data["year"];
+   }
+
+   $templateParams["year"] = $year;
+
    $templateParams["namesMonths"] = [
       "J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"
    ];
@@ -40,7 +50,11 @@
    };
 
    // Загрузим данные по дням
-   $require->includeFiles(["PObject/Days.php"]);
-   $pDays = new PDays();
-   $templateParams["daysByDates"] = $pDays->listByDates($pDays->list());
+   if (isset($_SESSION["user"])) {
+      $require->includeFiles(["PObject/Days.php"]);
+      $pDays = new PDays();
+      $listDays = $pDays->list($_SESSION["user"]["login"], $year);
+      $templateParams["days"] = json_encode($listDays);
+      $templateParams["daysByDates"] = $pDays->listByDates($listDays);
+   }
 ?>

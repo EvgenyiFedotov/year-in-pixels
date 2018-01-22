@@ -16,8 +16,8 @@ body .buttons-nav .button {
 body .form {
   width: 200px;
   position: fixed;
-  top: calc(40%);
   left: calc(50% - 100px);
+  top: calc(50% - 112px);
   background-color: #FFFFFF;
   display: none;
   opacity: 0;

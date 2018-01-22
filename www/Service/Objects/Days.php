@@ -2,21 +2,21 @@
    include_once("Protected/Days.php");
 
    class Days {
+      /**
+       * Записать данные по дню
+       */
       public function write($query) {
          if ($query->method("POST")) {
-            $pDays = new PDays();
             $data = $query->data();
+            $pDays = new PDays();
+            $login = $_SESSION["user"]["login"];
 
-            // Проверим, может уже существует запись
-            $id = $pDays->has($data["date"]);
+            $data["login"] = $login;
 
-            if ($id) {
-               $pDays->write($data, [
-                  "date" => $data["date"]
-               ]);
-            } else {
-               $id = $pDays->write($data);
-            }
+            $id = $pDays->write($data, [
+               "date" => $data["date"],
+               "login" => $login
+            ]);
 
             $query->response([
                "id" => $id

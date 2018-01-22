@@ -30,10 +30,14 @@ define([
       _clickButtonSend: function() {
          var $form = this.$('.form');
          var formState = $form.attr('state');
+         var values = {};
 
-         Service.post('Auth.' + formState.replace('-', ''), {
+         $form.find('input').each(function(index, el) {
+            var $el = $(el);
+            values[$el.attr('name')] = $el.val();
+         });
 
-         }, {
+         Service.post('Auth.' + formState.replace('-', ''), values, {
             success: function(result, textStatus, jqXHR) {
                if (formState === 'sing-up') {
                   $form.attr('state', 'sing-in');
@@ -45,15 +49,15 @@ define([
                } else if (formState === 'sing-in') {
                   $form.attr('show', false);
                }
+
+               console.log(result);
             },
             error: function(jqXHR, textStatus, message) {
                new Informer({
                   type: "error",
                   autoDestroy: false,
                   autoHide: false,
-                  maxCount: 1,
-                  header: 'ERROR',
-                  note: message
+                  header: message
                }).show();
             }
          });

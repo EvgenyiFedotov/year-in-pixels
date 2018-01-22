@@ -22,7 +22,8 @@
       public function response($data = [], $message = null) {
          // Если передали только сообщение
          if (is_string($data)) {
-            $data = ["message"=> $data];
+            $message = $data;
+            $data = [];
          }
 
          echo json_encode($data);
