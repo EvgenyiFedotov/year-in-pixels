@@ -49,7 +49,9 @@ define([
             error: function(jqXHR, textStatus, message) {
                new Informer({
                   type: "error",
+                  autoDestroy: false,
                   autoHide: false,
+                  maxCount: 1,
                   header: 'ERROR',
                   note: message
                }).show();

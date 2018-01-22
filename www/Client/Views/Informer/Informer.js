@@ -6,64 +6,6 @@ define([
 
    var $body = $('body');
 
-   var count = 0;
-   var heightAllInformers = 0;
-
-   var informers = function() {
-      return $body.find('.informer[destroy!="true"]');
-   };
-
-   var heightInformer = function($informer) {
-      var rows = parseInt($informer.attr('rows'));
-
-      if (rows === 1) {
-         return 3;
-      } else if (rows === 2) {
-         return 5;
-      } else {
-         return 3;
-      }
-   };
-
-   /**
-    * Установить корректный отступ для информера
-    * @param $informer
-    * @param {Number} index
-    * @param {Number} height
-    */
-   // var informerBottom = function($informer, index, height) {
-   // $informer.css('bottom', index * height + (index + 1) + 'rem');
-   var informerBottom = function($informer, height) {
-      var bottom = 0;
-
-      informers().each(function(index, el) {
-         bottom += heightInformer($(el)) + 1;
-      });
-
-      bottom -= heightInformer($informer);
-
-      $informer.css('bottom', bottom + 'rem');
-   };
-
-   /**
-    * Удалить информер
-    */
-   var informerRemove = function($informer, height) {
-      console.log($informer);
-
-      var bottom = heightInformer($informer) + 1;
-
-      $informer.css('bottom', -bottom + 'rem');
-
-      // informerBottom($informer, -1, height);
-      // $informer.attr('destroy', true);
-      // count--;
-
-      // setTimeout(function() {
-      //    $informer.remove();
-      // }, 600);
-   };
-
    return Backbone.View.extend({
       /**
        * @config {String}
@@ -71,14 +13,15 @@ define([
       type: '',
 
       /**
-       * Высота информера
-       * @config {Number}
+       * Автоматически разрушать информер
+       * @config {Boolean}
        */
-      height: 3,
+      autoDestroy: true,
 
       /**
        * Автоматически скрывать информер
-       * @config {Booleans}
+       * Внимание! autoDestroy имеет больший приоритет
+       * @config {Boolean}
        */
       autoHide: true,
 
@@ -95,7 +38,7 @@ define([
       maxCount: 3,
 
       events: {
-         'click .button[name="close"]': '_clickButtonClose'
+         'click .button[name="close"]': 'hide'
       },
 
       /**
@@ -114,7 +57,14 @@ define([
          $body.append(this.$el);
 
          this.type = options.type || this.type;
-         this.$el.attr('type', this.type);
+         this.$el.attr({
+            'type': this.type,
+            'show': false
+         });
+
+         this.autoDestroy = options.autoDestroy !== undefined
+            ? !!options.autoDestroy
+            : this.autoDestroy;
 
          this.autoHide = options.autoHide !== undefined
             ? !!options.autoHide
@@ -123,50 +73,120 @@ define([
          this.timeout = options.timeout !== undefined
             ? options.timeout
             : this.timeout;
+
+         this.maxCount = options.maxCount !== undefined
+            ? options.maxCount
+            : this.maxCount;
+      },
+
+      /**
+       * Получить информеры
+       * @param {Boolean} isVisible
+       */
+      informers: function(isVisible) {
+         var showHide = '';
+
+         if (isVisible !== undefined) {
+            showHide = '[show="' + !!isVisible + '"]';
+         }
+
+         return $body.find('.informer[destroy!="true"]' + showHide);
+      },
+
+      /**
+       * Получить высоту информера
+       * @param $informer
+       */
+      _height: function($informer) {
+         var rows = parseInt($informer.attr('rows'));
+   
+         if (rows === 1) {
+            return 3;
+         } else if (rows === 2) {
+            return 5;
+         } else {
+            return 3;
+         }
+      },
+
+      _showEl: function($el, bottom) {
+         $el.css('bottom', bottom + 'rem');
+         $el.attr('show', true);
       },
 
       show: function() {
          setTimeout(function() {
-            var height = this.height;
+            var informers = this.informers(true);
+            var bottom = 1;
+
+            // Посчитатем отступ для информера
+            informers.each(function(index, el) {
+               bottom += this._height($(el)) + 1;
+            }.bind(this));
+
+            // Выведем информер
+            this._showEl(this.$el, bottom);
 
             // Если количество информеров больше максимального значения
-            if (count + 1 > this.maxCount) {
-               var $informers = informers();
-
-               // $informers.each(function(index, el) {
-               //    informerBottom($(el), index - 1, height);
-               // });
-               // $informers.eq(0).remove();
-               // count--;
+            if (informers.length + 1 > this.maxCount) {
+               this._hideEl(informers.eq(0));
+               this._calcBottomShowInformers();
             }
 
-            // Отобразим информер
-            informerBottom(this.$el, height);
-            // count++;
+            this.trigger('show');
 
-            // Если необходимо автоматически скрыать информер
-            // if (this.autoHide) {
-            //    setTimeout(function() {
-            //       this.hide();
-            //    }.bind(this), this.timeout * 1000);
-            // }
+            // Если необходимо автоматически разрушить информер
+            if (this.autoDestroy) {
+               setTimeout(function() {
+                  this.destroy();
+               }.bind(this), this.timeout * 1000);
+
+            // Если необходимо автоматически скрывать информер
+            } else if (this.autoHide) {
+               setTimeout(function() {
+                  this.hide();
+               }.bind(this), this.timeout * 1000);
+            }
          }.bind(this), 0);
+
+         return this;
+      },
+
+      _hideEl: function($el) {
+         $el.css('bottom', -(this._height($el) + 1) + 'rem');
+         $el.attr('show', false);
+      },
+
+      /**
+       * Рассчитать bottom для всех видимых информеров
+       */
+      _calcBottomShowInformers: function() {
+         var bottom = 1;
+
+         this.informers(true).each(function(index, el) {
+            var $el = $(el);
+
+            this._showEl($el, bottom);
+
+            bottom += this._height($el) + 1;
+         }.bind(this));
       },
 
       hide: function() {
-         var height = this.height;
-
-         // Удалим информер
-         informerRemove(this.$el, height);
-
-         // Подвинем остальные информеры
-         // this.informers().each(function(index, el) {
-         //    informerBottom($(el), index, height);
-         // });
+         this.trigger('hide');
+         this._hideEl(this.$el);
+         this._calcBottomShowInformers();
+         return this;
       },
 
-      _clickButtonClose: function() {
+      destroy: function() {
+         this.trigger('destroy');
+
          this.hide();
+
+         setTimeout(function() {
+            this.$el.remove();
+         }.bind(this), 500);
       }
    });
 });
