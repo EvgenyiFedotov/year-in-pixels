@@ -1,9 +1,10 @@
 define([
    'Pages/Years/Views/Palette',
+   'Pages/Years/Views/MenuOptions',
    'Views/FloatArea/FloatArea',
    'Core/Service',
    'Pages/Years/Helpers'
-], function(Palette, FloatArea, Service, Helpers) {
+], function(Palette, MenuOptions, FloatArea, Service, Helpers) {
    'use strict';
 
    return Backbone.View.extend({
@@ -23,7 +24,10 @@ define([
          'click .table .block-color': '_clickBlockColor',
 
          // Клик по кнопке с палеткой
-         'click .button[name="palette"]': '_clickButtonPalette'
+         'click .button[name="palette"]': '_clickButtonPalette',
+
+         // Клик по кнопке с опциями
+         'click .button[name="options"]': '_clickButtonOptions'
       },
 
       initialize: function () {
@@ -61,6 +65,12 @@ define([
                top: -5,
                left: -5
             }
+         });
+
+         // Меню опций
+         this.menuOptions = new MenuOptions({
+            $target: this.$('.button[name="options"]'),
+            $border: $('body')
          });
       },
 
@@ -141,6 +151,14 @@ define([
 
          // Запишем в навигацию
          this.navigate('palette');
+      },
+
+      /**
+       * Обработчик клика по кнопке с опциями
+       */
+      _clickButtonOptions: function(e) {
+         this.menuOptions.show();
+         console.log('_click', MenuOptions);
       }
    });
 });

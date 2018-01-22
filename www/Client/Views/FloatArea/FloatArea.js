@@ -73,8 +73,11 @@ define(['css!Views/FloatArea/FloatArea'], function() {
       offset: {},
 
       /**
-       * @param  {Object} options
-       * @param  {jQuery} options.$target
+       * @param {Object} options
+       * @param {jQuery} options.$el
+       * @param {jQuery} options.$target
+       * @param {jQuery} options.$border
+       * @param {Object} options.offset
        */
       initialize: function(options) {
          var $el = options.$el;
@@ -103,7 +106,10 @@ define(['css!Views/FloatArea/FloatArea'], function() {
       setTarget: function($target) {
          if ($target && $target.length) {
             this.$target = $target;
-            this.$el.css($target.offset());
+         }
+
+         if (this.$target) {
+            this.$el.css(this.$target.offset());
          }
       },
 
@@ -163,18 +169,16 @@ define(['css!Views/FloatArea/FloatArea'], function() {
       },
 
       /**
-       * Оторбразить панель
+       * Отобразить панель
        * @param {jQuery} [$target]
        * @param {Object} offset
        */
       show: function($target, offset) {
          this.setTarget($target);
 
-         if (this.$target) {
-            this.$el.attr('data-show', 'true');
-            this.setOffset(offset);
-            this.checkPosition();
-         }
+         this.$el.attr('data-show', 'true');
+         this.setOffset(offset);
+         this.checkPosition();
       },
 
       /**
