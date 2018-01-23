@@ -1,10 +1,9 @@
 define([
-   'Pages/Years/Views/Palette',
-   'Pages/Years/Views/MenuOptions',
-   'Views/FloatArea/FloatArea',
+   'Pages/Years/Views/Palette/Palette',
+   'Pages/Years/Views/MenuOptions/MenuOptions',
    'Core/Service',
    'Pages/Years/Helpers'
-], function(Palette, MenuOptions, FloatArea, Service, Helpers) {
+], function(Palette, MenuOptions, Service, Helpers) {
    'use strict';
 
    return Backbone.View.extend({
@@ -32,19 +31,17 @@ define([
 
       initialize: function () {
          // Палетка для блоков дней
-         this.daysPalette = new Palette();
-         this.daysPaletteFloatArea = new FloatArea({
-            $el: this.daysPalette.$el,
+         this.daysPalette = new Palette({
             $border: $('.content .table'),
             offset: {
-               top: -6,
-               left: -7
+               top: -12,
+               left: -14
             }
          });
 
          // Будем слушать события клика по элементу палетки
-         this.listenTo(this.daysPalette, 'click', function(data) {
-            var date = this.daysPaletteFloatArea.date;
+         this.listenTo(this.daysPalette, 'clickItem', function(data) {
+            var date = this.daysPalette.date;
 
             // Отправим данные на сервер
             Service.post('Days.Write', {
@@ -58,8 +55,7 @@ define([
          });
 
          // Палетка для кнопкии "палетка"
-         this.buttonPaletteFloatArea = new FloatArea({
-            $el: new Palette().$el,
+         this.buttonPalette = new Palette({
             $border: $('body'),
             offset: {
                top: -5,
@@ -79,7 +75,7 @@ define([
        * @param  {Boolean} value
        */
       setBlur: function(value) {
-         this.$('.content').attr('data-blur', value + '');
+         this.$el.children('.content').attr('data-blur', value + '');
       },
 
       /**
@@ -107,8 +103,8 @@ define([
        * Обработчик клика в любую область представления
        */
       _click: function() {
-         this.daysPaletteFloatArea.hide();
-         this.buttonPaletteFloatArea.hide();
+         this.daysPalette.hide();
+         this.buttonPalette.hide();
          this.setBlur(false);
 
          // Запишем в навигацию
@@ -124,14 +120,14 @@ define([
 
          e.stopPropagation();
 
-         this.daysPaletteFloatArea.show($target);
-         this.daysPaletteFloatArea.date = date;
+         // this.daysPalette.show($target);
+         // this.daysPalette.date = date;
 
-         // Скроем палетку для кнопки
-         this.buttonPaletteFloatArea.hide();
+         // // Скроем палетку для кнопки
+         // this.buttonPalette.hide();
 
-         // Размытие контента
-         this.setBlur(true);
+         // // Размытие контента
+         // this.setBlur(true);
 
          // Запишем в навигацию
          this.navigate('date=' + date);
@@ -145,9 +141,9 @@ define([
 
          e.stopPropagation();
 
-         this.daysPaletteFloatArea.hide();
+         this.daysPalette.hide();
          this.setBlur(false);
-         this.buttonPaletteFloatArea.show($target);
+         this.buttonPalette.show($target);
 
          // Запишем в навигацию
          this.navigate('palette');
