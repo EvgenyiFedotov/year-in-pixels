@@ -1,3 +1,5 @@
+@import "Page/Themes/Main/Colors";
+
 @keyframes example {
    from {opacity: 0;}
    to {opacity: 1;}
@@ -7,6 +9,12 @@
    position: fixed;
    display: none;
    transition: opacity 5s;
+   background-color: @color-background;
+   border: 1px solid @color-border;
+
+   &[data-shadow="true"] {
+      box-shadow: 0 0 1rem @color-text-60;
+   }
 
    &[data-show="true"] {
       display: block;

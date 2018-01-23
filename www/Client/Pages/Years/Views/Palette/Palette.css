@@ -1,0 +1,19 @@
+.palette {
+  border-radius: 2px;
+  padding: .5rem;
+  opacity: .1;
+}
+.palette .item {
+  display: flex;
+  color: #757575;
+  line-height: 1.5rem;
+  padding: .3rem .5rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.palette .item .block-color {
+  margin-right: .5rem;
+}
+.palette .item:hover {
+  background-color: #eeeeee;
+}

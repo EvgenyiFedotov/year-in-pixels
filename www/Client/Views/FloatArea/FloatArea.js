@@ -48,11 +48,6 @@ define(['css!Views/FloatArea/FloatArea'], function() {
 
    return Backbone.View.extend({
       /**
-       * @config {String}
-       */
-      className: 'float-area',
-
-      /**
        * @config {jQuery}
        */
       $body: $('body'),
@@ -85,7 +80,7 @@ define(['css!Views/FloatArea/FloatArea'], function() {
          // Настроить всплывающую область
          if ($el && $el.length) {
             this.$el = $el;
-            this.$el.addClass(this.className);
+            this.$el.addClass('float-area ' + this.className);
             this.$body.append(this.$el);
          }
 
