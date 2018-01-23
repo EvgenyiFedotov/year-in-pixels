@@ -29,8 +29,8 @@ define([
        */
       events: function() {
          return {
-            'click .menu-item': function(e) {
-               var $item = $(e.target).closest('.menu-item');
+            'click .item': function(e) {
+               var $item = $(e.target).closest('.item');
                this.trigger('clickItem', $item.data(), $item, e);
             }
          };

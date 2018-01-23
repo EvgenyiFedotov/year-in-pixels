@@ -11,13 +11,17 @@ define([
    var Router = Backbone.Router.extend({
       routes: {
          'date=:date': 'date',
-         'palette': 'palette'
+         'palette': 'palette',
+         'options': 'options'
       },
       date: function(date) {
          year.$('.block-color[data-date="' + date + '"]').click();
       },
       palette: function() {
          year.$('.button[name="palette"]').click();
+      },
+      options: function() {
+         year.$('.button[name="options"]').click();
       }
    });
 

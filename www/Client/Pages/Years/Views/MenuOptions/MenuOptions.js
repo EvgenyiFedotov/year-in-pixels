@@ -10,12 +10,12 @@ define([
          {
             content: 'Settings',
             attrs: {
-               name: 'settings'
+               'data-name': 'settings'
             }
          }, {
             content: 'Sign out',
             attrs: {
-               name: 'sign-out'
+               'data-name': 'sign-out'
             }
          }
       ]

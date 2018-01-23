@@ -68,6 +68,11 @@ define([
             $target: this.$('.button[name="options"]'),
             $border: $('body')
          });
+
+         // Подпишимся на события клика по меню опций
+         this.listenTo(this.menuOptions, 'clickItem', function(data) {
+            console.log('menu', data);
+         });
       },
 
       /**
@@ -105,6 +110,7 @@ define([
       _click: function() {
          this.daysPalette.hide();
          this.buttonPalette.hide();
+         this.menuOptions.hide();
          this.setBlur(false);
 
          // Запишем в навигацию
@@ -120,14 +126,15 @@ define([
 
          e.stopPropagation();
 
-         // this.daysPalette.show($target);
-         // this.daysPalette.date = date;
+         this.daysPalette.show($target);
+         this.daysPalette.date = date;
 
-         // // Скроем палетку для кнопки
-         // this.buttonPalette.hide();
+         // Скроем палетку для кнопки
+         this.buttonPalette.hide();
+         this.menuOptions.hide();
 
-         // // Размытие контента
-         // this.setBlur(true);
+         // Размытие контента
+         this.setBlur(true);
 
          // Запишем в навигацию
          this.navigate('date=' + date);
@@ -142,7 +149,10 @@ define([
          e.stopPropagation();
 
          this.daysPalette.hide();
+         this.menuOptions.hide();
+
          this.setBlur(false);
+
          this.buttonPalette.show($target);
 
          // Запишем в навигацию
@@ -153,8 +163,11 @@ define([
        * Обработчик клика по кнопке с опциями
        */
       _clickButtonOptions: function(e) {
+         e.stopPropagation();
          this.menuOptions.show();
-         console.log('_click', MenuOptions);
+
+         // Запишем в навигацию
+         this.navigate('options');
       }
    });
 });
