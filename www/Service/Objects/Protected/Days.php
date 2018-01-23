@@ -36,8 +36,8 @@
 
          return $connect->select("days", "*", [
             "login" => $login,
-            "date[>=]" => date("Y-m-d", mktime(0, 0, 0, 0, 0, $year)),
-            "date[<]" => date("Y-m-d", mktime(0, 0, 0, 0, 0, $year + 1))
+            "date[>=]" => date("Y-m-d", mktime(0, 0, 0, 1, 0, $year)),
+            "date[<]" => date("Y-m-d", mktime(0, 0, 0, 1, 0, $year + 1))
          ]);
       }
 
