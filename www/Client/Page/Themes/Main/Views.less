@@ -52,3 +52,22 @@ input[type="text"] {
 input[type="password"] {
    .input-text();
 }
+
+// Label
+.label {
+   color: @color-label;
+   margin-right: 1rem;
+   cursor: default;
+
+   &[data-side="right"] {
+      margin-left: 0rem;
+      margin-left: 1rem;
+   }
+}
+
+// Comment
+.comment {
+   color: @color-label;
+   font-size: .8rem;
+   font-style: italic;
+}

@@ -81,6 +81,7 @@ define(['css!Views/FloatArea/FloatArea'], function() {
          if ($el && $el.length) {
             this.$el = $el;
             this.$el.addClass('float-area ' + this.className);
+            this.$el.attr('data-cid', this.cid);
             this.$body.append(this.$el);
          }
 
@@ -92,6 +93,33 @@ define(['css!Views/FloatArea/FloatArea'], function() {
 
          // Оффсет
          this.setOffset(options.offset);
+      },
+
+      /**
+       * Подписаться на событие клика по body
+       */
+      _onClickBody: function() {
+         // Обработчик на клик вне области всплывающей панели
+         this.$body.on('click.click-body-' + this.cid, this._clickBody.bind(this));
+      },
+
+      /**
+       * Отписать от события клика по body
+       */
+      _offClickBody: function() {
+         this.$body.off('click.click-body-' + this.cid);
+      },
+
+      /**
+       * Обработчик клика по body
+       */
+      _clickBody: function(e) {
+         var $panel = $(e.target).closest('.float-area[data-cid="' + this.cid + '"]');
+
+         // Скроем панель если кликнули не на нее
+         if (!$panel.length) {
+            this.hide();
+         }
       },
 
       /**
@@ -174,13 +202,31 @@ define(['css!Views/FloatArea/FloatArea'], function() {
          this.$el.attr('data-show', 'true');
          this.setOffset(offset);
          this.checkPosition();
+
+         this.trigger('show');
+
+         // Подпишимся на событие клика по body
+         this._onClickBody();
       },
 
       /**
        * Скрыть панель
        */
       hide: function () {
+         // Отпишимся от события клика по body
+         this._offClickBody();
          this.$el.attr('data-show', 'false');
+         this.trigger('hide');
+      },
+
+      /**
+       * До переопределим удаление представления
+       */
+      remove: function() {
+         // Отпишимся от события клика по body
+         this._offClickBody();
+
+         Backbone.View.prototype.remove(this, arguments);
       }
    });
 });

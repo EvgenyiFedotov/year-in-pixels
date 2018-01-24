@@ -30,6 +30,12 @@ body {
       }
 
       .content-top {
+         margin-bottom: 1rem;
+
+         .name-project {
+            text-align: left;
+         }
+
          .buttons {
             display: flex;
             padding-top: 2rem;
@@ -50,10 +56,16 @@ body {
       }
 
       .content-center {
+         width: 23.38rem;
+
          .table {
             overflow: hidden;
-            display: flex;
+            display: none;
             flex-direction: column;
+
+            &[data-show="true"] {
+               display: flex;
+            }
 
             .names-months {
                display: flex;

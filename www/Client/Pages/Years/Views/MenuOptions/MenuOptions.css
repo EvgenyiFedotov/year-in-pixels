@@ -3,12 +3,12 @@
   padding: .5rem;
 }
 .menu-options .item {
-  color: #757575;
+  color: #E0E0E0;
   line-height: 1.5rem;
   padding: .2rem .5rem;
   border-radius: 2px;
   cursor: pointer;
 }
 .menu-options .item:hover {
-  background-color: #eeeeee;
+  background-color: #424242;
 }

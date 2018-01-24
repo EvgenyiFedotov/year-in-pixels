@@ -17,17 +17,14 @@ define([
        * @config {Object}
        */
       events: {
-         // Клик в любую область представления
-         'click': '_click',
-
          // Клик по блоку дня
          'click .table .block-color': '_clickBlockColor',
 
          // Клик по кнопке с палеткой
          'click .button[name="palette"]': '_clickButtonPalette',
 
-         // Клик по кнопке с опциями
-         'click .button[name="options"]': '_clickButtonOptions'
+         // Клик по кнопке с меню
+         'click .button[name="menu"]': '_showMenu'
       },
 
       initialize: function() {
@@ -55,6 +52,8 @@ define([
             });
          });
 
+         this.listenTo(this.daysPalette, 'hide', this.hidePaletteDays);
+
          // Палетка для кнопкии "палетка"
          this.buttonPalette = new Palette({
             $border: $('body'),
@@ -66,17 +65,12 @@ define([
 
          // Меню опций
          this.menuOptions = new MenuOptions({
-            $target: this.$('.button[name="options"]'),
+            $target: this.$('.button[name="menu"]'),
             $border: $('body')
          });
 
          // Подпишимся на события клика по меню опций
          this.listenTo(this.menuOptions, 'clickItem', this._clickMenuOptions);
-
-         // Настройки
-         this.settings = new Settings({
-            $el: this.$('.content-center')
-         });
       },
 
       /**
@@ -109,12 +103,18 @@ define([
       },
 
       /**
-       * Обработчик клика в любую область представления
+       * Поменять режим отображения таблицы с днями
+       * @param {Boolean|String} value
        */
-      _click: function() {
-         this.daysPalette.hide();
-         this.buttonPalette.hide();
-         this.menuOptions.hide();
+      tableShow: function(value) {
+         this.$('.content-center>.table').attr('data-show', value + '');
+      },
+
+      /**
+       * Обработчик скрытия палетки дней
+       */
+      hidePaletteDays: function() {
+         // Убрать размытие фона
          this.setBlur(false);
 
          // Запишем в навигацию
@@ -164,18 +164,55 @@ define([
       },
 
       /**
-       * Обработчик клика по кнопке с опциями
+       * Показать меню
        */
-      _clickButtonOptions: function(e) {
-         e.stopPropagation();
-
+      showMenu: function() {
          this.setBlur(false);
          this.daysPalette.hide();
          this.menuOptions.hide();
          this.menuOptions.show();
 
          // Запишем в навигацию
-         this.navigate('options');
+         this.navigate('menu');
+      },
+
+      /**
+       * Обработчик клика по кнопке с меню
+       */
+      _showMenu: function(e) {
+         e.stopPropagation();
+         this.showMenu();
+      },
+
+      /**
+       * Создать и отобразить настройки
+       */
+      showSettings: function() {
+         // Если еще не создали панель настроек
+         if (!this.settings) {
+            this.settings = new Settings({
+               el: this.$('.content-center')
+            });
+
+            // Слушать событие закрытия панели с опциями
+            this.listenTo(this.settings, 'hide', this._hideSettings);
+         }
+
+         // Скроем таблицу с днями
+         this.tableShow(false);
+
+         // Отобразим панель
+         this.settings.show();
+
+         // Запишем в навигацию
+         this.navigate('settings');
+      },
+      
+      /**
+       * Обработчик закрытия панели настроек
+       */
+      _hideSettings: function() {
+         this.tableShow(true);
       },
 
       /**
@@ -185,6 +222,12 @@ define([
          // Настройки
          if (data.name === 'settings') {
             e.stopPropagation();
+
+            // Скроем меню опций
+            this.menuOptions.hide();
+
+            // Создалим панель настроек, если это необходимо и отобразим ее
+            this.showSettings();
 
          // Выход
          } else if (data.name === 'sign-out') {

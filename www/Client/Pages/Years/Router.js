@@ -12,7 +12,8 @@ define([
       routes: {
          'date=:date': 'date',
          'palette': 'palette',
-         'options': 'options'
+         'menu': 'menu',
+         'settings': 'settings'
       },
       date: function(date) {
          year.$('.block-color[data-date="' + date + '"]').click();
@@ -20,8 +21,11 @@ define([
       palette: function() {
          year.$('.button[name="palette"]').click();
       },
-      options: function() {
-         year.$('.button[name="options"]').click();
+      menu: function() {
+         year.showMenu();
+      },
+      settings: function() {
+         year.showSettings();
       }
    });
 

@@ -5,11 +5,11 @@
   box-sizing: border-box;
   cursor: pointer;
   border-radius: 2px;
-  border: 1px solid #eeeeee;
+  border: 1px solid #424242;
 }
 .block-color:hover {
-  border-color: #e0e0e0;
-  background-color: #e0e0e0;
+  border-color: #424242;
+  background-color: #424242;
 }
 body > .content[data-blur="true"] {
   filter: blur(1px);
@@ -21,6 +21,12 @@ body > .content .block-null {
   box-sizing: border-box;
   cursor: pointer;
 }
+body > .content .content-top {
+  margin-bottom: 1rem;
+}
+body > .content .content-top .name-project {
+  text-align: left;
+}
 body > .content .content-top .buttons {
   display: flex;
   padding-top: 2rem;
@@ -28,7 +34,7 @@ body > .content .content-top .buttons {
   margin-top: 0.3rem;
 }
 body > .content .content-top .buttons .button {
-  color: #757575;
+  color: #E0E0E0;
   font-size: 1rem;
   margin-left: 1rem;
   cursor: pointer;
@@ -36,10 +42,16 @@ body > .content .content-top .buttons .button {
 body > .content .content-top .buttons .button:hover {
   text-decoration: underline;
 }
+body > .content .content-center {
+  width: 23.38rem;
+}
 body > .content .content-center .table {
   overflow: hidden;
-  display: flex;
+  display: none;
   flex-direction: column;
+}
+body > .content .content-center .table[data-show="true"] {
+  display: flex;
 }
 body > .content .content-center .table .names-months {
   display: flex;

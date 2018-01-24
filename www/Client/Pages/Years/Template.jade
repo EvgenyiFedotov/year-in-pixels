@@ -11,10 +11,10 @@ block contentTop
    .name-project="Year in pixels"
    .buttons
       .button(name="palette")="Palette"
-      .button(name="options")="Options"
+      .button(name="menu")="Menu"
 
 block contentCenter
-   .table
+   .table(data-show="true")
       .names-months
          .block-null
          each $nameMonth, $key in $namesMonths
