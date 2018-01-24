@@ -42,7 +42,7 @@
          $headers = $this->headers();
 
          // Если уже была переадресация, обработаем запрашиваемый путь
-         if ($headers["Referer"] && !$headers["Cache-Control"]) {
+         if ($headers["Referer"]) {
             $url = $this->requestUrlByReferer("year-in-pixels");
 
             header("Content-Type: " . $headers["Accept"]);
@@ -57,8 +57,9 @@
             } elseif (file_exists($url)) {
                echo file_get_contents($url);
 
-            // Если не нашли файл
-            } else {
+            // Если не нашли файл и уже есть кэш (Скорее всего релоад)
+            } else if ($headers["Cache-Control"]) {
+               $this->findAndRunHandler();
                // Пока ничего не будем выдавать
                // $this->error(503, true);
             }
