@@ -48,8 +48,6 @@ define([
                   $form.attr('show', false);
                   window.location.reload();
                }
-
-               console.log(result);
             },
             error: function(jqXHR, textStatus, message) {
                new Informer({

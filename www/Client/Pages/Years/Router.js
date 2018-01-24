@@ -1,5 +1,5 @@
 define([
-   'Pages/Years/Views/Year',
+   'Pages/Years/View',
    'css!Pages/Years/Style'
 ], function (Year) {
    'use strict';
