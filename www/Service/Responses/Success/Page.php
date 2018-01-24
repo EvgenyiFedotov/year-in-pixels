@@ -30,7 +30,7 @@
          }
 
          // Путь до темплейта
-         $template = $require->pathFile("Client/Pages/" . $namePage . "/Templates/Main.jade");
+         $template = $require->pathFile("Client/Pages/" . $namePage . "/Template.jade");
 
          // Путь до основного темлейта (вдруг не найдет темлейт для страницы)
          $templateMain = $require->pathFile("Client/Page/Template.jade");

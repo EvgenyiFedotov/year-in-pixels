@@ -98,5 +98,13 @@
             $query->error(404, "The entered data is incorrect!");
          }
       }
+
+      /**
+       * Выход
+       */
+      public function singout($query) {
+         unset($_SESSION["user"]);
+         $query->response("OK");
+      }
    }
 ?>

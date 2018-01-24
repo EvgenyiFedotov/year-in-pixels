@@ -1,0 +1,44 @@
+include ../../Page/Template.jade
+
+block headBefore
+   +routepage()
+   if $paletteJSON
+      script !{"window.palette = " . $paletteJSON . ";"}
+   if $days
+      script !{"window.days = " . $days . ";"}
+
+block contentTop
+   .name-project
+      ="Year in pixels"
+   .buttons
+      .button(name="palette")
+         ="Palette"
+      .button(name="options")
+         ="Options"
+
+block contentCenter
+   .table
+      .names-months
+         .block-null
+         each $nameMonth, $key in $namesMonths
+            .name-month
+               =$nameMonth
+      .days
+         .days-month
+            - $index = 0;
+            while $index < 31
+               .day-number
+                  = $index + 1;
+               - $index++;
+         - $monthIndex = 0;
+
+         $indexDay
+
+         while $monthIndex < 12
+            .days-month
+               - $index = 0;
+               while $index < 31
+                  - $date = $getDate($year, $monthIndex + 1, $index + 1);
+                  .block-color(title=$date, data-date=$date, style=$dayColor($palette[$daysByDates[$date]["status"]]["color"]))
+                  - $index++;
+            - $monthIndex++;

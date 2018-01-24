@@ -1,10 +1,21 @@
 define([
    'Pages/Auth/Views/Auth',
-   'css!Pages/Auth/Styles/Style'
+   'css!Pages/Auth/Style'
 ], function(Auth) {
    'use strict';
 
-   new Auth({
+   var auth = new Auth({
       el: $('body')
    });
+
+   var Router = Backbone.Router.extend({
+      routes: {
+         'state=:state': 'state'
+      },
+      state: function(state) {
+         auth.showForm(state);
+      }
+   });
+
+   auth.router = new Router();
 });

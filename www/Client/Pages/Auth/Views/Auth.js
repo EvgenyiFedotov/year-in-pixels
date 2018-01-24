@@ -18,10 +18,8 @@ define([
          var $button = $(e.target).closest('.button');
          var buttonName = $button.attr('name');
 
-         this.$('.form').attr({
-            show: true,
-            state: buttonName
-         });
+         this.navigate('state=' + buttonName);
+         this.showForm(buttonName);
       },
 
       /**
@@ -68,7 +66,30 @@ define([
        * Клик по кпопке закрытия формы
        */
       _clickButtonClose: function() {
+         this.navigate(null);
          this.$('.form').attr('show', false);
+      },
+
+      /**
+       * Записать url
+       * @param {String} url
+       * @param {Object} [options]
+       */
+      navigate: function(url, options) {
+         if (this.router) {
+            this.router.navigate(url, options);
+         }
+      },
+
+      /**
+       * Показать форму
+       * @param {String} state
+       */
+      showForm: function(state) {
+         this.$('.form').attr({
+            show: true,
+            state: state
+         });
       }
    });
 });

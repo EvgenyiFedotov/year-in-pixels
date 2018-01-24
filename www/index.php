@@ -12,8 +12,6 @@
       "arguments" => [$require]
    ]);
 
-   // unset($_SESSION["user"]);
-
    // Запустим обработку запроса
    $query->autoResponse();
 ?>

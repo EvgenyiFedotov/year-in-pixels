@@ -1,9 +1,10 @@
 define([
    'Pages/Years/Views/Palette/Palette',
    'Pages/Years/Views/MenuOptions/MenuOptions',
+   'Pages/Years/Views/Settings/Settings',
    'Core/Service',
    'Pages/Years/Helpers'
-], function(Palette, MenuOptions, Service, Helpers) {
+], function(Palette, MenuOptions, Settings, Service, Helpers) {
    'use strict';
 
    return Backbone.View.extend({
@@ -70,9 +71,7 @@ define([
          });
 
          // Подпишимся на события клика по меню опций
-         this.listenTo(this.menuOptions, 'clickItem', function(data) {
-            console.log('menu', data);
-         });
+         this.listenTo(this.menuOptions, 'clickItem', this._clickMenuOptions);
       },
 
       /**
@@ -164,10 +163,32 @@ define([
        */
       _clickButtonOptions: function(e) {
          e.stopPropagation();
+
+         this.setBlur(false);
+         this.daysPalette.hide();
+         this.menuOptions.hide();
          this.menuOptions.show();
 
          // Запишем в навигацию
          this.navigate('options');
+      },
+
+      /**
+       * Обработчик клика по меню опций
+       */
+      _clickMenuOptions: function(data, $item, e) {
+         // Настройки
+         if (data.name === 'settings') {
+            e.stopPropagation();
+
+         // Выход
+         } else if (data.name === 'sign-out') {
+            Service.get('Auth.Singout', {}, {
+               success: function(result) {
+                  window.location.reload();
+               }.bind(this)
+            });
+         }
       }
    });
 });
