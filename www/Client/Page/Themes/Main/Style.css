@@ -1,8 +1,63 @@
+.button {
+  color: #E0E0E0;
+  cursor: pointer;
+  display: inline-block;
+}
+.button[type="link"]:hover {
+  text-decoration: underline;
+}
+.button[type="block"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #212121;
+  border-radius: 3px;
+  color: #E0E0E0;
+  border: 1px solid #E0E0E0;
+  line-height: 2rem;
+}
+.button[type="block"]:hover {
+  background-color: #E0E0E0;
+  color: #212121;
+}
+input[type="text"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #212121;
+  border-radius: 3px;
+  color: #E0E0E0;
+  border: 1px solid #E0E0E0;
+  width: 100%;
+}
+input[type="password"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #212121;
+  border-radius: 3px;
+  color: #E0E0E0;
+  border: 1px solid #E0E0E0;
+  width: 100%;
+}
+.label {
+  color: #BDBDBD;
+  margin-right: 1rem;
+  cursor: default;
+}
+.label[data-side="right"] {
+  margin-left: 0rem;
+  margin-left: 1rem;
+}
+.comment {
+  color: #BDBDBD;
+  font-size: .8rem;
+  font-style: italic;
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: default;
 }
 html {
   font-size: 14px;
@@ -21,17 +76,23 @@ body {
   display: flex;
   flex-direction: column;
 }
+body .name-project {
+  width: 100%;
+  cursor: default;
+  font-size: 2rem;
+  color: #E0E0E0;
+  padding: 2rem 0;
+  text-align: center;
+}
 body > .content {
   height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  color: #757575;
+  color: #E0E0E0;
 }
 body > .content .content-top {
-  font-size: 2rem;
   height: 5rem;
-  padding: 2rem 0;
   display: flex;
 }
 body > .content .content-center {
@@ -43,5 +104,20 @@ body > .content .content-bottom {
 }
 body .glyphicon {
   font-size: 1rem;
-  color: #757575;
+  color: #E0E0E0;
+}
+body .row {
+  display: flex;
+}
+body .column {
+  display: flex;
+  flex-direction: column;
+}
+::selection {
+  background-color: #E0E0E0;
+  color: #212121;
+}
+::-moz-selection {
+  background-color: #E0E0E0;
+  color: #212121;
 }

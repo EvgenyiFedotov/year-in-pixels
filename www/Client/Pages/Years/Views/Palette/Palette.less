@@ -1,0 +1,24 @@
+@import "Page/Themes/Main/Colors";
+
+.palette {
+   border-radius: 2px;
+   padding: .5rem;
+   opacity: .1;
+
+   .item {
+      display: flex;
+      color: @color-text;
+      line-height: 1.5rem;
+      padding: .3rem .5rem;
+      border-radius: 2px;
+      cursor: pointer;
+
+      .block-color {
+         margin-right: .5rem;
+      }
+
+      &:hover {
+         background-color: @color-border;
+      }
+   }
+}

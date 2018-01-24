@@ -48,11 +48,6 @@ define(['css!Views/FloatArea/FloatArea'], function() {
 
    return Backbone.View.extend({
       /**
-       * @config {String}
-       */
-      className: 'float-area',
-
-      /**
        * @config {jQuery}
        */
       $body: $('body'),
@@ -73,8 +68,11 @@ define(['css!Views/FloatArea/FloatArea'], function() {
       offset: {},
 
       /**
-       * @param  {Object} options
-       * @param  {jQuery} options.$target
+       * @param {Object} options
+       * @param {jQuery} options.$el
+       * @param {jQuery} options.$target
+       * @param {jQuery} options.$border
+       * @param {Object} options.offset
        */
       initialize: function(options) {
          var $el = options.$el;
@@ -82,7 +80,8 @@ define(['css!Views/FloatArea/FloatArea'], function() {
          // Настроить всплывающую область
          if ($el && $el.length) {
             this.$el = $el;
-            this.$el.addClass(this.className);
+            this.$el.addClass('float-area ' + this.className);
+            this.$el.attr('data-cid', this.cid);
             this.$body.append(this.$el);
          }
 
@@ -97,13 +96,43 @@ define(['css!Views/FloatArea/FloatArea'], function() {
       },
 
       /**
+       * Подписаться на событие клика по body
+       */
+      _onClickBody: function() {
+         // Обработчик на клик вне области всплывающей панели
+         this.$body.on('click.click-body-' + this.cid, this._clickBody.bind(this));
+      },
+
+      /**
+       * Отписать от события клика по body
+       */
+      _offClickBody: function() {
+         this.$body.off('click.click-body-' + this.cid);
+      },
+
+      /**
+       * Обработчик клика по body
+       */
+      _clickBody: function(e) {
+         var $panel = $(e.target).closest('.float-area[data-cid="' + this.cid + '"]');
+
+         // Скроем панель если кликнули не на нее
+         if (!$panel.length) {
+            this.hide();
+         }
+      },
+
+      /**
        * Установить target
        * @param  {jQuery} $target
        */
       setTarget: function($target) {
          if ($target && $target.length) {
             this.$target = $target;
-            this.$el.css($target.offset());
+         }
+
+         if (this.$target) {
+            this.$el.css(this.$target.offset());
          }
       },
 
@@ -163,25 +192,41 @@ define(['css!Views/FloatArea/FloatArea'], function() {
       },
 
       /**
-       * Оторбразить панель
+       * Отобразить панель
        * @param {jQuery} [$target]
        * @param {Object} offset
        */
       show: function($target, offset) {
          this.setTarget($target);
 
-         if (this.$target) {
-            this.$el.attr('data-show', 'true');
-            this.setOffset(offset);
-            this.checkPosition();
-         }
+         this.$el.attr('data-show', 'true');
+         this.setOffset(offset);
+         this.checkPosition();
+
+         this.trigger('show');
+
+         // Подпишимся на событие клика по body
+         this._onClickBody();
       },
 
       /**
        * Скрыть панель
        */
       hide: function () {
+         // Отпишимся от события клика по body
+         this._offClickBody();
          this.$el.attr('data-show', 'false');
+         this.trigger('hide');
+      },
+
+      /**
+       * До переопределим удаление представления
+       */
+      remove: function() {
+         // Отпишимся от события клика по body
+         this._offClickBody();
+
+         Backbone.View.prototype.remove(this, arguments);
       }
    });
 });

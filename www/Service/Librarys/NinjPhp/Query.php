@@ -41,7 +41,7 @@
          // Вычислим откуда было обращение
          $headers = $this->headers();
 
-         // Если уже ьбыла переадресация, обработаем запрашиваемый путь
+         // Если уже была переадресация, обработаем запрашиваемый путь
          if ($headers["Referer"]) {
             $url = $this->requestUrlByReferer("year-in-pixels");
 
@@ -56,17 +56,30 @@
             // Если запрос при загрузке страницы
             } elseif (file_exists($url)) {
                echo file_get_contents($url);
+
+            // Если не нашли файл и уже есть кэш (Скорее всего релоад)
+            } else if ($headers["Cache-Control"]) {
+               $this->findAndRunHandler();
+               // Пока ничего не будем выдавать
+               // $this->error(503, true);
             }
          } else {
             /**
              * Найдем обработчик url
              * Если обработчик не найден отдадим ошибку
              */
+            $this->findAndRunHandler();
+         }
+      }
+
+      /**
+       * Поиск обрабочика url
+       */
+      public function findAndRunHandler() {
             if (!$this->success($this->requestUrl(true), "success")) {
                $this->error(503, true);
             }
          }
-      }
 
       /**
        * Проверить success-роуты
@@ -79,14 +92,14 @@
       /**
        * Проверить error-роуты
        * @param {String|Number} $url
-       * @param {Boolean} $status Отправлять ли статус
+       * @param {Boolean|String} $status Отправлять ли статус
        */
       public function error($url, $status = false) {
          $result = $this->checkRoutes((string) $url, "error");
 
          // Если необходимо отправить статус
          if ($status) {
-            $this->status($url);
+            $this->status($url, $status);
          }
 
          return $result;

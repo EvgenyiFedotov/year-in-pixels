@@ -7,8 +7,10 @@ define(function () {
    // Отмена контекстного меню
    $html.on('contextmenu', false);
 
-   // Уставновка видимость контента
-   $body.css('visibility', 'visible');
+   // Уставновка видимость контента (Пока сделаем так, но нужно переделать)
+   setTimeout(function() {
+      $body.css('visibility', 'visible');
+   }, 100);
 
    return {
       $html: $html,

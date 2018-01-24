@@ -1,5 +1,6 @@
 @import "Fonts";
 @import "Colors";
+@import "Views";
 
 .html-body() {
    .font-encode-sans();
@@ -11,7 +12,6 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   cursor: default;
 }
 
 html {
@@ -24,6 +24,15 @@ body {
    display: flex;
    flex-direction: column;
 
+   .name-project {
+      width: 100%;
+      cursor: default;
+      font-size: 2rem;
+      color: @color-text;
+      padding: 2rem 0;
+      text-align: center;
+   }
+
    & > .content {
       height: 100%;
       margin: 0 auto;
@@ -32,9 +41,7 @@ body {
       color: @color-text;
 
       .content-top {
-         font-size: 2rem;
          height: 5rem;
-         padding: 2rem 0;
          display: flex;
       }
 
@@ -52,4 +59,27 @@ body {
       font-size: 1rem;
       color: @color-text;
    }
+
+   .row {
+      display: flex;
+   }
+
+   .column {
+      display: flex;
+      flex-direction: column;
+   }
+}
+
+// selection
+.selection() {
+   background-color: @color-text;
+   color: @color-background;
+}
+
+::selection {
+   .selection();
+}
+
+::-moz-selection {
+   .selection();
 }

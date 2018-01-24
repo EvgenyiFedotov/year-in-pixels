@@ -49,7 +49,13 @@
          $matches = [];
          preg_match_all('/.*' . $host . '\/(.*)/', $referer, $matches);
 
-         $dirname = pathinfo($matches[1][0])["dirname"];
+         $pathinfo = pathinfo($matches[1][0]);
+
+         $dirname = $pathinfo["dirname"];
+
+         if (substr($matches[1][0], -1) === "/") {
+            $dirname .= "/" . $pathinfo["filename"];
+         }
 
          if ($dirname) {
             $url = str_replace($dirname . "/", "", $url);

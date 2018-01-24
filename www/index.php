@@ -1,4 +1,6 @@
 <?php
+   session_start();
+
    include "Service/Librarys/NinjPhp/RequireConfig.php";
    include "Service/Librarys/NinjPhp/Query.php";
 

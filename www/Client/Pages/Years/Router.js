@@ -1,6 +1,6 @@
 define([
-   'Pages/Years/Views/Year',
-   'css!Pages/Years/Styles/Main'
+   'Pages/Years/View',
+   'css!Pages/Years/Style'
 ], function (Year) {
    'use strict';
 
@@ -11,13 +11,21 @@ define([
    var Router = Backbone.Router.extend({
       routes: {
          'date=:date': 'date',
-         'palette': 'palette'
+         'palette': 'palette',
+         'menu': 'menu',
+         'settings': 'settings'
       },
       date: function(date) {
          year.$('.block-color[data-date="' + date + '"]').click();
       },
       palette: function() {
          year.$('.button[name="palette"]').click();
+      },
+      menu: function() {
+         year.showMenu();
+      },
+      settings: function() {
+         year.showSettings();
       }
    });
 

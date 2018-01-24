@@ -6,8 +6,11 @@ mixin routepage()
 doctype html
 html
    head
-      title="Events|time"
-      meta(name="viewport", http-equiv="content-type", content="text/html, charset=utf-8, width=device-width, initial-scale=1.0")
+      title="Year in pixels"
+      meta(http-equiv="content-type", content="text/html; charset=UTF-8")
+      meta(http-equiv="X-UA-Compatible", content="chrome=1")
+      meta(name="viewport", content="width=device-width, initial-scale=1.0")
+      link(rel="icon", href="favicon.ico")
       link(href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded:400,700", rel="stylesheet")
 
       script(src="Client/Page/Config.js")
@@ -21,6 +24,7 @@ html
       block headAfter
 
    body(style="visibility: hidden; overflow: hidden;")
+      block bodyBeforeContent
       .content
          .content-top
             block contentTop
@@ -28,3 +32,4 @@ html
             block contentCenter
          .content-bottom
             block contentBottom
+      block bodyAfterContent

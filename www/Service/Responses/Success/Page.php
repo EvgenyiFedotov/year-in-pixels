@@ -14,7 +14,7 @@
             "convertDirs" => [
                "Client/Page",
                "Client/Pages",
-               "Client/Styles"
+               "Client/Views"
             ]
          ]);
          $lesscss->convert();
@@ -22,8 +22,15 @@
          // Имя страницы
          $namePage = ucfirst($route[0]);
 
+         // Если пользователь еще не залогинился, выдадим страницу "Auth", иначе "Years"
+         if (isset($_SESSION["user"])) {
+            $namePage = "Years";
+         } else {
+            $namePage = "Auth";
+         }
+
          // Путь до темплейта
-         $template = $require->pathFile("Client/Pages/" . $namePage . "/Templates/Main.jade");
+         $template = $require->pathFile("Client/Pages/" . $namePage . "/Template.jade");
 
          // Путь до основного темлейта (вдруг не найдет темлейт для страницы)
          $templateMain = $require->pathFile("Client/Page/Template.jade");

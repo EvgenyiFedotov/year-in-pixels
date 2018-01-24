@@ -1,0 +1,56 @@
+.button {
+  color: #E0E0E0;
+  cursor: pointer;
+  display: inline-block;
+}
+.button[type="link"]:hover {
+  text-decoration: underline;
+}
+.button[type="block"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #212121;
+  border-radius: 3px;
+  color: #E0E0E0;
+  border: 1px solid #E0E0E0;
+  line-height: 2rem;
+}
+.button[type="block"]:hover {
+  background-color: #E0E0E0;
+  color: #212121;
+}
+input[type="text"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #212121;
+  border-radius: 3px;
+  color: #E0E0E0;
+  border: 1px solid #E0E0E0;
+  width: 100%;
+}
+input[type="password"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #212121;
+  border-radius: 3px;
+  color: #E0E0E0;
+  border: 1px solid #E0E0E0;
+  width: 100%;
+}
+.label {
+  color: #BDBDBD;
+  margin-right: 1rem;
+  cursor: default;
+}
+.label[data-side="right"] {
+  margin-left: 0rem;
+  margin-left: 1rem;
+}
+.comment {
+  color: #BDBDBD;
+  font-size: .8rem;
+  font-style: italic;
+}

@@ -1,0 +1,57 @@
+.informer {
+  position: fixed;
+  right: 1rem;
+  bottom: -5.5rem;
+  width: 20rem;
+  height: 3rem;
+  background-color: #212121;
+  border-radius: 3px;
+  box-shadow: 0 0 .75rem #E0E0E030;
+  transition: bottom .5s;
+  overflow: hidden;
+}
+.informer[rows="2"] {
+  height: 5rem;
+}
+.informer .color-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #E0E0E0;
+}
+.informer[type="info"] .color-indicator {
+  background-color: #01579B;
+}
+.informer[type="error"] .color-indicator {
+  background-color: #E53935;
+}
+.informer[type="success"] .color-indicator {
+  background-color: #00897B;
+}
+.informer .top {
+  display: flex;
+  margin-top: .5rem;
+  padding: .5rem 1rem;
+  margin-bottom: .2rem;
+}
+.informer .top .header {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #E0E0E0;
+  width: 100%;
+  font-weight: bold;
+}
+.informer .top .button[name="close"] {
+  font-size: .9rem;
+  margin-left: 1rem;
+}
+.informer .note {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: .5rem 1rem;
+  color: #E0E0E0;
+}
