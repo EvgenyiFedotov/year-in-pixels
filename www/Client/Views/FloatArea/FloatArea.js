@@ -80,7 +80,8 @@ define(['css!Views/FloatArea/FloatArea'], function() {
          // Настроить всплывающую область
          if ($el && $el.length) {
             this.$el = $el;
-            this.$el.addClass('float-area ' + this.className);
+            this.className = (this.className || '') + ' float-area';
+            this.$el.addClass(this.className);
             this.$el.attr('data-cid', this.cid);
             this.$body.append(this.$el);
          }

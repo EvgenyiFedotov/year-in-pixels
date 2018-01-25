@@ -1,9 +1,11 @@
 define([
+   'Pages/Years/Views/Palette/Palette',
+   'Pages/Years/Views/MenuOptions/MenuOptions',
+   'Pages/Years/Views/Settings/Settings',
    'Views/ButtonPanel/View',
-   'Views/List/View',
    'Core/Service',
    'Pages/Years/Helpers'
-], function(ButtonPanel, List, Service, Helpers) {
+], function(Palette, MenuOptions, Settings, ButtonPanel, Service, Helpers) {
    'use strict';
 
    return Backbone.View.extend({
@@ -16,33 +18,69 @@ define([
        * @config {Object}
        */
       events: {
+         // Клик по блоку дня
+         // 'click .table .block-color': '_clickBlockColor',
+
+         // // Клик по кнопке с палеткой
+         // 'click .button[name="palette"]': '_clickButtonPalette',
+
+         // // Клик по кнопке с меню
+         // 'click .button[name="menu"]': '_showMenu'
       },
 
       initialize: function() {
-         var menu = new List({
-            className: 'main-menu',
-            items: [
-               {
-                  content: 'Settings',
-                  attrs: {
-                     'data-name': 'settings'
-                  }
-               }, {
-                  content: 'Sign out',
-                  attrs: {
-                     'data-name': 'sign-out'
-                  }
-               }
-            ]
-         });
+         // Палетка для блоков дней
+         // this.daysPalette = new Palette({
+         //    $border: $('.content .table'),
+         //    offset: {
+         //       top: -12,
+         //       left: -14
+         //    }
+         // });
 
-         // Кнопка меню
          this.menu = new ButtonPanel({
             el: this.$('.button[name="menu"]'),
             panel: {
-               $el: menu.$el
+               $el: this.daysPalette.$el
             }
          });
+
+         // // Будем слушать события клика по элементу палетки
+         // this.listenTo(this.daysPalette, 'clickItem', function(data) {
+         //    var date = this.daysPalette.date;
+
+         //    // Отправим данные на сервер
+         //    Service.post('Days.Write', {
+         //       date: date,
+         //       status: data.status
+         //    }, {
+         //       success: function(result) {
+         //          this.colorDay(date, data.color);
+         //       }.bind(this)
+         //    });
+
+         //    this.daysPalette.hide();
+         // });
+
+         // this.listenTo(this.daysPalette, 'hide', this.hidePaletteDays);
+
+         // // Палетка для кнопкии "палетка"
+         // this.buttonPalette = new Palette({
+         //    $border: $('body'),
+         //    offset: {
+         //       top: -5,
+         //       left: -5
+         //    }
+         // });
+
+         // // Меню опций
+         // this.menuOptions = new MenuOptions({
+         //    $target: this.$('.button[name="menu"]'),
+         //    $border: $('body')
+         // });
+
+         // // Подпишимся на события клика по меню опций
+         // this.listenTo(this.menuOptions, 'clickItem', this._clickMenuOptions);
       },
 
       /**
