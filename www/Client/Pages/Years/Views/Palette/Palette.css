@@ -5,7 +5,7 @@
 }
 .palette .item {
   display: flex;
-  color: #E0E0E0;
+  color: #757575;
   line-height: 1.5rem;
   padding: .3rem .5rem;
   border-radius: 2px;
@@ -15,5 +15,5 @@
   margin-right: .5rem;
 }
 .palette .item:hover {
-  background-color: #424242;
+  background-color: #eeeeee;
 }

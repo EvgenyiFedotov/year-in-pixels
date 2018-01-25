@@ -5,11 +5,11 @@
   box-sizing: border-box;
   cursor: pointer;
   border-radius: 2px;
-  border: 1px solid #424242;
+  border: 1px solid #eeeeee;
 }
 .block-color:hover {
-  border-color: #424242;
-  background-color: #424242;
+  border-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 body > .content[data-blur="true"] {
   filter: blur(1px);
@@ -34,7 +34,7 @@ body > .content .content-top .buttons {
   margin-top: 0.3rem;
 }
 body > .content .content-top .buttons .button {
-  color: #E0E0E0;
+  color: #757575;
   font-size: 1rem;
   margin-left: 1rem;
   cursor: pointer;

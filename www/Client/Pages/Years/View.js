@@ -50,6 +50,8 @@ define([
                   this.colorDay(date, data.color);
                }.bind(this)
             });
+
+            this.daysPalette.hide();
          });
 
          this.listenTo(this.daysPalette, 'hide', this.hidePaletteDays);
