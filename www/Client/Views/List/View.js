@@ -41,6 +41,8 @@ define([
          this.$el.addClass('list');
          // Рендер списка
          this.$el.html(this.render(options));
+
+         Backbone.View.prototype.initialize.apply(this, arguments);
       },
 
       /**

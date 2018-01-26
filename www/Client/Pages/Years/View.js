@@ -1,9 +1,14 @@
 define([
-   'Views/ButtonPanel/View',
-   'Views/List/View',
+   'Views/ButtonMenu/View',
+   'Views/Menu/View',
+   'Views/FloatArea/View',
+   'Pages/Years/Views/Palette/Items',
+   'jade!Pages/Years/Views/Palette/Item',
+   'Pages/Years/Views/Settings/View',
    'Core/Service',
-   'Pages/Years/Helpers'
-], function(ButtonPanel, List, Service, Helpers) {
+   'Pages/Years/Helpers',
+   'css!Pages/Years/Views/Palette/Style'
+], function(ButtonMenu, Menu, FloatArea, PaletteItems, tPaletteItem, Settings, Service, Helpers) {
    'use strict';
 
    return Backbone.View.extend({
@@ -16,51 +21,158 @@ define([
        * @config {Object}
        */
       events: {
+         // Клик по блоку дня
+         'click .table .block-color': '_clickDay'
       },
 
       initialize: function() {
-         var menu = new List({
-            className: 'main-menu',
-            items: [
-               {
-                  content: 'Settings',
-                  attrs: {
-                     'data-name': 'settings'
-                  }
-               }, {
-                  content: 'Sign out',
-                  attrs: {
-                     'data-name': 'sign-out'
-                  }
-               }
-            ]
-         });
-
          // Кнопка меню
-         this.menu = new ButtonPanel({
-            el: this.$('.button[name="menu"]'),
-            panel: {
+         this.createMenu();
+
+         // Палетка
+         this.createPalette();
+
+         // Палетка для дней
+         this.createPaletteDays();
+      },
+
+      /**
+       * Создать меню (кнопку) (для настроек)
+       */
+      createMenu: function() {
+         if (!this.menu) {
+            this.menu = new ButtonMenu({
+               el: this.$('.button[name="menu"]'),
+               menu: {
+                  items: [
+                     {
+                        content: 'Settings',
+                        attrs: {'data-name': 'settings'}
+                     }, {
+                        content: 'Sign out',
+                        attrs: {'data-name': 'sign-out'}
+                     }
+                  ]
+               }
+            });
+
+            this.listenTo(this.menu, 'hide', function() {
+               if (window.location.hash !== '#settings') {
+                  this.navigate(null);
+               }
+            });
+
+            this.listenTo(this.menu, 'show', function() {
+               this.buttonPalette && this.buttonPalette.hide();
+               this.palette && this.palette.hide();
+               this.navigate('menu');
+            });
+
+            this.listenTo(this.menu, 'clickItem', function(data) {
+               // Настройки
+               if (data.name === 'settings') {
+                  // Создалим панель настроек, если это необходимо и отобразим ее
+                  this.showSettings();
+
+                  this.navigate('settings');
+
+               // Выход
+               } else if (data.name === 'sign-out') {
+                  Service.get('Auth.Singout', {}, {
+                     success: function(result) {
+                        window.location.reload();
+                     }.bind(this)
+                  });
+               }
+            });
+         }
+      },
+
+      /**
+       * Создать палетку
+       */
+      createPalette: function() {
+         if (!this.buttonPalette) {
+            this.buttonPalette = new ButtonMenu({
+               el: this.$('.button[name="palette"]'),
+               menu: {
+                  className: 'palette',
+                  templateItem: tPaletteItem,
+                  items: PaletteItems()
+               }
+            });
+
+            this.listenTo(this.buttonPalette, 'hide', function() {
+               this.navigate(null);
+            });
+
+            this.listenTo(this.buttonPalette, 'show', function() {
+               this.menu && this.menu.hide();
+               this.palette && this.palette.hide();
+               this.navigate('palette');
+            });
+         }
+      },
+
+      /**
+       * Создать палетку для дней
+       */
+      createPaletteDays: function() {
+         if (!this.palette) {
+            var $content = this.$el.children('.content');
+            var menu = new Menu({
+               className: 'palette',
+               templateItem: tPaletteItem,
+               items: PaletteItems()
+            });
+
+            this.listenTo(menu, 'clickItem', function(data) {
+               var date = this.palette.date;
+
+               // Отправим данные на сервер
+               Service.post('Days.Write', {
+                  date: date,
+                  status: data.status
+               }, {
+                  success: function(result) {
+                     this.$('.content .table .block-color[data-date=' + date + ']')
+                        .attr('style', Helpers.styleColorBlock(data.color));
+                  }.bind(this)
+               });
+
+               this.palette.hide();
+            });
+
+            this.palette = new FloatArea({
                $el: menu.$el
-            }
-         });
+            });
+
+            this.listenTo(this.palette, 'hide', function() {
+               $content.attr('data-blur', 'false');
+               this.navigate(null);
+            });
+
+            this.listenTo(this.palette, 'show', function() {
+               this.menu && this.menu.hide();
+               this.buttonPalette && this.buttonPalette.hide();
+               this.navigate('date=' + this.palette.date);
+               $content.attr('data-blur', 'true');
+            });
+         }
       },
 
       /**
-       * Установить размытие контента
-       * @param  {Boolean} value
+       * Клик по блоку дня
        */
-      setBlur: function(value) {
-         this.$el.children('.content').attr('data-blur', value + '');
-      },
+      _clickDay: function(e) {
+         if (this.palette) {
+            var $target = $(e.target);
 
-      /**
-       * Установить цвет для определенной даты (дня)
-       * @param  {String} date
-       * @param  {String} color
-       */
-      colorDay: function(date, color) {
-         this.$('.content .table .block-color[data-date=' + date + ']')
-            .attr('style', Helpers.styleColorBlock(color));
+            e.stopPropagation();
+
+            this.palette.date = $target.data().date;
+            this.palette.show($target);
+         }
       },
 
       /**
@@ -75,91 +187,11 @@ define([
       },
 
       /**
-       * Поменять режим отображения таблицы с днями
-       * @param {Boolean|String} value
-       */
-      tableShow: function(value) {
-         this.$('.content-center>.table').attr('data-show', value + '');
-      },
-
-      /**
-       * Обработчик скрытия палетки дней
-       */
-      hidePaletteDays: function() {
-         // Убрать размытие фона
-         this.setBlur(false);
-
-         // Запишем в навигацию
-         this.navigate(null);
-      },
-
-      /**
-       * Обработчик клика по блоку дня
-       */
-      _clickBlockColor: function(e) {
-         var $target = $(e.target);
-         var date = $target.data().date;
-
-         e.stopPropagation();
-
-         this.daysPalette.show($target);
-         this.daysPalette.date = date;
-
-         // Скроем палетку для кнопки
-         this.buttonPalette.hide();
-         this.menuOptions.hide();
-
-         // Размытие контента
-         this.setBlur(true);
-
-         // Запишем в навигацию
-         this.navigate('date=' + date);
-      },
-
-      /**
-       * Обработчик клика по кнопке с палеткой
-       */
-      _clickButtonPalette: function(e) {
-         var $target = $(e.target);
-
-         e.stopPropagation();
-
-         this.daysPalette.hide();
-         this.menuOptions.hide();
-
-         this.setBlur(false);
-
-         this.buttonPalette.show($target);
-
-         // Запишем в навигацию
-         this.navigate('palette');
-      },
-
-      /**
-       * Показать меню
-       */
-      showMenu: function() {
-         this.setBlur(false);
-         this.daysPalette.hide();
-         this.menuOptions.hide();
-         this.menuOptions.show();
-
-         // Запишем в навигацию
-         this.navigate('menu');
-      },
-
-      /**
-       * Обработчик клика по кнопке с меню
-       */
-      _showMenu: function(e) {
-         e.stopPropagation();
-         this.showMenu();
-      },
-
-      /**
        * Создать и отобразить настройки
        */
       showSettings: function() {
+         var $table = this.$('.content-center>.table');
+
          // Если еще не создали панель настроек
          if (!this.settings) {
             this.settings = new Settings({
@@ -167,48 +199,20 @@ define([
             });
 
             // Слушать событие закрытия панели с опциями
-            this.listenTo(this.settings, 'hide', this._hideSettings);
+            this.listenTo(this.settings, 'hide', function() {
+               this.navigate(null);
+               $table.attr('data-show', 'true');
+            });
          }
 
          // Скроем таблицу с днями
-         this.tableShow(false);
+         $table.attr('data-show', 'false');
 
          // Отобразим панель
          this.settings.show();
 
          // Запишем в навигацию
          this.navigate('settings');
-      },
-      
-      /**
-       * Обработчик закрытия панели настроек
-       */
-      _hideSettings: function() {
-         this.tableShow(true);
-      },
-
-      /**
-       * Обработчик клика по меню опций
-       */
-      _clickMenuOptions: function(data, $item, e) {
-         // Настройки
-         if (data.name === 'settings') {
-            e.stopPropagation();
-
-            // Скроем меню опций
-            this.menuOptions.hide();
-
-            // Создалим панель настроек, если это необходимо и отобразим ее
-            this.showSettings();
-
-         // Выход
-         } else if (data.name === 'sign-out') {
-            Service.get('Auth.Singout', {}, {
-               success: function(result) {
-                  window.location.reload();
-               }.bind(this)
-            });
-         }
       }
    });
 });

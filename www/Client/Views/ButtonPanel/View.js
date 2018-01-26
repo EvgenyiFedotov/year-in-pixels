@@ -1,5 +1,5 @@
 define([
-   'Views/FloatArea/FloatArea'
+   'Views/FloatArea/View'
 ], function(FloatArea) {
    'use strict';
 
@@ -70,15 +70,31 @@ define([
        * Клик по кнопке
        */
       click: function(e) {
-         var panel = this.createPanel();
-
          e.stopPropagation();
+
+         this.show();
+
+         this.trigger('click', e);
+      },
+
+      /**
+       * Отобразить панель
+       */
+      show: function() {
+         var panel = this.createPanel();
 
          if (panel) {
             panel.show();
          }
+      },
 
-         this.trigger('click', e);
+      /**
+       * Скрыть панель
+       */
+      hide: function() {
+         if (this.panel) {
+            this.panel.hide();
+         }
       }
    });
 });

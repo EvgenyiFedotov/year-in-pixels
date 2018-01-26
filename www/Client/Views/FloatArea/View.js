@@ -1,4 +1,6 @@
-define(['css!Views/FloatArea/FloatArea'], function() {
+define([
+   'css!Views/FloatArea/Style'
+], function() {
    'use sctrict';
 
    /**
@@ -73,6 +75,7 @@ define(['css!Views/FloatArea/FloatArea'], function() {
        * @param {jQuery} options.$target
        * @param {jQuery} options.$border
        * @param {Object} options.offset
+       * @param {Boolean} options.shadow
        */
       initialize: function(options) {
          var $el = options.$el;
@@ -82,7 +85,10 @@ define(['css!Views/FloatArea/FloatArea'], function() {
             this.$el = $el;
             this.className = (this.className || '') + ' float-area';
             this.$el.addClass(this.className);
-            this.$el.attr('data-cid', this.cid);
+            this.$el.attr({
+               'data-cid': this.cid,
+               'data-shadow': options.show === undefined ? true : !!(options.shadow)
+            });
             this.$body.append(this.$el);
          }
 
