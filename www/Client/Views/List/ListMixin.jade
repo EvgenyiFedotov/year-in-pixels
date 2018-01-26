@@ -1,0 +1,9 @@
+mixin list(items, templateItem)
+   if items && items.length
+      each item, index in items
+         .item&attributes(item.attrs || {})
+            //- Вставим сразу переданный контент, если так есть
+            !{item.content || ''}
+            //- Если передали шаблон итема
+            if templateItem
+               !{templateItem(item)}

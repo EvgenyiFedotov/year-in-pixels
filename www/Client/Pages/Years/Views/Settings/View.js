@@ -1,6 +1,6 @@
 define([
-   'jade!Pages/Years/Views/Settings/Settings',
-   'css!Pages/Years/Views/Settings/Settings'
+   'jade!Pages/Years/Views/Settings/Template',
+   'css!Pages/Years/Views/Settings/Style'
 ], function(template) {
    'use strict';
 

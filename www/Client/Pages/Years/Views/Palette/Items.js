@@ -1,9 +1,6 @@
 define([
-   'Views/FloatMenu/FloatMenu',
-   'jade!Pages/Years/Views/Palette/Item',
-   'Pages/Years/Helpers',
-   'css!Pages/Years/Views/Palette/Palette'
-], function(FloatMenu, templateItem, Helpers) {
+   'Pages/Years/Helpers'
+], function(Helpers) {
    'use strict';
 
    // Запомним палетку локально
@@ -14,10 +11,8 @@ define([
       delete window.palette;
    }
 
-   return FloatMenu.extend({
-      className: 'palette',
-      templateItem: templateItem,
-      items: palette.map(function(item) {
+   return function() {
+      return palette.map(function(item) {
          item.attrs = {
             'data-color': item.color,
             'data-status': item.status
@@ -25,6 +20,6 @@ define([
          item.style = Helpers.styleColorBlock(item.color);
 
          return item;
-      })
-   });
+      });
+   }; 
 });

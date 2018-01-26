@@ -1,10 +1,9 @@
 define([
-   'Views/FloatArea/FloatArea',
-   'jade!Views/FloatMenu/FloatMenu'
-], function(FloatArea, template) {
+   'jade!Views/List/Template'
+], function(template) {
    'use strict';
-   
-   return FloatArea.extend({
+
+   return Backbone.View.extend({
       /**
        * Шаблон итема
        * @config {Function}
@@ -18,19 +17,17 @@ define([
       items: [],
 
       /**
-       * Нужно ли добавлять тень
-       * @config {Boolean}
-       */
-      shadow: true,
-
-      /**
        * Обратчики представления
        * @return {Object}
        */
       events: function() {
          return {
+            /**
+             * Клик по итему списка
+             */
             'click .item': function(e) {
                var $item = $(e.target).closest('.item');
+
                this.trigger('clickItem', $item.data(), $item, e);
             }
          };
@@ -40,15 +37,19 @@ define([
        * @param {Object} options
        */
       initialize: function (options) {
-         options.$el = this.render(options);
-         return FloatArea.prototype.initialize.apply(this, arguments);
+         // Установим класс
+         this.$el.addClass('list');
+         // Рендер списка
+         this.$el.html(this.render(options));
+
+         Backbone.View.prototype.initialize.apply(this, arguments);
       },
 
       /**
        * Рендер
        * @param {Object} options
-       * @param {Array.<Object>} options.items
-       * @param {Function} templateItem
+       * @param {Array.<Object>} [options.items]
+       * @param {Function} [options.templateItem]
        */
       render: function(options) {
          this.items = options.items instanceof Array
@@ -59,16 +60,10 @@ define([
             ? options.templateItem
             : this.templateItem;
 
-         var $el = $(template({
+         return $(template({
             items: this.items,
             templateItem: this.templateItem
          }));
-
-         $el.attr({
-            'data-shadow': !!(options.shadow !== undefined ? options.shadow : this.shadow)
-         });
-
-         return $el;
       }
-   })
+   });
 });

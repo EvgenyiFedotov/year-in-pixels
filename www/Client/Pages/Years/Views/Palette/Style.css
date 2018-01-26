@@ -1,0 +1,7 @@
+.palette .item[data-status] {
+  display: flex;
+  padding: .3rem .5rem;
+}
+.palette .item[data-status] .block-color {
+  margin-right: .5rem;
+}

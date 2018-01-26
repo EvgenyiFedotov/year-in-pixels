@@ -4,9 +4,9 @@
   bottom: -5.5rem;
   width: 20rem;
   height: 3rem;
-  background-color: #212121;
+  background-color: #FFFFFF;
   border-radius: 3px;
-  box-shadow: 0 0 .75rem #E0E0E030;
+  box-shadow: 0 0 .75rem #75757530;
   transition: bottom .5s;
   overflow: hidden;
 }
@@ -19,7 +19,7 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #E0E0E0;
+  background-color: #757575;
 }
 .informer[type="info"] .color-indicator {
   background-color: #01579B;
@@ -40,7 +40,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #E0E0E0;
+  color: #757575;
   width: 100%;
   font-weight: bold;
 }
@@ -53,5 +53,5 @@
   overflow: hidden;
   text-overflow: ellipsis;
   padding: .5rem 1rem;
-  color: #E0E0E0;
+  color: #757575;
 }
