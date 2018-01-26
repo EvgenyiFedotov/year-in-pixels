@@ -38,7 +38,7 @@
          // Проверим корректность пароля
          $this->validatePass($query, $pass1);
          $this->validatePass($query, $pass2);
-         if ( $pass1 !== $pass2) {
+         if ($pass1 !== $pass2) {
             $query->error(404, "Invalid password value!");
          }
 
@@ -68,7 +68,7 @@
             if ($id) {
                $query->response("User successfully registered!");
             } else {
-               $query->error(500);
+               $query->error(500, true);
             }
          }
       }
@@ -92,8 +92,53 @@
          ]);
 
          if ($id) {
-            $_SESSION["user"] = ["login" => $login];
+            $_SESSION["user"] = ["id" => $id, "login" => $login];
             $query->response("OK");
+         } else {
+            $query->error(404, "The entered data is incorrect!");
+         }
+      }
+
+      /**
+       * Изменить пароль
+       */
+      public function passwordEdit($query) {
+         $data = $query->data();
+         $passOld = $data['password-old'];
+         $pass1 = $data['password-1'];
+         $pass2 = $data['password-2'];
+
+         // Проверим введеные данные
+         if ($query->method("POST") && isset($_SESSION["user"])
+         && $this->validatePass($query, $passOld)
+         && $this->validatePass($query, $pass1)
+         && $this->validatePass($query, $pass2)
+         && $pass1 === $pass2) {
+            $login = $_SESSION["user"]["login"];
+
+            $object = new Object();
+
+            $id = $object->hasRow("users", [
+               "login" => $login,
+               "password" => md5($passOld)
+            ]);
+
+            if ($id) {
+               $id = $object->writeRow("users", [
+                  "password" => md5($pass1)
+               ], [
+                  "password" => md5($passOld),
+                  "login" => $login
+               ]);
+
+               if ($id) {
+                  $query->response("Password changed successfully!");
+               } else {
+                  $query->error(500, true);
+               }
+            } else {
+               $query->error(500, true);
+            }
          } else {
             $query->error(404, "The entered data is incorrect!");
          }

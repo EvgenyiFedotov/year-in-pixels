@@ -1,0 +1,19 @@
+.form-password {
+  width: 15rem;
+  padding: 1rem 1rem 0 1rem;
+}
+.form-password input {
+  margin-bottom: 1rem;
+}
+.form-password .buttons {
+  display: flex;
+}
+.form-password .buttons input {
+  width: 100%;
+}
+.form-password .buttons input[data-name="cancel"] {
+  margin-right: .5rem;
+}
+.form-password .buttons input[data-name="save"] {
+  margin-left: .5rem;
+}

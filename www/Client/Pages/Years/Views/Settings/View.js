@@ -1,7 +1,9 @@
 define([
    'jade!Pages/Years/Views/Settings/Template',
+   'Views/ButtonPanel/View',
+   'Pages/Years/Views/Settings/Password/View',
    'css!Pages/Years/Views/Settings/Style'
-], function(template) {
+], function(template, ButtonPanel, Password) {
    'use strict';
 
    return Backbone.View.extend({
@@ -15,7 +17,7 @@ define([
        * @config {Object}
        */
       events: {
-         'click .button[data-name="close"]': 'hide'
+         'click .button[data-name="close"]': 'close'
       },
 
       /**
@@ -33,6 +35,36 @@ define([
          this.$el.append(this.$template);
 
          this.render(options);
+
+         // Кнопка с паролем
+         this.createButtonPassword();
+      },
+
+      /**
+       * Создать представление (+ форму) для кнопки с паролем
+       */
+      createButtonPassword: function() {
+         if (!this.buttonPassword) {
+            var form = new Password();
+
+            this.buttonPassword = new ButtonPanel({
+               el: this.$('.button[data-name="change-password"]'),
+               panel: {
+                  $el: form.$el,
+                  $border: $('body')
+               }
+            });
+
+            // Событие закрытия
+            this.listenTo(form, 'cancel', function() {
+               this.buttonPassword.hide();
+            });
+
+            // Событие сохранения пароля
+            this.listenTo(form, 'save', function() {
+               this.buttonPassword.hide();
+            });
+         }
       },
 
       /**
@@ -55,9 +87,9 @@ define([
       /**
        * Скрыть панель
        */
-      hide: function(e) {
+      close: function(e) {
          this.$template.attr('data-show', 'false');
-         this.trigger('hide', e);
+         this.trigger('close', e);
       }
    });
 });

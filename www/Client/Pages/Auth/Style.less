@@ -1,7 +1,7 @@
 @import "Page/Themes/Main/Colors";
 
 .form() {
-   width: 200px;
+   width: 15rem;
    position: fixed;
    left: calc(~"50% - 100px");
 }
@@ -51,16 +51,16 @@ body {
          display: flex;
          text-align: center;
 
-         .button {
+         input {
             width: 100%;
-         }
 
-         .button[name="close"] {
-            margin-right: .5rem;
-         }
+            &[name="close"] {
+               margin-right: .5rem;
+            }
 
-         .button[name="send"] {
-            margin-left: .5rem;
+            &[name="send"] {
+               margin-left: .5rem;
+            }
          }
       }
    }

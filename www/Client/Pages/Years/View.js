@@ -199,7 +199,7 @@ define([
             });
 
             // Слушать событие закрытия панели с опциями
-            this.listenTo(this.settings, 'hide', function() {
+            this.listenTo(this.settings, 'close', function() {
                this.navigate(null);
                $table.attr('data-show', 'true');
             });

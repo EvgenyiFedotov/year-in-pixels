@@ -10,11 +10,10 @@
   position: fixed;
   display: none;
   transition: opacity 5s;
-  background-color: #FFFFFF;
-  border: 1px solid #eeeeee;
+  background-color: #2F2F2F;
 }
 .float-area[data-shadow="true"] {
-  box-shadow: 0 0 1rem #75757560;
+  box-shadow: 0 0 1.5rem #212121;
 }
 .float-area[data-show="true"] {
   display: block;

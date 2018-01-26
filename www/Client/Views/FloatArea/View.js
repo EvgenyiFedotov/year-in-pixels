@@ -83,14 +83,16 @@ define([
          // Настроить всплывающую область
          if ($el && $el.length) {
             this.$el = $el;
-            this.className = (this.className || '') + ' float-area';
-            this.$el.addClass(this.className);
-            this.$el.attr({
-               'data-cid': this.cid,
-               'data-shadow': options.show === undefined ? true : !!(options.shadow)
-            });
             this.$body.append(this.$el);
          }
+
+         // Настроим основные опции
+         this.className = (this.className || '') + ' float-area';
+         this.$el.addClass(this.className);
+         this.$el.attr({
+            'data-cid': this.cid,
+            'data-shadow': options.show === undefined ? true : !!(options.shadow)
+         });
 
          // Если передали target, то закиним в него панель
          this.setTarget(options.$target);

@@ -9,8 +9,8 @@ block bodyAfterContent
 
    //- Кнопки навигации
    .buttons-nav
-      .button(type="link", name="sing-in")="Sign in"
-      .button(type="link", name="sing-up")="Sign up"
+      .button(data-type="link", name="sing-in")="Sign in"
+      .button(data-type="link", name="sing-up")="Sign up"
 
    //- Формы редактирования (Регистрация / Аутентификация)
    .form
@@ -19,5 +19,5 @@ block bodyAfterContent
       input(type="password", name="password-1", placeholder="Password")
       input(type="password", name="password-2", placeholder="Password repeat")
       .buttons
-         .button(type="block", name="close")="Close"
-         .button(type="block", name="send")="Send"
+         input(type="button", value="Close", data-type="block", name="close")
+         input(type="button", value="Send", data-type="block", name="send")

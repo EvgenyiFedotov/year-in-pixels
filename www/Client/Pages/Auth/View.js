@@ -7,8 +7,8 @@ define([
    return Backbone.View.extend({
       events: {
          'click .buttons-nav .button': '_clickNavButton',
-         'click .form .button[name="send"]': '_clickButtonSend',
-         'click .form .button[name="close"]': '_clickButtonClose'
+         'click .form input[name="send"]': '_clickButtonSend',
+         'click .form input[name="close"]': '_clickButtonClose'
       },
 
       /**
@@ -41,7 +41,7 @@ define([
                   $form.attr('state', 'sing-in');
 
                   new Informer({
-                     type: "success",
+                     type: 'success',
                      note: jqXHR.statusText
                   }).show();
                } else if (formState === 'sing-in') {
@@ -51,7 +51,7 @@ define([
             },
             error: function(jqXHR, textStatus, message) {
                new Informer({
-                  type: "error",
+                  type: 'error',
                   autoDestroy: false,
                   autoHide: false,
                   header: message

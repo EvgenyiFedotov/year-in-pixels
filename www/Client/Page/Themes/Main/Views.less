@@ -2,6 +2,7 @@
 
 @boder-radius: 3px;
 
+// Inputs
 .input-block() {
    height: 2rem;
    padding: 0 .5rem;
@@ -12,37 +13,25 @@
    border: 1px solid @color-text;
 }
 
-// Buttons
-.button() {
-   color: @color-text;
-   cursor: pointer;
-   display: inline-block;
-}
-
-.button {
-   .button();
-}
-
-.button[type="link"] {
-   &:hover {
-      text-decoration: underline;
-   }
-}
-
-.button[type="block"] {
-   .input-block();
-   line-height: 2rem;
-
-   &:hover {
-      background-color: @color-text;
-      color: @color-background;
-   }
-}
-
-// Inputs
 .input-text() {
    .input-block();
    width: 100%;
+}
+
+::-webkit-input-placeholder {
+   color: @color-label;
+}
+
+::-moz-placeholder {
+   color: @color-label;
+}
+
+:-ms-input-placeholder {
+   color: @color-label;
+}
+
+:-moz-placeholder {
+   color: @color-label;
 }
 
 input[type="text"] {
@@ -51,6 +40,36 @@ input[type="text"] {
 
 input[type="password"] {
    .input-text();
+}
+
+// Buttons
+.button() {
+   color: @color-text;
+   cursor: pointer;
+   display: inline-block;
+   text-align: center;
+
+   &[data-type="link"]:hover {
+      text-decoration: underline;
+   }
+
+   &[data-type="block"] {
+      .input-block();
+      line-height: 2rem;
+   }
+
+   &[data-type="block"]:hover {
+      background-color: @color-text;
+      color: @color-background;
+   }
+}
+
+.button {
+   .button();
+}
+
+input[type="button"] {
+   .button();
 }
 
 // Label
