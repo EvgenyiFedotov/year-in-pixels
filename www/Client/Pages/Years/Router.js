@@ -22,7 +22,7 @@ define([
          year.$('.button[name="palette"]').click();
       },
       menu: function() {
-         year.showMenu();
+         // year.showMenu();
       },
       settings: function() {
          year.showSettings();

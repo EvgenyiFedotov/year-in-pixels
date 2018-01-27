@@ -6,7 +6,7 @@
   height: 3rem;
   background-color: #2F2F2F;
   border-radius: 3px;
-  box-shadow: 0 0 .75rem #E0E0E030;
+  box-shadow: 0 0 .75rem #212121;
   transition: bottom .5s;
   overflow: hidden;
 }

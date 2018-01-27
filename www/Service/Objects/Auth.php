@@ -145,6 +145,15 @@
       }
 
       /**
+       * Поменять тему
+       */
+      public function changeTheme($query) {
+         if ($query->method("POST")) {
+            $query->response($query->data());
+         }
+      }
+
+      /**
        * Выход
        */
       public function singout($query) {

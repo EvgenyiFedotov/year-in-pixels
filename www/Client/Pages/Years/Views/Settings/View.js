@@ -2,8 +2,10 @@ define([
    'jade!Pages/Years/Views/Settings/Template',
    'Views/ButtonPanel/View',
    'Pages/Years/Views/Settings/Password/View',
+   'Views/ButtonMenu/View',
+   'Core/Service',
    'css!Pages/Years/Views/Settings/Style'
-], function(template, ButtonPanel, Password) {
+], function(template, ButtonPanel, Password, ButtonMenu, Service) {
    'use strict';
 
    return Backbone.View.extend({
@@ -36,8 +38,42 @@ define([
 
          this.render(options);
 
+         // Кнопка с темой
+         this.createButtonTheme();
+
          // Кнопка с паролем
          this.createButtonPassword();
+      },
+
+      /**
+       * Создать представление (Меню) для кнопки с темой
+       */
+      createButtonTheme: function() {
+         if (!this.buttonTheme) {
+            this.buttonTheme = new ButtonMenu({
+               el: this.$('.button[data-name="change-theme"]'),
+               menu: {
+                  items: [
+                     {
+                        content: "White",
+                        attrs: {'data-name': 'White'}
+                     }, {
+                        content: "Black",
+                        attrs: {'data-name': 'Black'}
+                     }
+                  ]
+               }
+            });
+
+            // Событие клика по итему
+            this.listenTo(this.buttonTheme, 'clickItem', function(data) {
+               Service.post('Auth.ChangeTheme', data, {
+                  success: function(result) {
+                     console.log(result);
+                  }.bind(this)
+               });
+            });
+         }
       },
 
       /**
