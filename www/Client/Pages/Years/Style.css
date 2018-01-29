@@ -60,3 +60,6 @@ body > .content .content-center .palette .palette-item {
 body > .content .content-center .palette .palette-item .note {
   line-height: 1.5rem;
 }
+body .menu-settings {
+  min-width: 6.2rem;
+}

@@ -50,6 +50,10 @@ define([
          if (!this.menu) {
             this.menu = new ButtonMenu({
                el: this.$('.button[name="menu"]'),
+               panel: {
+                  $border: $('body'),
+                  className: 'menu-settings'
+               },
                menu: {
                   items: [
                      {
@@ -151,7 +155,8 @@ define([
             });
 
             this.palette = new FloatArea({
-               $el: menu.$el
+               $el: menu.$el,
+               $border: $('body')
             });
 
             this.listenTo(this.palette, 'hide', function() {

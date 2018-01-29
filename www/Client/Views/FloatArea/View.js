@@ -8,8 +8,8 @@ define(function() {
    var borderElement = function($el) {
       var offset = $el.offset();
 
-      offset.right = offset.left + $el.width();
-      offset.bottom = offset.top + $el.height();
+      offset.right = offset.left + parseInt($el.css('width'));
+      offset.bottom = offset.top + parseInt($el.css('height'));
 
       return offset;
    };
