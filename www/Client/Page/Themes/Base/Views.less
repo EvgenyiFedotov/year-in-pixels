@@ -1,0 +1,99 @@
+@import "Colors";
+
+.views() {
+   @boder-radius: 3px;
+
+   // Inputs
+   .input-block() {
+      height: 2rem;
+      padding: 0 .5rem;
+      font-size: 1rem;
+      background-color: @color-background;
+      border-radius: @boder-radius;
+      color: @color-text;
+      border: 1px solid @color-text;
+   }
+   
+   .input-text() {
+      .input-block();
+      width: 100%;
+   }
+   
+   ::-webkit-input-placeholder {
+      color: @color-label;
+   }
+   
+   ::-moz-placeholder {
+      color: @color-label;
+   }
+   
+   :-ms-input-placeholder {
+      color: @color-label;
+   }
+   
+   :-moz-placeholder {
+      color: @color-label;
+   }
+   
+   input[type="text"] {
+      .input-text();
+   }
+   
+   input[type="password"] {
+      .input-text();
+   }
+   
+   // Buttons
+   .button() {
+      color: @color-text;
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+   
+      &[data-type="link"]:hover {
+         text-decoration: underline;
+      }
+   
+      &[data-type="block"] {
+         .input-block();
+         line-height: 2rem;
+      }
+   
+      &[data-type="block"]:hover {
+         background-color: @color-text;
+         color: @color-background;
+      }
+   }
+   
+   .button {
+      .button();
+   }
+   
+   input[type="button"] {
+      .button();
+   }
+   
+   // Label
+   .label {
+      color: @color-label;
+      margin-right: 1rem;
+      cursor: default;
+   
+      &[data-side="right"] {
+         margin-left: 0rem;
+         margin-left: 1rem;
+      }
+   }
+   
+   // Comment
+   .comment {
+      color: @color-label;
+      font-size: .8rem;
+      font-style: italic;
+   }
+
+   // Форма
+   .form {
+      background-color: @color-background;
+   }
+}

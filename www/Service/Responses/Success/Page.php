@@ -13,8 +13,10 @@
             "inportDirs" => ["Client/"],
             "convertDirs" => [
                "Client/Page",
-               "Client/Pages",
-               "Client/Views"
+               "Client/Pages/Auth"
+               //,
+               // "Client/Pages",
+               // "Client/Views"
             ]
          ]);
          $lesscss->convert();

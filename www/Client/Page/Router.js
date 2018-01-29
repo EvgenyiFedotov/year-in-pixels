@@ -1,7 +1,7 @@
 define([
    'Page/Page',
-   'css!Page/Themes/Main/Style'
-], function () {
+   'theme!css!Page/Themes/Style'
+], function() {
    'use strict';
    Backbone.history.start();
 });
