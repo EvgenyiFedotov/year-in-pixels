@@ -149,7 +149,16 @@
        */
       public function changeTheme($query) {
          if ($query->method("POST")) {
-            $query->response($query->data());
+            $object = new Object();
+            $data = $query->data();
+
+            $object->writeRow("users", [
+               "theme" => $data["name"]
+            ], [
+               "id" => $_SESSION["user"]["id"]
+            ]);
+
+            $query->response("OK");
          }
       }
 

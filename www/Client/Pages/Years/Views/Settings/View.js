@@ -69,9 +69,16 @@ define([
             this.listenTo(this.buttonTheme, 'clickItem', function(data) {
                Service.post('Auth.ChangeTheme', data, {
                   success: function(result) {
-                     this.$('.button[data-name="change-theme"]').text(result.name);
+                     window.location.reload();
                   }.bind(this)
                });
+            });
+
+            // Событие обображения
+            this.listenTo(this.buttonTheme, 'show', function() {
+               if (this.buttonPassword) {
+                  this.buttonPassword.hide();
+               }
             });
          }
       },
@@ -88,6 +95,13 @@ define([
                panel: {
                   $el: form.$el,
                   $border: $('body')
+               }
+            });
+
+            // Событие обображения
+            this.listenTo(this.buttonPassword, 'show', function() {
+               if (this.buttonTheme) {
+                  this.buttonTheme.hide();
                }
             });
 

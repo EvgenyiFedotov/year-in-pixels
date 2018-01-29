@@ -13,9 +13,9 @@
          .label="Password"
    .column
       .row
-         .value="@UserLogin"
+         .value="@" + model.get("login")
       .row
-         .button(data-type="link", data-name="change-theme")="Black"
+         .button(data-type="link", data-name="change-theme")=model.get("theme")
       .row
          .button(data-type="link", data-name="change-password")
             !{"&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"}

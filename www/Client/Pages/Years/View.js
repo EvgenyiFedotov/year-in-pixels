@@ -11,6 +11,13 @@ define([
 ], function(ButtonMenu, Menu, FloatArea, PaletteItems, tPaletteItem, Settings, Service, Helpers) {
    'use strict';
 
+   // Данные пользователя
+   var user;
+   if (window.user) {
+      user = new Backbone.Model(window.user);
+      delete window.user;
+   }
+
    return Backbone.View.extend({
       /**
        * @config {Backbone.Router}
@@ -195,7 +202,8 @@ define([
          // Если еще не создали панель настроек
          if (!this.settings) {
             this.settings = new Settings({
-               el: this.$('.content-center')
+               el: this.$('.content-center'),
+               model: user
             });
 
             // Слушать событие закрытия панели с опциями
