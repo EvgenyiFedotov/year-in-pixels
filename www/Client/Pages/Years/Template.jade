@@ -8,7 +8,6 @@ block headBefore
       script !{"window.days = " . $days . ";"}
    if $user
       script !{"window.user = " . json_encode($user) . ";"}
-      script !{"config.theme = '" . $user["theme"] . "';"}
 
 block contentTop
    .name-project="Year in pixels"

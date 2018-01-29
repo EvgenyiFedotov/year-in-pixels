@@ -65,5 +65,11 @@
       ], [
          "id" => $_SESSION["user"]["id"]
       ]);
+
+      $theme = $templateParams["user"]["theme"];
+      $templateParams["theme"] = $theme;
+
+      // Закэшируем название темы в сессию (чтобы на главно странице тоже подгружалась установленная тема)
+      $_SESSION["theme"] = $theme;
    }
 ?>

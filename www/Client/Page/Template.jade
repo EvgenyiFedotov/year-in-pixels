@@ -15,6 +15,10 @@ html
 
       script(src="Client/Page/Config.js")
 
+      //- Настройка темы
+      if $theme
+         script !{"config.theme = '" . $theme . "';"}
+
       //- Блок вставки кода ДО загрускии requirejs
       block headBefore
 
