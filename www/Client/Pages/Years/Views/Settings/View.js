@@ -69,7 +69,7 @@ define([
             this.listenTo(this.buttonTheme, 'clickItem', function(data) {
                Service.post('Auth.ChangeTheme', data, {
                   success: function(result) {
-                     console.log(result);
+                     this.$('.button[data-name="change-theme"]').text(result.name);
                   }.bind(this)
                });
             });
