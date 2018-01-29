@@ -1,20 +1,14 @@
-@import "Page/Themes/Main/Colors";
+@import "Page/Themes/Base/Colors";
 
-.line-ellipsis() {
-   white-space: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
-}
-
-.informer {
+.informer() {
+   background-color: @color-background;
+   box-shadow: 0 0 1.5rem @color-shadow;
    position: fixed;
    right: 1rem;
    bottom: -5.5rem;
    width: 20rem;
    height: 3rem;
-   background-color: @color-background;
    border-radius: 3px;
-   box-shadow: 0 0 .75rem @color-shadow;
    transition: bottom .5s;
    overflow: hidden;
 
@@ -50,7 +44,6 @@
       margin-bottom: .2rem;
 
       .header {
-         .line-ellipsis();
          color: @color-text;
          width: 100%;
          font-weight: bold;
@@ -63,8 +56,13 @@
    }
 
    .note {
-      .line-ellipsis();
       padding: .5rem 1rem;
       color: @color-text;
+   }
+}
+
+.Informer() {
+   .informer {
+      .informer();
    }
 }

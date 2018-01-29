@@ -12,11 +12,9 @@
          $lesscss = new LessCSS([
             "inportDirs" => ["Client/"],
             "convertDirs" => [
-               "Client/Page",
-               "Client/Pages/Auth"
-               //,
-               // "Client/Pages",
-               // "Client/Views"
+               "Client/Page/Themes/Compiled",
+               "Client/Views",
+               "Client/Pages"
             ]
          ]);
          $lesscss->convert();

@@ -1,79 +1,27 @@
 @import "Colors";
+@import "Views/Button";
+@import "Views/Inputs";
+@import "Views/DayMarker";
+@import "Views/FloatArea";
+@import "Views/Menu";
 
-.views() {
-   @boder-radius: 3px;
+.Views() {
+   // Кнопка
+   .Button();
 
-   // Inputs
-   .input-block() {
-      height: 2rem;
-      padding: 0 .5rem;
-      font-size: 1rem;
-      background-color: @color-background;
-      border-radius: @boder-radius;
-      color: @color-text;
-      border: 1px solid @color-text;
-   }
-   
-   .input-text() {
-      .input-block();
-      width: 100%;
-   }
-   
-   ::-webkit-input-placeholder {
-      color: @color-label;
-   }
-   
-   ::-moz-placeholder {
-      color: @color-label;
-   }
-   
-   :-ms-input-placeholder {
-      color: @color-label;
-   }
-   
-   :-moz-placeholder {
-      color: @color-label;
-   }
-   
-   input[type="text"] {
-      .input-text();
-   }
-   
-   input[type="password"] {
-      .input-text();
-   }
-   
-   // Buttons
-   .button() {
-      color: @color-text;
-      cursor: pointer;
-      display: inline-block;
-      text-align: center;
-   
-      &[data-type="link"]:hover {
-         text-decoration: underline;
-      }
-   
-      &[data-type="block"] {
-         .input-block();
-         line-height: 2rem;
-      }
-   
-      &[data-type="block"]:hover {
-         background-color: @color-text;
-         color: @color-background;
-      }
-   }
-   
-   .button {
-      .button();
-   }
-   
-   input[type="button"] {
-      .button();
-   }
-   
-   // Label
+   // Поля ввода
+   .Inputs();
+
+   // Маркер дня
+   .DayMarker();
+
+   // Всплывающая область
+   .FloatArea();
+
+   // Меню
+   .Menu();
+
+   // Метка
    .label {
       color: @color-label;
       margin-right: 1rem;
@@ -85,7 +33,7 @@
       }
    }
    
-   // Comment
+   // Комментарий
    .comment {
       color: @color-label;
       font-size: .8rem;

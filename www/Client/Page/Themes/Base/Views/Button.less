@@ -1,0 +1,30 @@
+@import "../Colors";
+
+.button() {
+   color: @color-text;
+   cursor: pointer;
+   display: inline-block;
+   text-align: center;
+
+   // Кнопка ссылкой
+   &[data-type="link"]:hover {
+      text-decoration: underline;
+   }
+
+   // Кнопка блоком
+   &[data-type="block"] {
+      .input-block();
+      line-height: 2rem;
+   }
+
+   &[data-type="block"]:hover {
+      background-color: @color-text;
+      color: @color-background;
+   }
+}
+
+.Button() {
+   .button {
+      .button();
+   }
+}

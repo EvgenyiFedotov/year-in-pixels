@@ -22,7 +22,7 @@ define([
        */
       events: {
          // Клик по блоку дня
-         'click .table .block-color': '_clickDay'
+         'click .table .day-marker': '_clickDay'
       },
 
       initialize: function() {
@@ -135,7 +135,7 @@ define([
                   status: data.status
                }, {
                   success: function(result) {
-                     this.$('.content .table .block-color[data-date=' + date + ']')
+                     this.$('.content .table .day-marker[data-date=' + date + ']')
                         .attr('style', Helpers.styleColorBlock(data.color));
                   }.bind(this)
                });

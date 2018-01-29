@@ -1,0 +1,49 @@
+@import "../Colors";
+@import "Button";
+
+@boder-radius: 3px;
+
+.input-block() {
+   height: 2rem;
+   padding: 0 .5rem;
+   font-size: 1rem;
+   background-color: @color-background;
+   border-radius: @boder-radius;
+   color: @color-text;
+   border: 1px solid @color-text;
+}
+
+.input-text() {
+   .input-block();
+   width: 100%;
+}
+
+.Inputs() {
+   input[type="text"] {
+      .input-text();
+   }
+
+   input[type="password"] {
+      .input-text();
+   }
+
+   input[type="button"] {
+      .button();
+   }
+
+   ::-webkit-input-placeholder {
+      color: @color-label;
+   }
+   
+   ::-moz-placeholder {
+      color: @color-label;
+   }
+   
+   :-ms-input-placeholder {
+      color: @color-label;
+   }
+   
+   :-moz-placeholder {
+      color: @color-label;
+   }
+}

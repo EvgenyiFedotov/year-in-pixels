@@ -6,10 +6,7 @@
          // Настроим корректный путь до файла стилем
          var nameArr = name.split('/');
 
-         nameArr[nameArr.length - 1] = [
-            config.theme,
-            nameArr[nameArr.length - 1]
-         ].join('/');
+         nameArr.push(config.theme);
 
          name = nameArr.join('/');
 

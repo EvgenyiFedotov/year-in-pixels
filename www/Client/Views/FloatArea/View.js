@@ -1,6 +1,4 @@
-define([
-   'css!Views/FloatArea/Style'
-], function() {
+define(function() {
    'use sctrict';
 
    /**

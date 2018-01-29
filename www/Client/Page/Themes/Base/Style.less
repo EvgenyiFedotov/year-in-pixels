@@ -2,13 +2,13 @@
 @import "Colors";
 @import "Views";
 
-.style() {
-   .html-body() {
-      .font-encode-sans();
-      height: 100%;
-      overflow: hidden;
-   }
-   
+.html-body() {
+   .font-encode-sans();
+   height: 100%;
+   overflow: hidden;
+}
+
+.Style() {
    * {
       margin: 0;
       padding: 0;
@@ -55,16 +55,11 @@
             height: 3rem;
          }
       }
-   
-      .glyphicon {
-         font-size: 1rem;
-         color: @color-text;
-      }
-   
+
       .row {
          display: flex;
       }
-   
+
       .column {
          display: flex;
          flex-direction: column;
@@ -76,15 +71,22 @@
       background-color: @color-text;
       color: @color-background;
    }
-   
+
    ::selection {
       .selection();
    }
-   
+
    ::-moz-selection {
       .selection();
    }
 
    // Добавим в общие стили, слити представлений
-   .views();
+   .Views();
+
+   // Обрезать строку, поставить троеточие
+   .line-ellipsis {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
 }

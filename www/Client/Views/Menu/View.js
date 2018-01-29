@@ -1,6 +1,5 @@
 define([
-   'Views/List/View',
-   'css!Views/Menu/Style'
+   'Views/List/View'
 ], function(List) {
    'use strict';
 
