@@ -49,12 +49,21 @@
       }
    };
 
-   // Загрузим данные по дням
+   // Загрузим данные
    if (isset($_SESSION["user"])) {
+      // Дни
       $require->includeFiles(["PObject/Days.php"]);
       $pDays = new PDays();
       $listDays = $pDays->list($_SESSION["user"]["login"], $year);
       $templateParams["days"] = json_encode($listDays);
       $templateParams["daysByDates"] = $pDays->listByDates($listDays);
+
+      // Данные пользователя
+      $connect = new Connect("Configs/Connect.json");
+      $templateParams["user"] = $connect->get("users", [
+         "login", "theme"
+      ], [
+         "id" => $_SESSION["user"]["id"]
+      ]);
    }
 ?>

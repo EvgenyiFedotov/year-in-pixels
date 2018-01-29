@@ -24,6 +24,9 @@
 .settings .head .button {
   margin-left: 1rem;
 }
+.settings .button[data-name="change-theme"] {
+  text-transform: capitalize;
+}
 .settings .calendars .comment {
   width: 200%;
   text-align: right;

@@ -6,6 +6,9 @@ block headBefore
       script !{"window.palette = " . $paletteJSON . ";"}
    if $days
       script !{"window.days = " . $days . ";"}
+   if $user
+      script !{"window.user = " . json_encode($user) . ";"}
+      script !{"config.theme = '" . $user["theme"] . "';"}
 
 block contentTop
    .name-project="Year in pixels"
@@ -16,14 +19,14 @@ block contentTop
 block contentCenter
    .table(data-show="true")
       .names-months
-         .block-null
+         .day-marker-block
          each $nameMonth, $key in $namesMonths
-            .name-month=$nameMonth
+            .name-month.day-marker-block=$nameMonth
       .days
          .days-month
             - $index = 0;
             while $index < 31
-               .day-number= $index + 1;
+               .day-number.day-marker-block= $index + 1;
                - $index++;
          - $monthIndex = 0;
 
@@ -34,6 +37,6 @@ block contentCenter
                - $index = 0;
                while $index < 31
                   - $date = $getDate($year, $monthIndex + 1, $index + 1);
-                  .block-color(title=$date, data-date=$date, style=$dayColor($palette[$daysByDates[$date]["status"]]["color"]))
+                  .day-marker(title=$date, data-date=$date, style=$dayColor($palette[$daysByDates[$date]["status"]]["color"]))
                   - $index++;
             - $monthIndex++;

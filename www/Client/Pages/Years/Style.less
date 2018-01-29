@@ -1,32 +1,7 @@
-@import "Page/Themes/Main/Colors";
-
-.block() {
-   width: 1.5rem;
-   height: 1.5rem;
-   text-align: center;
-   box-sizing: border-box;
-   cursor: pointer;
-}
-
-.block-color {
-   .block();
-   border-radius: 2px;
-   border: 1px solid @color-border;
-
-   &:hover {
-      border-color: @color-hover;
-      background-color: @color-hover;
-   }
-}
-
 body {
    & > .content {
       &[data-blur="true"] {
          filter: blur(1px);
-      }
-
-      .block-null {
-         .block();
       }
 
       .content-top {
@@ -64,7 +39,6 @@ body {
                display: flex;
 
                .name-month {
-                  .block();
                   margin-left: .3rem;
                }
             }
@@ -77,13 +51,12 @@ body {
 
                .days-month {
                   .day-number {
-                     .block();
                      margin-right: .3rem;
                      margin-bottom: .3rem;
                      padding-top: .2rem;
                   }
 
-                  .block-color {
+                  .day-marker {
                      margin-right: .3rem;
                      margin-bottom: .3rem;
                   }

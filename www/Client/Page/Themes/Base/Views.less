@@ -1,0 +1,47 @@
+@import "Colors";
+@import "Views/Button";
+@import "Views/Inputs";
+@import "Views/DayMarker";
+@import "Views/FloatArea";
+@import "Views/Menu";
+
+.Views() {
+   // Кнопка
+   .Button();
+
+   // Поля ввода
+   .Inputs();
+
+   // Маркер дня
+   .DayMarker();
+
+   // Всплывающая область
+   .FloatArea();
+
+   // Меню
+   .Menu();
+
+   // Метка
+   .label {
+      color: @color-label;
+      margin-right: 1rem;
+      cursor: default;
+   
+      &[data-side="right"] {
+         margin-left: 0rem;
+         margin-left: 1rem;
+      }
+   }
+   
+   // Комментарий
+   .comment {
+      color: @color-label;
+      font-size: .8rem;
+      font-style: italic;
+   }
+
+   // Форма
+   .form {
+      background-color: @color-background;
+   }
+}

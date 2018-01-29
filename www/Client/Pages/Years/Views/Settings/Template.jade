@@ -2,7 +2,7 @@
 .row.head.main
    .header="Settings"
    //- .button(data-name="edit")="Edit"
-   .button(data-name="close")="Close"
+   .button(data-type="link", data-name="close")="Close"
 .row
    .column.labels
       .row
@@ -13,9 +13,9 @@
          .label="Password"
    .column
       .row
-         .value="@UserLogin"
+         .value="@" + model.get("login")
       .row
-         .button(data-type="link", data-name="change-theme")="Black"
+         .button(data-type="link", data-name="change-theme")=model.get("theme")
       .row
          .button(data-type="link", data-name="change-password")
             !{"&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"}

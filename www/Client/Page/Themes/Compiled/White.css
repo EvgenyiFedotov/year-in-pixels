@@ -1,0 +1,220 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 14px;
+  line-height: 1rem;
+  font-family: 'Encode Sans Expanded', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
+body {
+  font-size: 14px;
+  line-height: 1rem;
+  font-family: 'Encode Sans Expanded', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+body .name-project {
+  width: 100%;
+  cursor: default;
+  font-size: 2rem;
+  color: #757575;
+  padding: 2rem 0;
+  text-align: center;
+}
+body > .content {
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  color: #757575;
+}
+body > .content .content-top {
+  height: 5rem;
+  display: flex;
+}
+body > .content .content-center {
+  display: flex;
+  height: 100%;
+}
+body > .content .content-bottom {
+  height: 3rem;
+}
+body .row {
+  display: flex;
+}
+body .column {
+  display: flex;
+  flex-direction: column;
+}
+::selection {
+  background-color: #757575;
+  color: #FFFFFF;
+}
+::-moz-selection {
+  background-color: #757575;
+  color: #FFFFFF;
+}
+.button {
+  color: #757575;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+}
+.button[data-type="link"]:hover {
+  text-decoration: underline;
+}
+.button[data-type="block"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  line-height: 2rem;
+}
+.button[data-type="block"]:hover {
+  background-color: #757575;
+  color: #FFFFFF;
+}
+input[type="text"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  width: 100%;
+}
+input[type="password"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  width: 100%;
+}
+input[type="button"] {
+  color: #757575;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+}
+input[type="button"][data-type="link"]:hover {
+  text-decoration: underline;
+}
+input[type="button"][data-type="block"] {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  line-height: 2rem;
+}
+input[type="button"][data-type="block"]:hover {
+  background-color: #757575;
+  color: #FFFFFF;
+}
+::-webkit-input-placeholder {
+  color: #BDBDBD;
+}
+::-moz-placeholder {
+  color: #BDBDBD;
+}
+:-ms-input-placeholder {
+  color: #BDBDBD;
+}
+:-moz-placeholder {
+  color: #BDBDBD;
+}
+.day-marker-block {
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.day-marker {
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid #eeeeee;
+}
+.day-marker:hover {
+  border-color: #e0e0e0;
+  background-color: #e0e0e0;
+}
+@keyframes example {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.float-area {
+  position: fixed;
+  display: none;
+  transition: opacity 5s;
+  background-color: #FFFFFF;
+}
+.float-area[data-shadow="true"] {
+  box-shadow: 0 0 1.5rem #BDBDBD;
+}
+.float-area[data-show="true"] {
+  display: block;
+  opacity: 1;
+  animation-name: example;
+  animation-duration: 0.2s;
+}
+.menu {
+  border-radius: 2px;
+  padding: .5rem;
+}
+.menu .item {
+  color: #757575;
+  line-height: 1.5rem;
+  padding: .2rem .5rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.menu .item:hover {
+  background-color: #eeeeee;
+}
+.label {
+  color: #BDBDBD;
+  margin-right: 1rem;
+  cursor: default;
+}
+.label[data-side="right"] {
+  margin-left: 0rem;
+  margin-left: 1rem;
+}
+.comment {
+  color: #BDBDBD;
+  font-size: .8rem;
+  font-style: italic;
+}
+.form {
+  background-color: #FFFFFF;
+}
+.line-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

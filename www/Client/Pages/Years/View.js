@@ -11,6 +11,13 @@ define([
 ], function(ButtonMenu, Menu, FloatArea, PaletteItems, tPaletteItem, Settings, Service, Helpers) {
    'use strict';
 
+   // Данные пользователя
+   var user;
+   if (window.user) {
+      user = new Backbone.Model(window.user);
+      delete window.user;
+   }
+
    return Backbone.View.extend({
       /**
        * @config {Backbone.Router}
@@ -22,7 +29,7 @@ define([
        */
       events: {
          // Клик по блоку дня
-         'click .table .block-color': '_clickDay'
+         'click .table .day-marker': '_clickDay'
       },
 
       initialize: function() {
@@ -135,7 +142,7 @@ define([
                   status: data.status
                }, {
                   success: function(result) {
-                     this.$('.content .table .block-color[data-date=' + date + ']')
+                     this.$('.content .table .day-marker[data-date=' + date + ']')
                         .attr('style', Helpers.styleColorBlock(data.color));
                   }.bind(this)
                });
@@ -195,7 +202,8 @@ define([
          // Если еще не создали панель настроек
          if (!this.settings) {
             this.settings = new Settings({
-               el: this.$('.content-center')
+               el: this.$('.content-center'),
+               model: user
             });
 
             // Слушать событие закрытия панели с опциями

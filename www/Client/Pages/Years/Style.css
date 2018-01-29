@@ -1,25 +1,5 @@
-.block-color {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  border-radius: 2px;
-  border: 1px solid #424242;
-}
-.block-color:hover {
-  border-color: #424242;
-  background-color: #424242;
-}
 body > .content[data-blur="true"] {
   filter: blur(1px);
-}
-body > .content .block-null {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
 }
 body > .content .content-top {
   margin-bottom: 1rem;
@@ -51,11 +31,6 @@ body > .content .content-center .table .names-months {
   display: flex;
 }
 body > .content .content-center .table .names-months .name-month {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
   margin-left: .3rem;
 }
 body > .content .content-center .table .days {
@@ -65,16 +40,11 @@ body > .content .content-center .table .days {
   overflow-y: auto;
 }
 body > .content .content-center .table .days .days-month .day-number {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
   margin-right: .3rem;
   margin-bottom: .3rem;
   padding-top: .2rem;
 }
-body > .content .content-center .table .days .days-month .block-color {
+body > .content .content-center .table .days .days-month .day-marker {
   margin-right: .3rem;
   margin-bottom: .3rem;
 }

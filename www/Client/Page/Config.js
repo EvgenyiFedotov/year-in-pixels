@@ -3,13 +3,12 @@
 
    window.config = {
       'baseUrl': 'Client',
+      'theme': 'White',
       'paths': {
          'css': 'Librarys/Require/Plugins/Css/css',
          'jade-compiler': 'Librarys/Require/Plugins/jade-compiler',
          'jade': 'Librarys/Require/Plugins/jade',
-         'view': 'Librarys/Require/Plugins/view',
-         'view-functions': 'Librarys/Require/Plugins/view-functions',
-         'exist': 'Librarys/Require/Plugins/exist',
+         'theme': 'Librarys/Require/Plugins/theme',
 
          'jQuery': 'Librarys/jQuery/jquery',
          'Underscore': 'Librarys/Underscore/underscore',
@@ -31,7 +30,7 @@
       },
       'deps': [
          'Backbone',
-         'css!Librarys/Bootstrap3/css/bootstrap.icons',
+         // 'css!Librarys/Bootstrap3/css/bootstrap.icons',
          'Router'
       ]
    };
