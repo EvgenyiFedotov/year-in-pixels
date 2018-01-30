@@ -68,6 +68,11 @@ define(function() {
       offset: {},
 
       /**
+       * @config {Boolean}
+       */
+      isShow: false,
+
+      /**
        * @param {Object} options
        * @param {jQuery} options.$el
        * @param {jQuery} options.$target
@@ -204,26 +209,39 @@ define(function() {
        * @param {Object} offset
        */
       show: function($target, offset) {
-         this.setTarget($target);
+         if (!this.isShow) {
+            this.setTarget($target);
 
-         this.$el.attr('data-show', 'true');
-         this.setOffset(offset);
-         this.checkPosition();
+            this.$el.attr('data-show', 'true');
+            this.setOffset(offset);
+            this.checkPosition();
 
-         this.trigger('show');
+            this.trigger('show');
 
-         // Подпишимся на событие клика по body
-         this._onClickBody();
+            /**
+             * Подпишимся на событие клика по body
+               * (используем setTimeout, чтобы сразу не скрыть панель)
+               */
+            setTimeout(function() {
+               this._onClickBody();
+            }.bind(this), 0);
+
+            this.isShow = true;
+         }
       },
 
       /**
        * Скрыть панель
        */
       hide: function () {
-         // Отпишимся от события клика по body
-         this._offClickBody();
-         this.$el.attr('data-show', 'false');
-         this.trigger('hide');
+         if (!!this.isShow) {
+            // Отпишимся от события клика по body
+            this._offClickBody();
+            this.$el.attr('data-show', 'false');
+            this.trigger('hide');
+
+            this.isShow = false;
+         }
       },
 
       /**

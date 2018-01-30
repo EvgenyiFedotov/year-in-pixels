@@ -2,13 +2,14 @@ define([
    'Views/ButtonMenu/View',
    'Views/Menu/View',
    'Views/FloatArea/View',
+   'Pages/Years/FormEditDay/View',
    'Pages/Years/Palette/Items',
    'jade!Pages/Years/Palette/Item',
    'Pages/Years/Settings/View',
    'Core/Service',
    'Pages/Years/Helpers',
    'css!Pages/Years/Palette/Style'
-], function(ButtonMenu, Menu, FloatArea, PaletteItems, tPaletteItem, Settings, Service, Helpers) {
+], function(ButtonMenu, Menu, FloatArea, FormEditDay, PaletteItems, tPaletteItem, Settings, Service, Helpers) {
    'use strict';
 
    // Данные пользователя
@@ -24,7 +25,7 @@ define([
        */
       router: null,
 
-      /**
+      /**FormEditDay
        * @config {Object}
        */
       events: {
@@ -165,6 +166,7 @@ define([
 
                // Если нажали на кнопку редактирования
                } else {
+                  this.formEditDay.show(this.palette.$target);
                   console.log('Edit day ', date);
                }
 
@@ -186,8 +188,18 @@ define([
             this.listenTo(this.palette, 'show', function() {
                this.menu && this.menu.hide();
                this.buttonPalette && this.buttonPalette.hide();
+               this.formEditDay && this.formEditDay.hide();
                this.navigate('date=' + this.palette.date);
                $content.attr('data-blur', 'true');
+            });
+
+            // Создадим форму редактирования дня
+            var formEditDay = new FormEditDay();
+
+            // Создадим всплывающую панель редактирования дня
+            this.formEditDay = new FloatArea({
+               $el: formEditDay.$el,
+               $border: $('body')
             });
          }
       },
@@ -202,6 +214,7 @@ define([
             e.stopPropagation();
 
             this.palette.date = $target.data().date;
+            this.palette.hide();
             this.palette.show($target);
          }
       },

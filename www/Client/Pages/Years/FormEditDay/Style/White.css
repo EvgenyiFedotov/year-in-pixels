@@ -1,0 +1,34 @@
+.form-edit-day {
+  width: 16rem;
+  padding: .5rem;
+  border-radius: 2px;
+}
+.form-edit-day .status {
+  display: flex;
+  margin-bottom: .5rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+.form-edit-day .status .day-marker {
+  margin-right: 1rem;
+  border-color: #757575;
+}
+.form-edit-day .status .note {
+  color: #757575;
+  line-height: 1.5rem;
+}
+.form-edit-day .buttons {
+  display: flex;
+}
+.form-edit-day input {
+  width: 100%;
+}
+.form-edit-day input[type="text"] {
+  margin-bottom: .5rem;
+}
+.form-edit-day input[data-name="cancel"] {
+  margin-right: .5rem;
+}
+.form-edit-day input[data-name="save"] {
+  margin-left: .5rem;
+}
