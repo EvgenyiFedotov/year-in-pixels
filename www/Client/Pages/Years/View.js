@@ -131,34 +131,53 @@ define([
       createPaletteDays: function() {
          if (!this.palette) {
             var $content = this.$el.children('.content');
+            var paletteItems = PaletteItems();
+
+            // Добавим кнопку редактирования
+            paletteItems.unshift({
+               content: 'Edit',
+               template: false
+            });
+
+            // Создадим меню
             var menu = new Menu({
                className: 'palette',
                templateItem: tPaletteItem,
-               items: PaletteItems()
+               items: paletteItems
             });
 
+            // Подписка на события меню
             this.listenTo(menu, 'clickItem', function(data) {
                var date = this.palette.date;
 
-               // Отправим данные на сервер
-               Service.post('Days.Write', {
-                  date: date,
-                  status: data.status
-               }, {
-                  success: function(result) {
-                     this.$('.content .table .day-marker[data-date=' + date + ']')
-                        .attr('style', Helpers.styleColorBlock(data.color));
-                  }.bind(this)
-               });
+               // Если выбрали статус
+               if (data.status !== undefined) {
+                  // Отправим данные на сервер
+                  Service.post('Days.Write', {
+                     date: date,
+                     status: data.status
+                  }, {
+                     success: function(result) {
+                        this.$('.content .table .day-marker[data-date=' + date + ']')
+                           .attr('style', Helpers.styleColorBlock(data.color));
+                     }.bind(this)
+                  });
+
+               // Если нажали на кнопку редактирования
+               } else {
+                  console.log('Edit day ', date);
+               }
 
                this.palette.hide();
             });
 
+            // Создадим всплывающую панель с меню
             this.palette = new FloatArea({
                $el: menu.$el,
                $border: $('body')
             });
 
+            // Подписка на события панели
             this.listenTo(this.palette, 'hide', function() {
                $content.attr('data-blur', 'false');
                this.navigate(null);

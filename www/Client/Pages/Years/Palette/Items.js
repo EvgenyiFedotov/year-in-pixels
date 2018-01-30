@@ -21,5 +21,5 @@ define([
 
          return item;
       });
-   }; 
+   };
 });

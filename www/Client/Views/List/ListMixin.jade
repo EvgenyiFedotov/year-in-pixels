@@ -4,6 +4,8 @@ mixin list(items, templateItem)
          .item&attributes(item.attrs || {})
             //- Вставим сразу переданный контент, если так есть
             !{item.content || ''}
+
             //- Если передали шаблон итема
-            if templateItem
-               !{templateItem(item)}
+            - var tItem = item.template !== undefined ? item.template : templateItem;
+            if tItem
+               !{tItem(item)}
