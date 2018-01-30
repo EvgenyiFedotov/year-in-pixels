@@ -1,0 +1,8 @@
+{
+   "name": "statuses",
+   "columns": {
+      "id": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+      "login": "VARCHAR(255) NOT NULL",
+      "note": "VARCHAR(255)"
+   }
+}
