@@ -37,7 +37,8 @@ body > .content .content-center .table .days {
   display: flex;
   width: 106%;
   height: 100%;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 body > .content .content-center .table .days .days-month .day-number {
   margin-right: .3rem;

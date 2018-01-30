@@ -1,6 +1,6 @@
 define([
    'jade!Views/Informer/Template',
-   'theme!css!Views/Informer'
+   'theme!css!Views/Informer/Style'
 ], function(template) {
    'use strict';
 

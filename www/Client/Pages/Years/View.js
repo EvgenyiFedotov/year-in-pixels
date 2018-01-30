@@ -2,12 +2,12 @@ define([
    'Views/ButtonMenu/View',
    'Views/Menu/View',
    'Views/FloatArea/View',
-   'Pages/Years/Views/Palette/Items',
-   'jade!Pages/Years/Views/Palette/Item',
-   'Pages/Years/Views/Settings/View',
+   'Pages/Years/Palette/Items',
+   'jade!Pages/Years/Palette/Item',
+   'Pages/Years/Settings/View',
    'Core/Service',
    'Pages/Years/Helpers',
-   'css!Pages/Years/Views/Palette/Style'
+   'css!Pages/Years/Palette/Style'
 ], function(ButtonMenu, Menu, FloatArea, PaletteItems, tPaletteItem, Settings, Service, Helpers) {
    'use strict';
 
@@ -226,6 +226,17 @@ define([
 
          // Запишем в навигацию
          this.navigate('settings');
+      },
+
+      /**
+       * Отобразить меню
+       */
+      showMenu: function() {
+         this.createMenu();
+
+         if (this.menu) {
+            this.menu.show();
+         }
       }
    });
 });

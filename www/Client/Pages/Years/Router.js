@@ -16,13 +16,13 @@ define([
          'settings': 'settings'
       },
       date: function(date) {
-         year.$('.block-color[data-date="' + date + '"]').click();
+         year.$('.day-marker[data-date="' + date + '"]').click();
       },
       palette: function() {
          year.$('.button[name="palette"]').click();
       },
       menu: function() {
-         // year.showMenu();
+         year.showMenu();
       },
       settings: function() {
          year.showSettings();

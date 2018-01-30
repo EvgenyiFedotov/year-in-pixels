@@ -1,10 +1,10 @@
 define([
-   'jade!Pages/Years/Views/Settings/Template',
+   'jade!Pages/Years/Settings/Template',
    'Views/ButtonPanel/View',
-   'Pages/Years/Views/Settings/Password/View',
+   'Pages/Years/Settings/Password/View',
    'Views/ButtonMenu/View',
    'Core/Service',
-   'css!Pages/Years/Views/Settings/Style'
+   'css!Pages/Years/Settings/Style'
 ], function(template, ButtonPanel, Password, ButtonMenu, Service) {
    'use strict';
 

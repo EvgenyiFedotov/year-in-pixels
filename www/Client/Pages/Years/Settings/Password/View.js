@@ -1,8 +1,8 @@
 define([
-   'jade!Pages/Years/Views/Settings/Password/Template',
+   'jade!Pages/Years/Settings/Password/Template',
    'Core/Service',
    'Views/Informer/View',
-   'css!Pages/Years/Views/Settings/Password/Style'
+   'css!Pages/Years/Settings/Password/Style'
 ], function(template, Service, Informer) {
    'use strict';
 
