@@ -2,29 +2,30 @@
 .date.row
    - var d = "date";
    .header="Date"
-   .text="31.01.2018"
+   .text=model.get('date').toLocaleDateString()
 
 //- Статус дня
 .status.row
    .header="Status"
    .day-marker-block.row
-      .day-marker
-      .text="Note stasus"
+      - var status = model.get('status');
+      .day-marker(style=model.styleMarkerDayString(status))
+      .text=status.text
 
 //- Описание дня
 .note
-   - var note = "It is note summ day! It is note summ day! It is note summ day!";
+   - var note = model.get('note');
 
    .top.row
       .header="Note"
-      .button(data-type="link", data-name="note-edit")="Edit"
-      .button(data-type="link", data-name="note-save", data-show="false")="Save"
+      .button(data-type="link", data-name="edit")="Edit"
+      .button(data-type="link", data-name="save", data-show="false")="Save"
    .text=note
-   input(type="text", data-name="note", placeholder="Note day", data-field="true", data-show="false", value=note)
+   textarea(ata-name="note", placeholder="Note", data-field="true", data-show="false", value=note)
 
 //- События дня
 .events
    .top.row
       .header="Events"
-      .button(data-type="link", data-name="events-add")="Add"
+      .button(data-type="link", data-name="add")="Add"
    .null.comment="No events for the selected date"

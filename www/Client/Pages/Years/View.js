@@ -8,8 +8,9 @@ define([
    'Pages/Years/Settings/View',
    'Core/Service',
    'Pages/Years/Helpers',
+   'Pages/Years/FormEditDay/Day.Model',
    'css!Pages/Years/Palette/Style'
-], function(ButtonMenu, Menu, FloatArea, FormEditDay, PaletteItems, tPaletteItem, Settings, Service, Helpers) {
+], function(ButtonMenu, Menu, FloatArea, FormEditDay, PaletteItems, tPaletteItem, Settings, Service, Helpers, DayModel) {
    'use strict';
 
    // Данные пользователя
@@ -135,19 +136,12 @@ define([
       createPaletteDays: function() {
          if (!this.palette) {
             var $content = this.$el.children('.content');
-            var paletteItems = PaletteItems();
-
-            // Добавим кнопку редактирования
-            // paletteItems.unshift({
-            //    content: 'Edit',
-            //    template: false
-            // });
 
             // Создадим меню
             var menu = new Menu({
                className: 'palette',
                templateItem: tPaletteItem,
-               items: paletteItems
+               items: PaletteItems()
             });
 
             // Подписка на события меню
@@ -166,12 +160,7 @@ define([
                            .attr('style', Helpers.styleColorBlock(data.color));
                      }.bind(this)
                   });
-
-               // Если нажали на кнопку редактирования
-               }/** else {
-                  this.formEditDay.show(this.palette.$target);
-                  console.log('Edit day ', date);
-               }**/
+               }
 
                this.palette.hide();
             });
@@ -191,19 +180,9 @@ define([
             this.listenTo(this.palette, 'show', function() {
                this.menu && this.menu.hide();
                this.buttonPalette && this.buttonPalette.hide();
-               // this.formEditDay && this.formEditDay.hide();
                this.navigate('date=' + this.palette.date);
                $content.attr('data-blur', 'true');
             });
-
-            // // Создадим форму редактирования дня
-            // var formEditDay = new FormEditDay();
-
-            // // Создадим всплывающую панель редактирования дня
-            // this.formEditDay = new FloatArea({
-            //    $el: formEditDay.$el,
-            //    $border: $('body')
-            // });
          }
       },
 
@@ -213,7 +192,17 @@ define([
       createFormEditDay: function() {
          if (!this.formEditDay) {
             this.formEditDay = new FormEditDay({
-               el: this.$('.form-edit-day')
+               el: this.$('.form-edit-day'),
+               model: new DayModel({
+                  date: '2020-09-18',
+                  status: {
+                     color: '#E91E63',
+                     text: 'Excited'
+                  },
+                  note: 'The British Museum has one of the largest libraries in the world. It has a copy of every book that is printed in the English language, so that there are more than six million books there. They receive nearly two thousand books and papers daily.'
+               }, {
+                  parse: true
+               })
             });
          }
       },

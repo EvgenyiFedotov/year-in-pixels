@@ -81,6 +81,18 @@ input[type="password"] {
   border: 1px solid #757575;
   width: 100%;
 }
+textarea {
+  height: 2rem;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  color: #757575;
+  border: 1px solid #757575;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
 input[type="button"] {
   color: #757575;
   cursor: pointer;

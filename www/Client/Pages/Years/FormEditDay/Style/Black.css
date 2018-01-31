@@ -1,3 +1,4 @@
+@import "../Fonts";
 .form-edit-day {
   width: 100%;
 }
@@ -47,6 +48,10 @@
   line-height: 1.5rem;
   font-style: italic;
   text-align: justify;
+}
+.form-edit-day>.note textarea {
+  line-height: 1.5rem;
+  height: 6rem;
 }
 .form-edit-day>.events {
   margin-bottom: 1rem;
