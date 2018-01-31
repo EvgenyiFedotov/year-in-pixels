@@ -1,11 +1,13 @@
 @import "Fonts";
 @import "Colors";
 @import "Views";
+@import "Grid";
 
 .html-body() {
    .font-encode-sans();
    height: 100%;
    overflow: hidden;
+   color: @color-text;
 }
 
 .Style() {
@@ -24,7 +26,7 @@
       .html-body();
       display: flex;
       flex-direction: column;
-   
+
       .name-project {
          width: 100%;
          cursor: default;
@@ -32,37 +34,6 @@
          color: @color-text;
          padding: 2rem 0;
          text-align: center;
-      }
-   
-      & > .content {
-         height: 100%;
-         margin: 0 auto;
-         display: flex;
-         flex-direction: column;
-         color: @color-text;
-   
-         .content-top {
-            height: 5rem;
-            display: flex;
-         }
-   
-         .content-center {
-            display: flex;
-            height: 100%;
-         }
-   
-         .content-bottom {
-            height: 3rem;
-         }
-      }
-
-      .row {
-         display: flex;
-      }
-
-      .column {
-         display: flex;
-         flex-direction: column;
       }
    }
    
@@ -82,6 +53,9 @@
 
    // Добавим в общие стили, слити представлений
    .Views();
+
+   // Добавим в общие стили, слити сетки
+   .Grid();
 
    // Обрезать строку, поставить троеточие
    .line-ellipsis {

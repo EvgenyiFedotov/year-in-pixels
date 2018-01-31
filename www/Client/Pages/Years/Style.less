@@ -1,17 +1,25 @@
 body {
-   & > .content {
+   &>.content {
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+
+      // Размытие всего контента
       &[data-blur="true"] {
          filter: blur(1px);
       }
 
-      .content-top {
+      &>.top {
+         height: 5rem;
+         display: flex;
          margin-bottom: 1rem;
 
          .name-project {
             text-align: left;
          }
 
-         .buttons {
+         .navigation {
             display: flex;
             padding-top: 2rem;
             height: 1rem;
@@ -23,7 +31,9 @@ body {
          }
       }
 
-      .content-center {
+      &>.center {
+         display: flex;
+         height: 100%;
          width: 23.38rem;
 
          .table {
@@ -79,6 +89,10 @@ body {
                }
             }
          }
+      }
+
+      &>.bottom {
+         height: 3rem;
       }
    }
 

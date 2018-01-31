@@ -1,65 +1,78 @@
-body > .content[data-blur="true"] {
+body>.content {
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+body>.content[data-blur="true"] {
   filter: blur(1px);
 }
-body > .content .content-top {
+body>.content>.top {
+  height: 5rem;
+  display: flex;
   margin-bottom: 1rem;
 }
-body > .content .content-top .name-project {
+body>.content>.top .name-project {
   text-align: left;
 }
-body > .content .content-top .buttons {
+body>.content>.top .navigation {
   display: flex;
   padding-top: 2rem;
   height: 1rem;
   margin-top: 0.3rem;
 }
-body > .content .content-top .buttons .button {
+body>.content>.top .navigation .button {
   margin-left: 1rem;
 }
-body > .content .content-center {
+body>.content>.center {
+  display: flex;
+  height: 100%;
   width: 23.38rem;
 }
-body > .content .content-center .table {
+body>.content>.center .table {
   overflow: hidden;
   display: none;
   flex-direction: column;
 }
-body > .content .content-center .table[data-show="true"] {
+body>.content>.center .table[data-show="true"] {
   display: flex;
 }
-body > .content .content-center .table .names-months {
+body>.content>.center .table .names-months {
   display: flex;
 }
-body > .content .content-center .table .names-months .name-month {
+body>.content>.center .table .names-months .name-month {
   margin-left: .3rem;
 }
-body > .content .content-center .table .days {
+body>.content>.center .table .days {
   display: flex;
   width: 106%;
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
 }
-body > .content .content-center .table .days .days-month .day-number {
+body>.content>.center .table .days .days-month .day-number {
   margin-right: .3rem;
   margin-bottom: .3rem;
   padding-top: .2rem;
 }
-body > .content .content-center .table .days .days-month .day-marker {
+body>.content>.center .table .days .days-month .day-marker {
   margin-right: .3rem;
   margin-bottom: .3rem;
 }
-body > .content .content-center .palette {
+body>.content>.center .palette {
   margin-left: 1rem;
   padding-top: 1.7rem;
 }
-body > .content .content-center .palette .palette-item {
+body>.content>.center .palette .palette-item {
   cursor: pointer;
   display: flex;
   margin-bottom: 1.5rem;
 }
-body > .content .content-center .palette .palette-item .note {
+body>.content>.center .palette .palette-item .note {
   line-height: 1.5rem;
+}
+body>.content>.bottom {
+  height: 3rem;
 }
 body .menu-settings {
   min-width: 6.2rem;

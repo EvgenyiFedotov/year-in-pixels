@@ -9,6 +9,7 @@ html {
   font-family: 'Encode Sans Expanded', sans-serif;
   height: 100%;
   overflow: hidden;
+  color: #E0E0E0;
   background-color: #2F2F2F;
 }
 body {
@@ -17,6 +18,7 @@ body {
   font-family: 'Encode Sans Expanded', sans-serif;
   height: 100%;
   overflow: hidden;
+  color: #E0E0E0;
   display: flex;
   flex-direction: column;
 }
@@ -27,31 +29,6 @@ body .name-project {
   color: #E0E0E0;
   padding: 2rem 0;
   text-align: center;
-}
-body > .content {
-  height: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  color: #E0E0E0;
-}
-body > .content .content-top {
-  height: 5rem;
-  display: flex;
-}
-body > .content .content-center {
-  display: flex;
-  height: 100%;
-}
-body > .content .content-bottom {
-  height: 3rem;
-}
-body .row {
-  display: flex;
-}
-body .column {
-  display: flex;
-  flex-direction: column;
 }
 ::selection {
   background-color: #E0E0E0;
@@ -212,6 +189,13 @@ input[type="button"][data-type="block"]:hover {
 }
 .form {
   background-color: #2F2F2F;
+}
+.row {
+  display: flex;
+}
+.column {
+  display: flex;
+  flex-direction: column;
 }
 .line-ellipsis {
   white-space: nowrap;

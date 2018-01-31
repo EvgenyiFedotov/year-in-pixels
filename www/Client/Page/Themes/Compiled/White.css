@@ -9,6 +9,7 @@ html {
   font-family: 'Encode Sans Expanded', sans-serif;
   height: 100%;
   overflow: hidden;
+  color: #757575;
   background-color: #FFFFFF;
 }
 body {
@@ -17,6 +18,7 @@ body {
   font-family: 'Encode Sans Expanded', sans-serif;
   height: 100%;
   overflow: hidden;
+  color: #757575;
   display: flex;
   flex-direction: column;
 }
@@ -27,31 +29,6 @@ body .name-project {
   color: #757575;
   padding: 2rem 0;
   text-align: center;
-}
-body > .content {
-  height: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  color: #757575;
-}
-body > .content .content-top {
-  height: 5rem;
-  display: flex;
-}
-body > .content .content-center {
-  display: flex;
-  height: 100%;
-}
-body > .content .content-bottom {
-  height: 3rem;
-}
-body .row {
-  display: flex;
-}
-body .column {
-  display: flex;
-  flex-direction: column;
 }
 ::selection {
   background-color: #757575;
@@ -212,6 +189,13 @@ input[type="button"][data-type="block"]:hover {
 }
 .form {
   background-color: #FFFFFF;
+}
+.row {
+  display: flex;
+}
+.column {
+  display: flex;
+  flex-direction: column;
 }
 .line-ellipsis {
   white-space: nowrap;
