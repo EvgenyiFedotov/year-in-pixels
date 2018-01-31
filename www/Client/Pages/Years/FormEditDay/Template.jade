@@ -1,6 +1,30 @@
-.top.row
-   .status
+//- Сама дата
+.date.row
+   - var d = "date";
+   .header="Date"
+   .text="31.01.2018"
+
+//- Статус дня
+.status.row
+   .header="Status"
+   .day-marker-block.row
       .day-marker
-      .note="Status"
-.note.row
-   input(type="text", data-name="note", placeholder="Note day", data-field="true")
+      .text="Note stasus"
+
+//- Описание дня
+.note
+   - var note = "It is note summ day! It is note summ day! It is note summ day!";
+
+   .top.row
+      .header="Note"
+      .button(data-type="link", data-name="note-edit")="Edit"
+      .button(data-type="link", data-name="note-save", data-show="false")="Save"
+   .text=note
+   input(type="text", data-name="note", placeholder="Note day", data-field="true", data-show="false", value=note)
+
+//- События дня
+.events
+   .top.row
+      .header="Events"
+      .button(data-type="link", data-name="events-add")="Add"
+   .null.comment="No events for the selected date"

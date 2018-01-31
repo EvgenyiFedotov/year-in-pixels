@@ -2,28 +2,76 @@
    .form-edit-day {
       width: 100%;
 
-      .top {
-         .status {
-            display: flex;
-            margin-bottom: .5rem;
-            padding-bottom: .5rem;
-   
+      &>.date {
+         margin-bottom: 1rem;
+         line-height: 1.5rem;
+
+         .header {
+            margin-right: 1rem;
+         }
+
+         .text {
+            width: 100%;
+            text-align: right;
+            font-style: italic;
+            color: @color-label;
+         }
+      }
+
+      &>.status {
+         margin-bottom: 1rem;
+         line-height: 1.5rem;
+
+         .header {
+            margin-right: 1rem;
+         }
+
+         .day-marker-block {
+            width: 100%;
+            justify-content: flex-end;
+
             .day-marker {
                margin-right: 1rem;
             }
    
-            .note {
-               color: @color-text;
-               line-height: 1.5rem;
+            .text {
+               font-style: italic;
+               color: @color-label;
             }
          }
       }
 
-      input {
-         width: 100%;
+      // Описание дня
+      &>.note {
+         margin-bottom: 1rem;
 
-         &[type="text"] {
+         .top {
+            line-height: 1.5rem;
             margin-bottom: 1rem;
+
+            .header {
+               width: 100%;
+            }
+         }
+
+         .text {
+            color: @color-label;
+            line-height: 1.5rem;
+            font-style: italic;
+            text-align: justify;
+         }
+      }
+
+      &>.events {
+         margin-bottom: 1rem;
+
+         .top {
+            margin-bottom: 1rem;
+            line-height: 1.5rem;
+
+            .header {
+               width: 100%;
+            }
          }
       }
    }

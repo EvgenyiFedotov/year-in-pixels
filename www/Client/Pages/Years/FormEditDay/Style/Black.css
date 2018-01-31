@@ -1,21 +1,60 @@
 .form-edit-day {
   width: 100%;
 }
-.form-edit-day .top .status {
-  display: flex;
-  margin-bottom: .5rem;
-  padding-bottom: .5rem;
-}
-.form-edit-day .top .status .day-marker {
-  margin-right: 1rem;
-}
-.form-edit-day .top .status .note {
-  color: #E0E0E0;
+.form-edit-day>.date {
+  margin-bottom: 1rem;
   line-height: 1.5rem;
 }
-.form-edit-day input {
+.form-edit-day>.date .header {
+  margin-right: 1rem;
+}
+.form-edit-day>.date .text {
+  width: 100%;
+  text-align: right;
+  font-style: italic;
+  color: #BDBDBD;
+}
+.form-edit-day>.status {
+  margin-bottom: 1rem;
+  line-height: 1.5rem;
+}
+.form-edit-day>.status .header {
+  margin-right: 1rem;
+}
+.form-edit-day>.status .day-marker-block {
+  width: 100%;
+  justify-content: flex-end;
+}
+.form-edit-day>.status .day-marker-block .day-marker {
+  margin-right: 1rem;
+}
+.form-edit-day>.status .day-marker-block .text {
+  font-style: italic;
+  color: #BDBDBD;
+}
+.form-edit-day>.note {
+  margin-bottom: 1rem;
+}
+.form-edit-day>.note .top {
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+}
+.form-edit-day>.note .top .header {
   width: 100%;
 }
-.form-edit-day input[type="text"] {
+.form-edit-day>.note .text {
+  color: #BDBDBD;
+  line-height: 1.5rem;
+  font-style: italic;
+  text-align: justify;
+}
+.form-edit-day>.events {
   margin-bottom: 1rem;
+}
+.form-edit-day>.events .top {
+  margin-bottom: 1rem;
+  line-height: 1.5rem;
+}
+.form-edit-day>.events .top .header {
+  width: 100%;
 }

@@ -7,6 +7,8 @@ define([
 
    return View.extend({
       className: 'form-edit-day',
-      template: template
+      template: template,
+      events: {
+      }
    });
 });
