@@ -1,3 +1,13 @@
+@day-marker-line-height: 1.5rem;
+@day-marker-margin-right-bottom: .3rem;
+@content-center-column: 23.38rem;
+
+.days-day-block {
+   margin-right: @day-marker-margin-right-bottom;
+   margin-bottom: @day-marker-margin-right-bottom;
+   line-height: @day-marker-line-height;
+}
+
 body {
    &>.content {
       height: 100%;
@@ -34,41 +44,38 @@ body {
       &>.center {
          display: flex;
          height: 100%;
-         width: 23.38rem;
+         width: @content-center-column * 2;
 
+         // Данные дней
          .days {
+            width: @content-center-column;
+            overflow: hidden;
+
             .name-month {
-               margin-left: .3rem;
+               .days-day-block();
             }
 
             .content {
+               display: flex;
+               width: 106%;
+               height: calc(~"100% - (@{day-marker-line-height} + @{day-marker-margin-right-bottom})");
+               overflow-x: hidden;
+               overflow-y: scroll;
+
                .day-number {
-                  margin-right: .3rem;
-                  margin-bottom: .3rem;
-                  line-height: 1.5rem;
-                  text-align: right;
+                  .days-day-block();
                }
-               
+
                .day-marker {
-                  margin-right: .3rem;
-                  margin-bottom: .3rem;
+                  .days-day-block();
                }
             }
          }
 
-         .palette {
+         // Форма редактирования дня
+         .form-edit-day {
             margin-left: 1rem;
-            padding-top: 1.7rem;
-
-            .palette-item {
-               cursor: pointer;
-               display: flex;
-               margin-bottom: 1.5rem;
-
-               .note {
-                  line-height: 1.5rem;
-               }
-            }
+            width: @content-center-column - 1rem;
          }
       }
 

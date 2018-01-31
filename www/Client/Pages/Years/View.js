@@ -42,6 +42,9 @@ define([
 
          // Палетка для дней
          this.createPaletteDays();
+
+         // Форма редактирования дня
+         this.createFormEditDay();
       },
 
       /**
@@ -135,10 +138,10 @@ define([
             var paletteItems = PaletteItems();
 
             // Добавим кнопку редактирования
-            paletteItems.unshift({
-               content: 'Edit',
-               template: false
-            });
+            // paletteItems.unshift({
+            //    content: 'Edit',
+            //    template: false
+            // });
 
             // Создадим меню
             var menu = new Menu({
@@ -165,10 +168,10 @@ define([
                   });
 
                // Если нажали на кнопку редактирования
-               } else {
+               }/** else {
                   this.formEditDay.show(this.palette.$target);
                   console.log('Edit day ', date);
-               }
+               }**/
 
                this.palette.hide();
             });
@@ -188,18 +191,29 @@ define([
             this.listenTo(this.palette, 'show', function() {
                this.menu && this.menu.hide();
                this.buttonPalette && this.buttonPalette.hide();
-               this.formEditDay && this.formEditDay.hide();
+               // this.formEditDay && this.formEditDay.hide();
                this.navigate('date=' + this.palette.date);
                $content.attr('data-blur', 'true');
             });
 
-            // Создадим форму редактирования дня
-            var formEditDay = new FormEditDay();
+            // // Создадим форму редактирования дня
+            // var formEditDay = new FormEditDay();
 
-            // Создадим всплывающую панель редактирования дня
-            this.formEditDay = new FloatArea({
-               $el: formEditDay.$el,
-               $border: $('body')
+            // // Создадим всплывающую панель редактирования дня
+            // this.formEditDay = new FloatArea({
+            //    $el: formEditDay.$el,
+            //    $border: $('body')
+            // });
+         }
+      },
+
+      /**
+       * Создать форму редактирования дня
+       */
+      createFormEditDay: function() {
+         if (!this.formEditDay) {
+            this.formEditDay = new FormEditDay({
+               el: this.$('.form-edit-day')
             });
          }
       },
@@ -234,24 +248,30 @@ define([
        * Создать и отобразить настройки
        */
       showSettings: function() {
-         var $table = this.$('.content-center>.table');
+         var $days = this.$('.center>.days');
+         var $formEditDay = this.$('.center>.form-edit-day');
 
          // Если еще не создали панель настроек
          if (!this.settings) {
             this.settings = new Settings({
-               el: this.$('.content-center'),
-               model: user
+               el: this.$('.center'),
+               model: user,
+               attributes: {
+                  'data-show': false
+               }
             });
 
             // Слушать событие закрытия панели с опциями
             this.listenTo(this.settings, 'close', function() {
                this.navigate(null);
-               $table.attr('data-show', 'true');
+               $days.attr('data-show', 'true');
+               $formEditDay.attr('data-show', 'true');
             });
          }
 
          // Скроем таблицу с днями
-         $table.attr('data-show', 'false');
+         $days.attr('data-show', 'false');
+         $formEditDay.attr('data-show', 'false');
 
          // Отобразим панель
          this.settings.show();

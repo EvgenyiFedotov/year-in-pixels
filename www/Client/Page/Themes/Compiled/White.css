@@ -54,7 +54,7 @@ body .name-project {
   background-color: #FFFFFF;
   border-radius: 3px;
   color: #757575;
-  border: 1px solid #757575;
+  border: 1px solid #eeeeee;
   line-height: 2rem;
 }
 .button[data-type="block"]:hover {
@@ -68,7 +68,7 @@ input[type="text"] {
   background-color: #FFFFFF;
   border-radius: 3px;
   color: #757575;
-  border: 1px solid #757575;
+  border: 1px solid #eeeeee;
   width: 100%;
 }
 input[type="password"] {
@@ -78,7 +78,7 @@ input[type="password"] {
   background-color: #FFFFFF;
   border-radius: 3px;
   color: #757575;
-  border: 1px solid #757575;
+  border: 1px solid #eeeeee;
   width: 100%;
 }
 input[type="button"] {
@@ -97,7 +97,7 @@ input[type="button"][data-type="block"] {
   background-color: #FFFFFF;
   border-radius: 3px;
   color: #757575;
-  border: 1px solid #757575;
+  border: 1px solid #eeeeee;
   line-height: 2rem;
 }
 input[type="button"][data-type="block"]:hover {

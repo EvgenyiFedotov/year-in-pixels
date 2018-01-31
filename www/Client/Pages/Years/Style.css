@@ -1,3 +1,8 @@
+.days-day-block {
+  margin-right: .3rem;
+  margin-bottom: .3rem;
+  line-height: 1.5rem;
+}
 body>.content {
   height: 100%;
   margin: 0 auto;
@@ -27,32 +32,37 @@ body>.content>.top .navigation .button {
 body>.content>.center {
   display: flex;
   height: 100%;
+  width: 46.76rem;
+}
+body>.content>.center .days {
   width: 23.38rem;
+  overflow: hidden;
 }
 body>.content>.center .days .name-month {
-  margin-left: .3rem;
+  margin-right: .3rem;
+  margin-bottom: .3rem;
+  line-height: 1.5rem;
+}
+body>.content>.center .days .content {
+  display: flex;
+  width: 106%;
+  height: calc(100% - (1.5rem + .3rem));
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 body>.content>.center .days .content .day-number {
   margin-right: .3rem;
   margin-bottom: .3rem;
   line-height: 1.5rem;
-  text-align: right;
 }
 body>.content>.center .days .content .day-marker {
   margin-right: .3rem;
   margin-bottom: .3rem;
-}
-body>.content>.center .palette {
-  margin-left: 1rem;
-  padding-top: 1.7rem;
-}
-body>.content>.center .palette .palette-item {
-  cursor: pointer;
-  display: flex;
-  margin-bottom: 1.5rem;
-}
-body>.content>.center .palette .palette-item .note {
   line-height: 1.5rem;
+}
+body>.content>.center .form-edit-day {
+  margin-left: 1rem;
+  width: 22.38rem;
 }
 body>.content>.bottom {
   height: 3rem;
