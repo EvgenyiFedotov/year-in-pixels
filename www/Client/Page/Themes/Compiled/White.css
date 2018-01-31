@@ -202,3 +202,6 @@ input[type="button"][data-type="block"]:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+[data-show="false"] {
+  display: none;
+}

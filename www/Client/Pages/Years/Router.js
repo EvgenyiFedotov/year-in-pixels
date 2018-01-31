@@ -16,7 +16,7 @@ define([
          'settings': 'settings'
       },
       date: function(date) {
-         year.$('.day-marker[data-date="' + date + '"]').click();
+         year.$('.days .day-marker[data-date="' + date + '"]').click();
       },
       palette: function() {
          year.$('.button[name="palette"]').click();

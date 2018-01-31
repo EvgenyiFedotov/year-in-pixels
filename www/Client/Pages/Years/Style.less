@@ -36,41 +36,22 @@ body {
          height: 100%;
          width: 23.38rem;
 
-         .table {
-            overflow: hidden;
-            display: none;
-            flex-direction: column;
-
-            &[data-show="true"] {
-               display: flex;
+         .days {
+            .name-month {
+               margin-left: .3rem;
             }
 
-            .names-months {
-               display: flex;
-
-               .name-month {
-                  margin-left: .3rem;
+            .content {
+               .day-number {
+                  margin-right: .3rem;
+                  margin-bottom: .3rem;
+                  line-height: 1.5rem;
+                  text-align: right;
                }
-            }
-
-            .days {
-               display: flex;
-               width: 106%;
-               height: 100%;
-               overflow-x: hidden;
-               overflow-y: scroll;
-
-               .days-month {
-                  .day-number {
-                     margin-right: .3rem;
-                     margin-bottom: .3rem;
-                     padding-top: .2rem;
-                  }
-
-                  .day-marker {
-                     margin-right: .3rem;
-                     margin-bottom: .3rem;
-                  }
+               
+               .day-marker {
+                  margin-right: .3rem;
+                  margin-bottom: .3rem;
                }
             }
          }

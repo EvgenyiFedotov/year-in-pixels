@@ -29,33 +29,16 @@ body>.content>.center {
   height: 100%;
   width: 23.38rem;
 }
-body>.content>.center .table {
-  overflow: hidden;
-  display: none;
-  flex-direction: column;
-}
-body>.content>.center .table[data-show="true"] {
-  display: flex;
-}
-body>.content>.center .table .names-months {
-  display: flex;
-}
-body>.content>.center .table .names-months .name-month {
+body>.content>.center .days .name-month {
   margin-left: .3rem;
 }
-body>.content>.center .table .days {
-  display: flex;
-  width: 106%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-body>.content>.center .table .days .days-month .day-number {
+body>.content>.center .days .content .day-number {
   margin-right: .3rem;
   margin-bottom: .3rem;
-  padding-top: .2rem;
+  line-height: 1.5rem;
+  text-align: right;
 }
-body>.content>.center .table .days .days-month .day-marker {
+body>.content>.center .days .content .day-marker {
   margin-right: .3rem;
   margin-bottom: .3rem;
 }
