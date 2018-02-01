@@ -1,6 +1,6 @@
 define([
    'Views/ButtonMenu/View',
-   'Views/Menu/View',
+   'Pages/Years/Palette/View',
    'Views/FloatArea/View',
    'Pages/Years/FormEditDay/View',
    'Pages/Years/Palette/Items',
@@ -8,10 +8,14 @@ define([
    'Pages/Years/Settings/View',
    'Core/Service',
    'Pages/Years/Helpers',
-   'Pages/Years/FormEditDay/Day.Model',
+   'Pages/Years/Data/Day.Model',
+   'Pages/Years/Data/Day.Collection',
    'css!Pages/Years/Palette/Style'
-], function(ButtonMenu, Menu, FloatArea, FormEditDay, PaletteItems, tPaletteItem, Settings, Service, Helpers, DayModel) {
+], function(ButtonMenu, Palette, FloatArea, FormEditDay, PaletteItems, tPaletteItem, Settings,
+Service, Helpers, DayModel, days) {
    'use strict';
+
+   console.log('DayCollection: ', days);
 
    // Данные пользователя
    var user;
@@ -138,14 +142,10 @@ define([
             var $content = this.$el.children('.content');
 
             // Создадим меню
-            var menu = new Menu({
-               className: 'palette',
-               templateItem: tPaletteItem,
-               items: PaletteItems()
-            });
+            var palette = new Palette();
 
             // Подписка на события меню
-            this.listenTo(menu, 'clickItem', function(data) {
+            this.listenTo(palette, 'clickItem', function(data) {
                var date = this.palette.date;
 
                // Если выбрали статус
@@ -167,7 +167,7 @@ define([
 
             // Создадим всплывающую панель с меню
             this.palette = new FloatArea({
-               $el: menu.$el,
+               $el: palette.$el,
                $border: $('body')
             });
 
@@ -195,10 +195,10 @@ define([
                el: this.$('.form-edit-day'),
                model: new DayModel({
                   date: '2020-09-18',
-                  status: {
-                     color: '#E91E63',
-                     text: 'Excited'
-                  },
+                  // status: {
+                  //    color: '#E91E63',
+                  //    text: 'Excited'
+                  // },
                   note: 'The British Museum has one of the largest libraries in the world. It has a copy of every book that is printed in the English language, so that there are more than six million books there. They receive nearly two thousand books and papers daily.'
                }, {
                   parse: true

@@ -1,16 +1,19 @@
+
+
 //- Сама дата
 .date.row
    - var d = "date";
+
    .header="Date"
    .text=model.get('date').toLocaleDateString()
 
 //- Статус дня
 .status.row
+
    .header="Status"
    .day-marker-block.row
-      - var status = model.get('status');
-      .day-marker(style=model.styleMarkerDayString(status))
-      .text=status.text
+      span.row
+         include Templates/DayMarker.jade
 
 //- Описание дня
 .note
@@ -21,7 +24,7 @@
       .button(data-type="link", data-name="edit")="Edit"
       .button(data-type="link", data-name="save", data-show="false")="Save"
    .text=note
-   textarea(ata-name="note", placeholder="Note", data-field="true", data-show="false", value=note)
+   textarea(placeholder="Note", data-show="false")=note
 
 //- События дня
 .events

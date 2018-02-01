@@ -1,4 +1,3 @@
-@import "../Fonts";
 .form-edit-day {
   width: 100%;
 }
@@ -27,7 +26,7 @@
   justify-content: flex-end;
 }
 .form-edit-day>.status .day-marker-block .day-marker {
-  margin-right: 1rem;
+  margin-left: 1rem;
 }
 .form-edit-day>.status .day-marker-block .text {
   font-style: italic;
@@ -50,6 +49,11 @@
   text-align: justify;
 }
 .form-edit-day>.note textarea {
+  font-size: 14px;
+  line-height: 1rem;
+  font-family: 'Encode Sans Expanded', sans-serif;
+  resize: none;
+  font-style: italic;
   line-height: 1.5rem;
   height: 6rem;
 }

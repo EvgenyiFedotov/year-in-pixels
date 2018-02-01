@@ -1,18 +1,32 @@
 define([
    'Core/View',
    'jade!Pages/Years/FormEditDay/Template',
-   'Pages/Years/FormEditDay/Day.Model',
+   'jade!Pages/Years/FormEditDay/Templates/DayMarker',
+   'Pages/Years/Data/Day.Model',
+   'Pages/Years/Palette/View',
+   'Views/FloatArea/View',
    'theme!css!Pages/Years/FormEditDay/Style'
-], function(View, template, Model) {
+], function(View, template, tDayMarker, Model, Palette, FloatArea) {
    'use strict';
 
    // Карта селекторов представления
    var selectors = {
+      // Статус
+      status: '.status .day-marker-block>span',
+
+      // Описание
       noteButtonEdit: '.note>.top>.button[data-name="edit"]',
       noteButtonSave: '.note>.top>.button[data-name="save"]',
       noteText: '.note>.text',
       noteTextarea: '.note>textarea'
    };
+
+   // Палетка и ее всплывающая панель
+   var palette = new Palette();
+   var paletteFloat = new FloatArea({
+      $el: palette.$el,
+      $border: $('body')
+   });
 
    return View.extend({
       className: 'form-edit-day',
@@ -20,6 +34,10 @@ define([
       events: function() {
          var events = {};
 
+         // Статус
+         events['click ' + selectors.status] = 'editStatus';
+
+         // Описание
          events['click ' + selectors.noteButtonEdit] = 'editNote';
          events['click ' + selectors.noteButtonSave] = 'saveNote';
 
@@ -38,13 +56,28 @@ define([
             this.model = options.model;
          }
 
+         // Подписка на события палетки
+         this.listenTo(palette, 'clickItem', this._clickItemPalette);
+
+         // Подписка на события модели
+         this.listenTo(this.model, 'change:note', this._changeNote);
+         this.listenTo(this.model, 'change:status', this._changeStatus);
+
          View.prototype.initialize.apply(this, arguments);
+      },
+
+      /**
+       * Редактирование статуса дня
+       */
+      editStatus: function() {
+         paletteFloat.show(this.$(selectors.status));
       },
 
       /**
        * Редактирование описания дня
        */
       editNote: function() {
+         // Настройка видимости
          this.$(selectors.noteButtonEdit).attr('data-show', false);
          this.$(selectors.noteText).attr('data-show', false);
          this.$(selectors.noteButtonSave).attr('data-show', true);
@@ -55,10 +88,46 @@ define([
        * Сохранить описание
        */
       saveNote: function() {
+         var $textarea = this.$(selectors.noteTextarea);
+
+         // Установим значение описания в модель
+         this.model.set('note', $textarea.val());
+
+         // Настройка видимости
          this.$(selectors.noteButtonEdit).attr('data-show', true);
          this.$(selectors.noteText).attr('data-show', true);
          this.$(selectors.noteButtonSave).attr('data-show', false);
-         this.$(selectors.noteTextarea).attr('data-show', false);
+         $textarea.attr('data-show', false);
+      },
+
+      /**
+       * Обработчик изменения описания в модели
+       * @param {Day.Model}
+       * @param {String} value
+       */
+      _changeNote: function(model, value) {
+         this.$(selectors.noteTextarea).val(value);
+         this.$(selectors.noteText).text(value);
+      },
+
+      /**
+       * Обработчик клика по итему палетки
+       * @param {Object} data
+       */
+      _clickItemPalette: function(data) {
+         this.model.set('status', data);
+
+         // Скроем палетку
+         paletteFloat.hide();
+      },
+
+      /**
+       * Обработчик изменения статуса в модели
+       * @param {Day.Model} model
+       * @param {Object} status
+       */
+      _changeStatus: function(model, status) {
+         this.$(selectors.status).html(tDayMarker({model: model}));
       }
    });
 });

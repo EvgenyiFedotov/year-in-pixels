@@ -1,4 +1,4 @@
-@import "../Fonts";
+@import "Page/Themes/Base/Fonts";
 
 .formEditDay() {
    .form-edit-day {
@@ -33,7 +33,7 @@
             justify-content: flex-end;
 
             .day-marker {
-               margin-right: 1rem;
+               margin-left: 1rem;
             }
    
             .text {
@@ -64,6 +64,9 @@
          }
 
          textarea {
+            .font-encode-sans();
+            resize: none;
+            font-style: italic;
             line-height: 1.5rem;
             height: 1.5rem * 4;
          }

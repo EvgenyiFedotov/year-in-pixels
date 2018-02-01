@@ -15,7 +15,8 @@ define([
       return palette.map(function(item) {
          item.attrs = {
             'data-color': item.color,
-            'data-status': item.status
+            'data-status': item.status,
+            'data-text': item.note
          };
          item.style = Helpers.styleColorBlock(item.color);
 

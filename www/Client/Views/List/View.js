@@ -52,6 +52,8 @@ define([
        * @param {Function} [options.templateItem]
        */
       render: function(options) {
+         options = options instanceof Object ? options : {};
+
          this.items = options.items instanceof Array
             ? options.items
             : this.items;
