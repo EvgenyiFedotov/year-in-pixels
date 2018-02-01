@@ -49,6 +49,11 @@
       }
    };
 
+   // Загрузим статусы дней
+   $require->includeFiles(["Object/Statuses.php"]);
+   $statuses = new Statuses();
+   $templateParams["statuses"] = $statuses->listByUserId($_SESSION["user"]["id"]);
+
    // Загрузим данные
    if (isset($_SESSION["user"])) {
       // Дни

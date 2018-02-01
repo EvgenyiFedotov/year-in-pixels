@@ -7,6 +7,10 @@ block headBefore
    if $paletteJSON
       script !{"window.palette = " . $paletteJSON . ";"}
 
+   // Данные о статусах
+   if $statuses
+      script !{"window.statuses = " .json_encode($statuses) . ";"}
+
    // Данные о днях
    if $days
       script !{"window.days = " . $days . ";"}

@@ -13,19 +13,28 @@ define(function() {
          date: new Date(),
 
          /**
-          * Статус
-          * @config {Object}
-          */
-         status: {
-            color: null,
-            text: 'Status'
-         },
-
-         /**
           * Описание дня
           * @config {String}
           */
-         note: ''
+         note: '',
+
+         /**
+          * Статус идентификатор
+          * @config {Number}
+          */
+         status: null,
+
+         /**
+          * Статус цвет
+          * @config {String}
+          */
+         statusColor: null,
+
+         /**
+          * Статус тескт
+          * @config {String}
+          */
+         statusText: 'Status'
       },
 
       /**
@@ -38,15 +47,17 @@ define(function() {
             params.date = new Date(params.date);
          }
 
+         // Статус
+         params.status = parseInt(params.status);
+
          return params;
       },
 
       /**
-       * Получить стиль для маркера дня по объекту статуса
-       * @param {Object} status
+       * Получить стиль для маркера дня
        */
-      styleMarkerDay: function(status) {
-         var color = status.color;
+      styleMarkerDay: function() {
+         var color = this.get('statusColor');
          var style = {};
 
          if (color) {
@@ -61,10 +72,9 @@ define(function() {
 
       /**
        * Получить стиль для маркера дня по объекту статуса в виде строки
-       * @param {Object} status
        */
-      styleMarkerDayString: function(status) {
-         var style = this.styleMarkerDay(status);
+      styleMarkerDayString: function() {
+         var style = this.styleMarkerDay();
 
          return Object.keys(style).reduce(function(result, key) {
             result.push(key + ': ' + style[key]);

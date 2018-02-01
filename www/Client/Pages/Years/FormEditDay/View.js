@@ -115,7 +115,11 @@ define([
        * @param {Object} data
        */
       _clickItemPalette: function(data) {
-         this.model.set('status', data);
+         this.model.set({
+            status: data.status,
+            statusColor: data.color,
+            statusText: data.text
+         });
 
          // Скроем палетку
          paletteFloat.hide();

@@ -1,4 +1,2 @@
-- var status = model.get('status');
-
-.text=status.text
-.day-marker(style=model.styleMarkerDayString(status))
+.text=model.get('statusText')
+.day-marker(style=model.styleMarkerDayString())

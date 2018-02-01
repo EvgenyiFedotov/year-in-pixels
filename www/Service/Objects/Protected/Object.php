@@ -42,5 +42,34 @@
             return null;
          }
       }
+
+      /**
+       * Обработка методов, для проверки доступа
+       * Обердтка позваляющяя выкинуть корректное исключение при вызове
+       * "Приватного для пользователя" метода
+       * @param {Function} $method
+       * @param {Array} $args
+       */
+      public function method($method, $args = []) {
+         try {
+            if (is_callable($method)) {
+               return call_user_func_array($method, $args);
+            } else {
+               $this->noAccess();
+            }
+
+         // Если выбрашено исключение значит нет доступа
+         } catch (Exception $e) {
+            $query = new Query\Query();
+            $query->error(404, $e->getMessage());
+         }
+      }
+
+      /**
+       * Запустить исключение поступа
+       */
+      public function noAccess() {
+         throw new Exception('No access!');
+      }
    }
 ?>

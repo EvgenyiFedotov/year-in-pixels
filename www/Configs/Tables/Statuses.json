@@ -2,7 +2,8 @@
    "name": "statuses",
    "columns": {
       "id": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
-      "login": "VARCHAR(255) NOT NULL",
+      "user_id": "INT, FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)",
+      "color": "VARCHAR(255)", 
       "note": "VARCHAR(255)"
    }
 }

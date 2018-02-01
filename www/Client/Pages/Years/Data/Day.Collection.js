@@ -7,7 +7,7 @@ define([
       model: Model
    });
 
-   console.log(window.days);
-
-   return new Days([{}, {}, {}, {}]);
+   return new Days(window.days, {
+      parse: true
+   });
 });
