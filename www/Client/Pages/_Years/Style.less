@@ -1,0 +1,90 @@
+@day-marker-line-height: 1.5rem;
+@day-marker-margin-right-bottom: .3rem;
+@content-center-column: 23.38rem;
+
+.days-day-block {
+   margin-right: @day-marker-margin-right-bottom;
+   margin-bottom: @day-marker-margin-right-bottom;
+   line-height: @day-marker-line-height;
+}
+
+body {
+   &>.content {
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+
+      // Размытие всего контента
+      &[data-blur="true"] {
+         filter: blur(1px);
+      }
+
+      &>.top {
+         height: 5rem;
+         display: flex;
+         margin-bottom: 1rem;
+
+         .name-project {
+            text-align: left;
+         }
+
+         .navigation {
+            display: flex;
+            padding-top: 2rem;
+            height: 1rem;
+            margin-top: 0.3rem;
+
+            .button {
+               margin-left: 1rem;
+            }
+         }
+      }
+
+      &>.center {
+         display: flex;
+         height: 100%;
+         width: @content-center-column * 2;
+
+         // Данные дней
+         .days {
+            width: @content-center-column;
+            overflow: hidden;
+
+            .name-month {
+               .days-day-block();
+            }
+
+            .content {
+               display: flex;
+               width: 106%;
+               height: calc(~"100% - (@{day-marker-line-height} + @{day-marker-margin-right-bottom})");
+               overflow-x: hidden;
+               overflow-y: scroll;
+
+               .day-number {
+                  .days-day-block();
+               }
+
+               .day-marker {
+                  .days-day-block();
+               }
+            }
+         }
+
+         // Форма редактирования дня
+         .form-edit-day {
+            margin-left: 1rem;
+            width: @content-center-column - 1rem;
+         }
+      }
+
+      &>.bottom {
+         height: 3rem;
+      }
+   }
+
+   .menu-settings {
+      min-width: 6.2rem;
+   }
+}

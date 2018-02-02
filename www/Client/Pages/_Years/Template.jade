@@ -1,0 +1,62 @@
+include ../../Page/Template.jade
+
+block headBefore
+   +routepage()
+
+   //- Палитра
+   if $paletteJSON
+      script !{"window.palette = " . $paletteJSON . ";"}
+
+   // Данные о статусах
+   if isset($statuses)
+      script !{"window.statuses = " . json_encode($statuses) . ";"}
+
+   // Данные о днях
+   if $days
+      script !{"window.days = " . $days . ";"}
+
+   // Данное пользователя
+   if $user
+      script !{"window.user = " . json_encode($user) . ";"}
+
+block body
+   .content
+      .top
+         .name-project="Year in pixels"
+         .navigation
+            .button(data-type="link", name="palette")="Palette"
+            .button(data-type="link", name="menu")="Menu"
+
+      .center.row
+         //- Дни
+         .days
+            //- Названия месяцев
+            .names-months.row
+               .name-month.day-marker-block
+               each $nameMonth, $key in $namesMonths
+                  .name-month.day-marker-block=$nameMonth
+
+            //- Данные дней
+            .content
+               //- Номера дней
+               .day-numbers
+                  - $index = 0;
+                  while $index < 31
+                     .day-number.day-marker-block=$index + 1;
+                     - $index++;
+
+               //- Сами данные дней
+               - $monthIndex = 0;
+               while $monthIndex < 12
+                  .day-markers
+                     - $index = 0;
+                     while $index < 31
+                        - $date = $getDate($year, $monthIndex + 1, $index + 1);
+                        .day-marker(title=$date, data-date=$date, style=$dayColor($palette[$daysByDates[$date]["status"]]["color"]))
+                        - $index++;
+                  - $monthIndex++;
+
+         //- Форма редактирования дня
+         .form-edit-day
+
+      .bottom

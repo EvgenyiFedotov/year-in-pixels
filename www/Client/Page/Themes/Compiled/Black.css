@@ -218,3 +218,6 @@ input[type="button"][data-type="block"]:hover {
 [data-show="false"] {
   display: none;
 }
+[data-blur="true"] {
+  filter: blur(1px);
+}

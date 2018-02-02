@@ -27,5 +27,10 @@ html
       //- Блок вставки кода ПОСЛЕ загрускии requirejs
       block headAfter
 
+      // Данные о днях
+      if $loadParams
+         each $data, $key in $loadParams
+            script !{"window." . $key . " = " . json_encode($data) . ";"}
+
    body(style="visibility: hidden; overflow: hidden;")
       block body

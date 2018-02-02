@@ -1,182 +1,97 @@
 define([
-   'Views/ButtonMenu/View',
-   'Views/FloatArea/View',
+   'Core/View',
+   'Pages/Years/Navigation/View',
+   'Pages/Years/Days/View',
    'Pages/Years/FormEditDay/View',
-   'Pages/Years/Settings/View',
-   'Pages/Years/Statuses/Menu',
-   'Core/Service',
-   'Pages/Years/Helpers',
-   'Pages/Years/Data/Day.Model',
-   'Pages/Years/Data/Day.Collection'
-], function(ButtonMenu, FloatArea, FormEditDay, Settings, StatusesMenu,
-Service, Helpers, DayModel, days) {
+   'Core/Service'
+], function(View, Navigation, Days, FormEditDay, Service) {
    'use strict';
 
-   // Данные пользователя
-   var user;
-   if (window.user) {
-      user = new Backbone.Model(window.user);
-      delete window.user;
-   }
-
-   return Backbone.View.extend({
+   return View.extend({
       /**
-       * @config {Backbone.Router}
-       */
-      router: null,
-
-      /**
+       * Селекторы
        * @config {Object}
        */
-      events: {
-         // Клик по блоку дня
-         'click .days .day-marker': '_clickDay'
+      selectors: {
+         // Контент центр
+         contentCenter: '.content>.center',
+
+         // Навигация
+         nav: '.content>.top>.navigation',
+   
+         // Данные дней
+         days: '.content>.center>.days',
+   
+         // Форма редактирования дня
+         formEditDay: '.content>.center>.form-edit-day'
       },
 
-      initialize: function() {
-         // Кнопка меню
-         this.createMenu();
+      /**
+       * @param {Object} options
+       */
+      initialize: function(options) {
+         View.prototype.initialize.apply(this, arguments);
 
-         // Палетка
-         // this.createPalette();
+         // Создадим панель навигации
+         this.ctreateNavigation();
 
-         // Палетка для дней
-         // this.createPaletteDays();
+         // Создать область с данными дней
+         this.createDays();
 
-         // Форма редактирования дня
+         // Создать форму редактирования дня
          this.createFormEditDay();
       },
 
       /**
-       * Создать меню (кнопку) (для настроек)
+       * Создать панель навигации
        */
-      createMenu: function() {
-         if (!this.menu) {
-            this.menu = new ButtonMenu({
-               el: this.$('.button[name="menu"]'),
-               panel: {
-                  $border: $('body'),
-                  className: 'menu-settings'
-               },
-               menu: {
-                  items: [
-                     {
-                        content: 'Settings',
-                        attrs: {'data-name': 'settings'}
-                     }, {
-                        content: 'Sign out',
-                        attrs: {'data-name': 'sign-out'}
-                     }
-                  ]
-               }
+      ctreateNavigation: function() {
+         if (!this.navigation) {
+            this.navigation = new Navigation({
+               el: this.selector('nav')
             });
 
-            this.listenTo(this.menu, 'hide', function() {
-               if (window.location.hash !== '#settings') {
-                  this.navigate(null);
-               }
-            });
+            // Обработчики событий навигации
+            this.listenToOnce(this.navigation, 'createMenu', function() {
+               // Обработчики событий меню
+               this.listenTo(this.navigation.menu, 'hide', function() {
+                  if (window.location.hash !== '#settings') {
+                     this.navigate(null);
+                  }
+               });
 
-            this.listenTo(this.menu, 'show', function() {
-               this.buttonPalette && this.buttonPalette.hide();
-               this.palette && this.palette.hide();
-               this.navigate('menu');
-            });
+               this.listenTo(this.navigation.menu, 'show', function() {
+                  this.navigate('menu');
+               });
 
-            this.listenTo(this.menu, 'clickItem', function(data) {
-               // Настройки
-               if (data.name === 'settings') {
-                  // Создалим панель настроек, если это необходимо и отобразим ее
-                  this.showSettings();
+               this.listenTo(this.navigation.menu, 'clickItem', function(data) {
+                  // Настройки
+                  if (data.name === 'settings') {
+                     // Создалим панель настроек, если это необходимо и отобразим ее
+                     this.showSettings();
 
-                  this.navigate('settings');
+                     this.navigate('settings');
 
-               // Выход
-               } else if (data.name === 'sign-out') {
-                  Service.get('Auth.Singout', {}, {
-                     success: function(result) {
-                        window.location.reload();
-                     }.bind(this)
-                  });
-               }
+                  // Выход
+                  } else if (data.name === 'sign-out') {
+                     Service.get('Auth.Singout', {}, {
+                        success: function(result) {
+                           window.location.reload();
+                        }.bind(this)
+                     });
+                  }
+               });
             });
          }
       },
 
       /**
-       * Создать палетку
+       * Создать область с данными дней
        */
-      createPalette: function() {
-         if (!this.buttonPalette) {
-            this.buttonPalette = new ButtonMenu({
-               el: this.$('.button[name="palette"]'),
-               menu: {
-                  className: 'palette',
-                  templateItem: tPaletteItem,
-                  items: PaletteItems()
-               }
-            });
-
-            this.listenTo(this.buttonPalette, 'hide', function() {
-               this.navigate(null);
-            });
-
-            this.listenTo(this.buttonPalette, 'show', function() {
-               this.menu && this.menu.hide();
-               this.palette && this.palette.hide();
-               this.navigate('palette');
-            });
-         }
-      },
-
-      /**
-       * Создать палетку для дней
-       */
-      createPaletteDays: function() {
-         if (!this.palette) {
-            var $content = this.$el.children('.content');
-
-            // Создадим меню
-            var palette = new Palette();
-
-            // Подписка на события меню
-            this.listenTo(palette, 'clickItem', function(data) {
-               var date = this.palette.date;
-
-               // Если выбрали статус
-               if (data.status !== undefined) {
-                  // Отправим данные на сервер
-                  Service.post('Days.Write', {
-                     date: date,
-                     status: data.status
-                  }, {
-                     success: function(result) {
-                        this.$('.days .day-marker[data-date=' + date + ']')
-                           .attr('style', Helpers.styleColorBlock(data.color));
-                     }.bind(this)
-                  });
-               }
-
-               this.palette.hide();
-            });
-
-            // Создадим всплывающую панель с меню
-            this.palette = new FloatArea({
-               $el: palette.$el,
-               $border: $('body')
-            });
-
-            // Подписка на события панели
-            this.listenTo(this.palette, 'hide', function() {
-               $content.attr('data-blur', 'false');
-               this.navigate(null);
-            });
-
-            this.listenTo(this.palette, 'show', function() {
-               this.menu && this.menu.hide();
-               this.buttonPalette && this.buttonPalette.hide();
-               this.navigate('date=' + this.palette.date);
-               $content.attr('data-blur', 'true');
+      createDays: function() {
+         if (!this.days) {
+            this.days = new Days({
+               el: this.selector('days')
             });
          }
       },
@@ -187,92 +102,63 @@ Service, Helpers, DayModel, days) {
       createFormEditDay: function() {
          if (!this.formEditDay) {
             this.formEditDay = new FormEditDay({
-               el: this.$('.form-edit-day'),
-               model: new DayModel({
-                  date: '2020-09-18',
-                  // status: {
-                  //    color: '#E91E63',
-                  //    text: 'Excited'
-                  // },
-                  note: 'The British Museum has one of the largest libraries in the world. It has a copy of every book that is printed in the English language, so that there are more than six million books there. They receive nearly two thousand books and papers daily.'
-               }, {
-                  parse: true
-               })
+               el: this.selector('formEditDay')
             });
          }
       },
 
       /**
-       * Клик по блоку дня
+       * Создать панель с настройками пользователя
+       * @param {Function}
        */
-      _clickDay: function(e) {
-         if (this.palette) {
-            var $target = $(e.target);
+      createSettings: function(callback) {
+         if (!this.settings) {
+            requirejs(['Pages/Years/Settings/View'], function(Settings) {
+               var $settings = $('<div />', {
+                  class: 'settings',
+                  attr: {
+                     'data-show': false
+                  }
+               });
 
-            e.stopPropagation();
+               this.$(this.selector('contentCenter')).append($settings);
 
-            this.palette.date = $target.data().date;
-            this.palette.hide();
-            this.palette.show($target);
+               this.settings = new Settings({
+                  el: $settings
+               });
+
+               this.listenTo(this.settings, 'hide', function() {
+                  this.$elementDataShow('days', true);
+                  this.$elementDataShow('formEditDay', true);
+               });
+
+               if (callback instanceof Function) {
+                  callback.call(this, this.settings);
+               }
+            }.bind(this));
          }
       },
 
       /**
-       * Записать url
-       * @param {String} url
-       * @param {Object} [options]
+       * Отобразить панель с настройками
        */
-      navigate: function(url, options) {
-         if (this.router) {
-            this.router.navigate(url, options);
+      _showSetting: function(settings) {
+         if (settings) {
+            settings.dataShow(true);
+            this.$elementDataShow('days', false);
+            this.$elementDataShow('formEditDay', false);
          }
       },
 
       /**
-       * Создать и отобразить настройки
+       * Создать и отобразить панель с настройками пользователя
        */
       showSettings: function() {
-         var $days = this.$('.center>.days');
-         var $formEditDay = this.$('.center>.form-edit-day');
+         // Создадим панель
+         this.createSettings(this._showSetting);
 
-         // Если еще не создали панель настроек
-         if (!this.settings) {
-            this.settings = new Settings({
-               el: this.$('.center'),
-               model: user,
-               attributes: {
-                  'data-show': false
-               }
-            });
-
-            // Слушать событие закрытия панели с опциями
-            this.listenTo(this.settings, 'close', function() {
-               this.navigate(null);
-               $days.attr('data-show', 'true');
-               $formEditDay.attr('data-show', 'true');
-            });
-         }
-
-         // Скроем таблицу с днями
-         $days.attr('data-show', 'false');
-         $formEditDay.attr('data-show', 'false');
-
-         // Отобразим панель
-         this.settings.show();
-
-         // Запишем в навигацию
-         this.navigate('settings');
-      },
-
-      /**
-       * Отобразить меню
-       */
-      showMenu: function() {
-         this.createMenu();
-
-         if (this.menu) {
-            this.menu.show();
-         }
+         // Если уже создали
+         this._showSetting(this.settings);
       }
    });
 });
