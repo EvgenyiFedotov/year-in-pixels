@@ -8,6 +8,8 @@ define([
 ], function(template, ButtonPanel, Password, ButtonMenu, Service) {
    'use strict';
 
+   console.log('w.s: ', window.statuses);
+
    return Backbone.View.extend({
       /**
        * Контейнер темплейта

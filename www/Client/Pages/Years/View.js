@@ -1,21 +1,16 @@
 define([
    'Views/ButtonMenu/View',
-   'Pages/Years/Palette/View',
    'Views/FloatArea/View',
    'Pages/Years/FormEditDay/View',
-   'Pages/Years/Palette/Items',
-   'jade!Pages/Years/Palette/Item',
    'Pages/Years/Settings/View',
+   'Pages/Years/Statuses/Menu',
    'Core/Service',
    'Pages/Years/Helpers',
    'Pages/Years/Data/Day.Model',
-   'Pages/Years/Data/Day.Collection',
-   'css!Pages/Years/Palette/Style'
-], function(ButtonMenu, Palette, FloatArea, FormEditDay, PaletteItems, tPaletteItem, Settings,
+   'Pages/Years/Data/Day.Collection'
+], function(ButtonMenu, FloatArea, FormEditDay, Settings, StatusesMenu,
 Service, Helpers, DayModel, days) {
    'use strict';
-
-   console.log('DayCollection: ', days);
 
    // Данные пользователя
    var user;
@@ -30,7 +25,7 @@ Service, Helpers, DayModel, days) {
        */
       router: null,
 
-      /**FormEditDay
+      /**
        * @config {Object}
        */
       events: {
@@ -43,10 +38,10 @@ Service, Helpers, DayModel, days) {
          this.createMenu();
 
          // Палетка
-         this.createPalette();
+         // this.createPalette();
 
          // Палетка для дней
-         this.createPaletteDays();
+         // this.createPaletteDays();
 
          // Форма редактирования дня
          this.createFormEditDay();

@@ -8,8 +8,8 @@ block headBefore
       script !{"window.palette = " . $paletteJSON . ";"}
 
    // Данные о статусах
-   if $statuses
-      script !{"window.statuses = " .json_encode($statuses) . ";"}
+   if isset($statuses)
+      script !{"window.statuses = " . json_encode($statuses) . ";"}
 
    // Данные о днях
    if $days

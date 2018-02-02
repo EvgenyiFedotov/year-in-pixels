@@ -3,6 +3,7 @@
   height: 100%;
 }
 .settings .row {
+  width: 100%;
   margin-bottom: 1rem;
 }
 .settings .row .column.labels .row .label {
@@ -23,7 +24,7 @@
 .settings .button[data-name="change-theme"] {
   text-transform: capitalize;
 }
-.settings .calendars .comment {
+.settings .statuses .comment {
   width: 200%;
   text-align: right;
   line-height: 1.5rem;

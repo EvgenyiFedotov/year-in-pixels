@@ -3,10 +3,9 @@ define([
    'jade!Pages/Years/FormEditDay/Template',
    'jade!Pages/Years/FormEditDay/Templates/DayMarker',
    'Pages/Years/Data/Day.Model',
-   'Pages/Years/Palette/View',
    'Views/FloatArea/View',
    'theme!css!Pages/Years/FormEditDay/Style'
-], function(View, template, tDayMarker, Model, Palette, FloatArea) {
+], function(View, template, tDayMarker, Model, FloatArea) {
    'use strict';
 
    // Карта селекторов представления
@@ -21,12 +20,7 @@ define([
       noteTextarea: '.note>textarea'
    };
 
-   // Палетка и ее всплывающая панель
-   var palette = new Palette();
-   var paletteFloat = new FloatArea({
-      $el: palette.$el,
-      $border: $('body')
-   });
+   // Статусы и ее всплывающая панель
 
    return View.extend({
       className: 'form-edit-day',
@@ -57,7 +51,7 @@ define([
          }
 
          // Подписка на события палетки
-         this.listenTo(palette, 'clickItem', this._clickItemPalette);
+         // this.listenTo(palette, 'clickItem', this._clickItemPalette);
 
          // Подписка на события модели
          this.listenTo(this.model, 'change:note', this._changeNote);
@@ -70,7 +64,6 @@ define([
        * Редактирование статуса дня
        */
       editStatus: function() {
-         paletteFloat.show(this.$(selectors.status));
       },
 
       /**
@@ -120,9 +113,6 @@ define([
             statusColor: data.color,
             statusText: data.text
          });
-
-         // Скроем палетку
-         paletteFloat.hide();
       },
 
       /**

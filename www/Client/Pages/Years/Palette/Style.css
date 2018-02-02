@@ -1,7 +1,0 @@
-.palette .item[data-status] {
-  display: flex;
-  padding: .3rem .5rem;
-}
-.palette .item[data-status] .day-marker {
-  margin-right: .5rem;
-}
