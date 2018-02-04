@@ -1,0 +1,31 @@
+.settings {
+  width: 100%;
+  height: 100%;
+}
+.settings .row {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.settings .row .column.labels .row .label {
+  width: 100%;
+  text-align: right;
+}
+.settings .head {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.settings .head .header {
+  width: 100%;
+  font-size: 1.5rem;
+}
+.settings .head .button {
+  margin-left: 1rem;
+}
+.settings .button[data-name="change-theme"] {
+  text-transform: capitalize;
+}
+.settings .statuses .comment {
+  width: 200%;
+  text-align: right;
+  line-height: 1.5rem;
+}
