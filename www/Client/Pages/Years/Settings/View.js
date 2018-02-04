@@ -127,6 +127,11 @@ define([
                   }
                });
 
+               // Подпишися на события панели
+               this.listenTo(panelEditPassword, 'cancel save', function() {
+                  this.panelPassword.hide();
+               });
+
                if (_.isFunction(callback)) {
                   callback.call(this, this.panelPassword);
                }

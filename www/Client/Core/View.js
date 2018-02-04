@@ -63,12 +63,22 @@ define(function() {
             (_.isFunction(this.eventsSelectors)
                ? (this.eventsSelectors.call(this) || {})
                : (this.eventsSelectors || {})
+            ),
+            (_.isFunction(this.events)
+               ? (this.events.call(this) || {})
+               : (this.events || {})
             )
          );
 
          return _.reduce(eventsSelectors, function(result, value, key) {
             var keyArr = key.split(' ');
-            result[keyArr[0] + ' ' + this.selector(keyArr[1])] = value;
+
+            if (keyArr.length == 2) {
+               result[keyArr[0] + ' ' + this.selector(keyArr[1])] = value;
+            } else {
+               result[key] = value;
+            }
+
             return result;
          }, {}, this);
       },
@@ -103,7 +113,7 @@ define(function() {
        * @param {String} key
        */
       selector: function(key) {
-         return this.selectors[key] || null;
+         return this.selectors[key] || key;
       },
 
       /**

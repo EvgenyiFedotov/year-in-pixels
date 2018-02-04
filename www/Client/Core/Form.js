@@ -18,12 +18,29 @@ define(['Core/View'], function(View) {
       fieldsValues: function() {
          var values = {};
 
-         this.$fields.each(function(index, el) {
+         this.$fields().each(function(index, el) {
             var $el = $(el);
-            values[$el.attr('data-name')] = $el.val();
+            values[$el.attr('data-name')] = $el.val
+               ? $el.val()
+               : ($el.value ? $el.value() : undefined);
          });
 
          return values;
+      },
+
+      /**
+       * Очистить значения полей
+       */
+      clearFiledsValues: function() {
+         this.$fields().each(function(index, el) {
+            var $el = $(el);
+            
+            if ($el.val) {
+               $el.val(null);
+            } else if ($el.value) {
+               $el.value(null);
+            }
+         });
       }
    });
 });
