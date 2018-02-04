@@ -1,8 +1,11 @@
 define([
    'Core/View',
    'jade!Pages/Years/Settings/Template',
+   'Pages/Years/Data/Statuses',
+   'Views/List/View',
+   'jade!Pages/Years/Settings/Statuses/Item',
    'css!Pages/Years/Settings/Style'
-], function(View, template) {
+], function(View, template, statuses, List, statusItem) {
    'use strict';
 
    var Service;
@@ -22,6 +25,16 @@ define([
          'click close': 'close',
          'click buttonTheme': 'showMenuTheme',
          'click buttonPassword': 'showPanelPassword'
+      },
+
+      /**
+       * @param {Object} options
+       */
+      initialize: function(options) {
+         View.prototype.initialize.apply(this, arguments);
+
+         // Создадим меню со статусами
+         this.createStatusesMenu();
       },
 
       /**
@@ -136,6 +149,24 @@ define([
                   callback.call(this, this.panelPassword);
                }
             }.bind(this));
+         }
+      },
+
+      /**
+       * Создать меню со статусами
+       * @param {Function} callback
+       */
+      createStatusesMenu: function(callback) {
+         if (!this.statusesMenu) {
+            this.statusesMenu = new List({
+               el: this.$('.statuses>.list'),
+               templateItem: statusItem,
+               items: statuses.models.map(function(model) {
+                  return {
+                     model: model
+                  };
+               })
+            });
          }
       }
    });

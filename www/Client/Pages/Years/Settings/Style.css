@@ -24,8 +24,11 @@
 .settings .button[data-name="change-theme"] {
   text-transform: capitalize;
 }
-.settings .statuses .comment {
-  width: 200%;
-  text-align: right;
+.settings .statuses .list .item {
+  display: flex;
   line-height: 1.5rem;
+  margin-bottom: .5rem;
+}
+.settings .statuses .list .item .day-marker {
+  margin-right: .5rem;
 }

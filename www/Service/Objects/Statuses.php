@@ -14,7 +14,9 @@
             if (is_int($userId) || is_string($userId)) {
                $connect = $this->connect();
 
-               return$connect->select("statuses", "*", [
+               return $connect->select("statuses", [
+                  "id", "color", "note"
+               ], [
                   "user_id" => $userId
                ]);
             } else {
