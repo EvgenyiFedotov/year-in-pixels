@@ -1,7 +1,10 @@
-Options -Indexes
+Options All -Indexes
 RewriteEngine On
 
-RewriteCond %{ENV:REDIRECT_FINISH} !^$
-RewriteRule ^ - [L]
+#RewriteRule \.(json|jpg|jpeg|png|gif)$ - [NC,F,L]
+RewriteRule .*(Configs|Service|Client/Pages).*$ - [NC,F,L]
 
-RewriteRule ^(.*)$ / [E=FINISH:1,L]
+#RewriteCond %{ENV:REDIRECT_FINISH} !^$
+#RewriteRule ^ - [L]
+
+#RewriteRule ^(.*)$ / [E=FINISH:1,L]
