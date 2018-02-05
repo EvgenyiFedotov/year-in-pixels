@@ -2,6 +2,7 @@ define([
    'Core/View',
    'jade!Pages/Years/Days/Template',
    'Pages/Years/Data/Day.Collection',
+   'theme!css!Pages/Years/StatusDay/Marker',
    'css!Pages/Years/Days/Style'
 ], function(View, template, days) {
    'use strict';

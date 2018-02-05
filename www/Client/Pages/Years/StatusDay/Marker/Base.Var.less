@@ -1,0 +1,24 @@
+.MarkerDayBlock() {
+   width: 1.5rem;
+   height: 1.5rem;
+   text-align: center;
+   box-sizing: border-box;
+   cursor: pointer;
+}
+
+.MarkerDay() {
+   .marker-day-block {
+      .MarkerDayBlock();
+   }
+
+   .marker-day {
+      .MarkerDayBlock();
+      border-radius: 2px;
+      border: 1px solid @color-day-marker-border;
+
+      &:hover {
+         border-color: @color-day-marker-hover;
+         background-color: @color-day-marker-hover;
+      }
+   }
+}

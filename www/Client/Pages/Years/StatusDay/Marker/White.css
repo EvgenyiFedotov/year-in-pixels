@@ -12,9 +12,9 @@
   box-sizing: border-box;
   cursor: pointer;
   border-radius: 2px;
-  border: 1px solid #424242;
+  border: 1px solid #EEEEEE;
 }
 .marker-day:hover {
-  border-color: #424242;
-  background-color: #424242;
+  border-color: #E0E0E0;
+  background-color: #E0E0E0;
 }

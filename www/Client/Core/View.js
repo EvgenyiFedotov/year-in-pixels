@@ -27,6 +27,11 @@ define(function() {
       eventsSelectors: {},
 
       /**
+       * Дочерние представления
+       */
+      childs: {},
+
+      /**
        * @param {Object} options
        * @param {Function} [options.template]
        * @param {Boolean} [options.firstRender]
@@ -145,6 +150,22 @@ define(function() {
          } else {
             this.trigger('show');
          }
+      },
+
+      /**
+       * Загрузить, создать и получить экземпляр дочернего представления
+       * @param {String} name
+       * @param {Function} callback
+       * @param {Array.<String>} load
+       */
+      child: function(name, callback, load) {
+         var child = this.childs[name] || null;
+
+         if (_.isFunction(callback)) {
+            requirejs(load || [], callback.bind(this, child));
+         }
+
+         return child;
       }
    });
 });

@@ -9,9 +9,9 @@ include ../StatusDay/Template.Mixin.jade
 .status.row
 
    .header="Status"
-   .day-marker-block.row
+   .status-block.row
       span.row
-         +statusDay(model.status())
+         +statusDay(model.status(), true)
 
 //- Описание дня
 .note

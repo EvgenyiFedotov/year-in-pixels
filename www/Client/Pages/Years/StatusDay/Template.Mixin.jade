@@ -1,3 +1,7 @@
-mixin statusDay(model)
-   .note=(model ? model.get('note') : 'Status')
-   .day-marker(style=(model ? model.styleMarker() : ''))
+mixin statusDay(model, isRevert)
+   if isRevert
+      .note=(model ? model.get('note') : 'Status')
+      .marker-day(style=(model ? model.styleMarker() : ''))
+   else
+      .marker-day(style=(model ? model.styleMarker() : ''))
+      .note=(model ? model.get('note') : 'Status')

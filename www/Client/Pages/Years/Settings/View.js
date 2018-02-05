@@ -3,9 +3,9 @@ define([
    'jade!Pages/Years/Settings/Template',
    'Pages/Years/Data/statuses',
    'Views/List/View',
-   'jade!Pages/Years/Settings/Statuses/Item',
+   'jade!Pages/Years/StatusDay/Template',
    'css!Pages/Years/Settings/Style'
-], function(View, template, statuses, List, statusItem) {
+], function(View, template, statuses, List, tStatusDay) {
    'use strict';
 
    var Service;
@@ -16,7 +16,7 @@ define([
       model: new Backbone.Model(window.user),
 
       selectors: {
-         close: '.button[data-name="close"]',
+         close: '.main>.top>.button[data-name="close"]',
          buttonTheme: '.button[data-name="change-theme"]',
          buttonPassword: '.button[data-name="change-password"]'
       },
@@ -24,7 +24,8 @@ define([
       eventsSelectors: {
          'click close': 'close',
          'click buttonTheme': 'showMenuTheme',
-         'click buttonPassword': 'showPanelPassword'
+         'click buttonPassword': 'showPanelPassword',
+         'click .statuses .button[data-name="add"]': 'statusAdd'
       },
 
       /**
@@ -32,9 +33,6 @@ define([
        */
       initialize: function(options) {
          View.prototype.initialize.apply(this, arguments);
-
-         // Создадим меню со статусами
-         this.createStatusesMenu();
       },
 
       /**
@@ -122,7 +120,7 @@ define([
 
       /**
        * Создать кнопку с панелью редактирования пароля
-       * @param {Function}  callback
+       * @param {Function} callback
        */
       createPanelPassword: function(callback) {
          if (!this.panelPassword) {
@@ -153,21 +151,29 @@ define([
       },
 
       /**
-       * Создать меню со статусами
-       * @param {Function} callback
+       * Добавить статус
        */
-      createStatusesMenu: function(callback) {
-         if (!this.statusesMenu) {
-            this.statusesMenu = new List({
-               el: this.$('.statuses>.list'),
-               templateItem: statusItem,
-               items: statuses.models.map(function(model) {
-                  return {
-                     model: model
-                  };
-               })
-            });
-         }
+      statusAdd: function() {
+         this.child('formEditStatus', function(child, FormEditStatus) {
+            if (!child) {
+               child = new FormEditStatus({
+                  el: this.$('.statuses>.form-edit-status')
+               });
+
+               // Подпишимся на положительное окончание редактирование статуса
+               this.listenTo(child, 'save', function(model) {
+                  statuses.add(model);
+               });
+
+               this.childs.formEditStatus = child;
+            }
+
+            if (!child.model) {
+               child.model = new statuses.model();
+            }
+
+            child.dataShow(true);
+         }, ['Pages/Years/Settings/FormEditStatus/View']);
       }
    });
 });

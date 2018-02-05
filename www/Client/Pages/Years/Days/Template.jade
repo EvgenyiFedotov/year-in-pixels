@@ -1,31 +1,31 @@
 //- Названия месяцев
 .names-months.row
-   .name-month.day-marker-block
+   .name-month.marker-day-block
    each name, index in nameMonths
-      .name-month.day-marker-block=name[0]
+      .name-month.marker-day-block=name[0]
 
 //- Данные дней
 .content
    - var indexDay = 0;
 
    //- Номера дней
-   .day-numbers
+   .numbers-days
       while indexDay < 31
-         .day-number.day-marker-block=(indexDay + 1)
+         .number-day.marker-day-block=(indexDay + 1)
          - indexDay++;
 
    //- Сами данные дней
    - var monthIndex = 0;
    while monthIndex < 12
       - indexDay = 0;
-      .day-markers
+      .markers-days
          while indexDay < 31
             - date = [year, monthIndex + 1, indexDay + 1].join('-');
             - day = days.findWhere({date: date + ' 00:00:00'});
             if day
-               .day-marker(title=date, data-date=date)
+               .marker-day(title=date, data-date=date)
             else
-               .day-marker(title=date, data-date=date)
+               .marker-day(title=date, data-date=date)
 
             - indexDay++;
       - monthIndex++;

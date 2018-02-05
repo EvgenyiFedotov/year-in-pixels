@@ -21,14 +21,14 @@
 .form-edit-day>.status .header {
   margin-right: 1rem;
 }
-.form-edit-day>.status .day-marker-block {
+.form-edit-day>.status .status-block {
   width: 100%;
   justify-content: flex-end;
 }
-.form-edit-day>.status .day-marker-block .day-marker {
+.form-edit-day>.status .status-block .marker-day {
   margin-left: 1rem;
 }
-.form-edit-day>.status .day-marker-block .note {
+.form-edit-day>.status .status-block .note {
   font-style: italic;
   color: #BDBDBD;
 }

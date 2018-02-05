@@ -18,12 +18,12 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
-.days .content .day-number {
+.days .content .number-day {
   margin-right: .3rem;
   margin-bottom: .3rem;
   line-height: 1.5rem;
 }
-.days .content .day-marker {
+.days .content .marker-day {
   margin-right: .3rem;
   margin-bottom: .3rem;
   line-height: 1.5rem;
