@@ -1,7 +1,7 @@
 define([
    'Core/View',
    'jade!Pages/Years/Settings/Template',
-   'Pages/Years/Data/Statuses',
+   'Pages/Years/Data/statuses',
    'Views/List/View',
    'jade!Pages/Years/Settings/Statuses/Item',
    'css!Pages/Years/Settings/Style'

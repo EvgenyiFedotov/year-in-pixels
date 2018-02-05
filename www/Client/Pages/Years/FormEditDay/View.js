@@ -1,11 +1,11 @@
 define([
    'Core/View',
    'jade!Pages/Years/FormEditDay/Template',
-   'jade!Pages/Years/FormEditDay/Templates/DayMarker',
+   'jade!Pages/Years/StatusDay/Template',
    'Pages/Years/Data/Day.Model',
    'Views/FloatArea/View',
    'theme!css!Pages/Years/FormEditDay/Style'
-], function(View, template, tDayMarker, Model, FloatArea) {
+], function(View, template, tStatusDay, Model, FloatArea) {
    'use strict';
 
    // Карта селекторов представления
@@ -121,7 +121,7 @@ define([
        * @param {Object} status
        */
       _changeStatus: function(model, status) {
-         this.$(selectors.status).html(tDayMarker({model: model}));
+         this.$(selectors.status).html(tStatusDay({model: model}));
       }
    });
 });

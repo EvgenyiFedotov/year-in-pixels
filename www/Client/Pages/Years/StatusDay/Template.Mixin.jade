@@ -1,0 +1,3 @@
+mixin statusDay(model)
+   .note=(model ? model.get('note') : 'Status')
+   .day-marker(style=(model ? model.styleMarker() : ''))

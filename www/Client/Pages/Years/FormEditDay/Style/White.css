@@ -28,7 +28,7 @@
 .form-edit-day>.status .day-marker-block .day-marker {
   margin-left: 1rem;
 }
-.form-edit-day>.status .day-marker-block .text {
+.form-edit-day>.status .day-marker-block .note {
   font-style: italic;
   color: #BDBDBD;
 }
