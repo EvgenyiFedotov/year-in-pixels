@@ -41,35 +41,39 @@
          // Вычислим откуда было обращение
          $headers = $this->headers();
 
-         // Если уже была переадресация, обработаем запрашиваемый путь
-         if ($headers["Referer"]) {
-            $url = $this->requestUrlByReferer("year-in-pixels");
+         $url = $this->pathToFile();
 
-            header("Content-Type: " . $headers["Accept"]);
+         // // Если уже была переадресация, обработаем запрашиваемый путь
+         // if ($headers["Referer"]) {
+         //    $url = $this->currentUrl();
 
-            // Если дополнительный запрос от клиента (ajax)
-            if ($headers["X-Requested-With"]) {
-               if (!$this->service($url)) {
-                  $this->error(503, true);
-               }
+         //    header("Content-Type: " . explode(",", $headers["Accept"])[0]);
+         //    header("Cache-Control: public, max-age=31536000");
+         //    header("Expires: Wed, 21 Oct 2025 07:28:00 GMT");
 
-            // Если запрос при загрузке страницы
-            } elseif (file_exists($url)) {
-               echo file_get_contents($url);
+         //    // Если дополнительный запрос от клиента (ajax)
+         //    if ($headers["X-Requested-With"]) {
+         //       if (!$this->service($url)) {
+         //          $this->error(503, true);
+         //       }
 
-            // Если не нашли файл и уже есть кэш (Скорее всего релоад)
-            } else if ($headers["Cache-Control"]) {
-               $this->findAndRunHandler();
-               // Пока ничего не будем выдавать
-               // $this->error(503, true);
-            }
-         } else {
-            /**
-             * Найдем обработчик url
-             * Если обработчик не найден отдадим ошибку
-             */
+         //    // Если запрос при загрузке страницы
+         //    } elseif (file_exists($url)) {
+         //       echo file_get_contents($url);
+
+         //    // Если не нашли файл и уже есть кэш (Скорее всего релоад)
+         //    } else if ($headers["Cache-Control"]) {
+         //       $this->findAndRunHandler();
+         //       // Пока ничего не будем выдавать
+         //       // $this->error(503, true);
+         //    }
+         // } else {
+         //    /**
+         //     * Найдем обработчик url
+         //     * Если обработчик не найден отдадим ошибку
+         //     */
             $this->findAndRunHandler();
-         }
+         // }
       }
 
       /**
