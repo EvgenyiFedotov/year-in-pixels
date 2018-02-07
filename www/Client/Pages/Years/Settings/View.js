@@ -1,145 +1,179 @@
 define([
+   'Core/View',
    'jade!Pages/Years/Settings/Template',
-   'Views/ButtonPanel/View',
-   'Pages/Years/Settings/Password/View',
-   'Views/ButtonMenu/View',
-   'Core/Service',
+   'Pages/Years/Data/statuses',
+   'Views/List/View',
+   'jade!Pages/Years/StatusDay/Template',
    'css!Pages/Years/Settings/Style'
-], function(template, ButtonPanel, Password, ButtonMenu, Service) {
+], function(View, template, statuses, List, tStatusDay) {
    'use strict';
 
-   return Backbone.View.extend({
-      /**
-       * Контейнер темплейта
-       * @config {jQuery}
-       */
-      $template: null,
+   var Service;
 
-      /**
-       * @config {Object}
-       */
-      events: {
-         'click .button[data-name="close"]': 'close'
+   return View.extend({
+      className: 'settings',
+      template: template,
+      model: new Backbone.Model(window.user),
+
+      selectors: {
+         close: '.main>.top>.button[data-name="close"]',
+         buttonTheme: '.button[data-name="change-theme"]',
+         buttonPassword: '.button[data-name="change-password"]'
+      },
+
+      eventsSelectors: {
+         'click close': 'close',
+         'click buttonTheme': 'showMenuTheme',
+         'click buttonPassword': 'showPanelPassword',
+         'click .statuses .button[data-name="add"]': 'statusAdd'
       },
 
       /**
        * @param {Object} options
-       * @param {Boolean} options.show
        */
-      initialize: function (options) {
-         this.$template = $('<div />', {
-            class: 'settings',
-            attr: {
-               'data-show': !!options.show
-            }
+      initialize: function(options) {
+         View.prototype.initialize.apply(this, arguments);
+      },
+
+      /**
+       * Скрыть / закрыть окно
+       */
+      close: function() {
+         this.dataShow(false);
+      },
+
+      /**
+       * Показать меню с темами
+       */
+      showMenuTheme: function() {
+         this.createButtonTheme(function(menu) {
+            menu.show();
          });
 
-         this.$el.append(this.$template);
-
-         this.render(options);
-
-         // Кнопка с темой
-         this.createButtonTheme();
-
-         // Кнопка с паролем
-         this.createButtonPassword();
+         if (this.buttonTheme) {
+            this.buttonTheme.show();
+         }
       },
 
       /**
        * Создать представление (Меню) для кнопки с темой
+       * @param {Function} callback
        */
-      createButtonTheme: function() {
+      createButtonTheme: function(callback) {
          if (!this.buttonTheme) {
-            this.buttonTheme = new ButtonMenu({
-               el: this.$('.button[data-name="change-theme"]'),
-               menu: {
-                  items: [
-                     {
-                        content: "White",
-                        attrs: {'data-name': 'White'}
-                     }, {
-                        content: "Black",
-                        attrs: {'data-name': 'Black'}
-                     }
-                  ]
-               }
-            });
+            requirejs([
+               'Views/ButtonMenu/View',
+               'Core/Service'
+            ], function(ButtonMenu, CoreService) {
+               Service = CoreService;
 
-            // Событие клика по итему
-            this.listenTo(this.buttonTheme, 'clickItem', function(data) {
-               Service.post('Auth.ChangeTheme', data, {
-                  success: function(result) {
-                     window.location.reload();
-                  }.bind(this)
+               this.buttonTheme = new ButtonMenu({
+                  el: this.selector('buttonTheme'),
+                  menu: {
+                     items: [
+                        {
+                           content: "White",
+                           attrs: {'data-name': 'White'}
+                        }, {
+                           content: "Black",
+                           attrs: {'data-name': 'Black'}
+                        }
+                     ]
+                  }
                });
-            });
 
-            // Событие обображения
-            this.listenTo(this.buttonTheme, 'show', function() {
-               if (this.buttonPassword) {
-                  this.buttonPassword.hide();
+               // Событие клика по итему
+               this.listenTo(this.buttonTheme, 'clickItem', function(data) {
+                  Service.post('Auth.ChangeTheme', data, {
+                     success: function(result) {
+                        window.location.reload();
+                     }.bind(this)
+                  });
+               });
+
+               // Событие обображения
+               this.listenTo(this.buttonTheme, 'show', function() {
+                  if (this.buttonPassword) {
+                     this.buttonPassword.hide();
+                  }
+               });
+
+               if (_.isFunction(callback)) {
+                  callback.call(this, this.buttonTheme);
                }
-            });
+            }.bind(this));
          }
       },
 
       /**
-       * Создать представление (+ форму) для кнопки с паролем
+       * Показать панель для редактирования пароля
        */
-      createButtonPassword: function() {
-         if (!this.buttonPassword) {
-            var form = new Password();
+      showPanelPassword: function() {
+         this.createPanelPassword(function(view) {
+            view.show();
+         });
 
-            this.buttonPassword = new ButtonPanel({
-               el: this.$('.button[data-name="change-password"]'),
-               panel: {
-                  $el: form.$el,
-                  $border: $('body')
-               }
-            });
-
-            // Событие обображения
-            this.listenTo(this.buttonPassword, 'show', function() {
-               if (this.buttonTheme) {
-                  this.buttonTheme.hide();
-               }
-            });
-
-            // Событие закрытия
-            this.listenTo(form, 'cancel', function() {
-               this.buttonPassword.hide();
-            });
-
-            // Событие сохранения пароля
-            this.listenTo(form, 'save', function() {
-               this.buttonPassword.hide();
-            });
+         if (this.panelPassword) {
+            this.panelPassword.show();
          }
       },
 
       /**
-       * Рендер
-       * @param {Object} params
+       * Создать кнопку с панелью редактирования пароля
+       * @param {Function} callback
        */
-      render: function(params) {
-         this.$template.html( template(params || {}) );
-         return this;
+      createPanelPassword: function(callback) {
+         if (!this.panelPassword) {
+            requirejs([
+               'Views/ButtonPanel/View',
+               'Pages/Years/Settings/PanelEditPassword/View'
+            ], function(ButtonPanel, PanelEditPassword) {
+               var panelEditPassword = new PanelEditPassword();
+
+               this.panelPassword = new ButtonPanel({
+                  el: this.selector('buttonPassword'),
+                  panel: {
+                     $el: panelEditPassword.$el,
+                     $border: $('body')
+                  }
+               });
+
+               // Подпишися на события панели
+               this.listenTo(panelEditPassword, 'cancel save', function() {
+                  this.panelPassword.hide();
+               });
+
+               if (_.isFunction(callback)) {
+                  callback.call(this, this.panelPassword);
+               }
+            }.bind(this));
+         }
       },
 
       /**
-       * Отобразить панель
+       * Добавить статус
        */
-      show: function(e) {
-         this.$template.attr('data-show', 'true');
-         this.trigger('show', e);
-      },
+      statusAdd: function() {
+         this.child('formEditStatus', function(child, FormEditStatus) {
+            if (!child) {
+               child = new FormEditStatus({
+                  el: this.$('.statuses>.form-edit-status')
+               });
 
-      /**
-       * Скрыть панель
-       */
-      close: function(e) {
-         this.$template.attr('data-show', 'false');
-         this.trigger('close', e);
+               // Подпишимся на положительное окончание редактирование статуса
+               this.listenTo(child, 'save', function(model) {
+                  statuses.add(model);
+               });
+
+               this.childs.formEditStatus = child;
+            }
+
+            if (!child.model) {
+               child.model = new statuses.model();
+            }
+
+            child.dataShow(true);
+         }, ['Pages/Years/Settings/FormEditStatus/View']);
       }
    });
 });

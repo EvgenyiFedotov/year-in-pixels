@@ -1,26 +1,29 @@
 //- Блок основных настроек
-.row.head.main
-   .header="Settings"
-   //- .button(data-name="edit")="Edit"
-   .button(data-type="link", data-name="close")="Close"
-.row
-   .column.labels
-      .row
-         .label="Login"
-      .row
-         .label="Theme"
-      .row
-         .label="Password"
-   .column
-      .row
-         .value="@" + model.get("login")
-      .row
-         .button(data-type="link", data-name="change-theme")=model.get("theme")
-      .row
-         .button(data-type="link", data-name="change-password")
-            !{"&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"}
+.main.settings-block
+   .top.row
+      .header="Settings"
+      .button(data-type="link", data-name="close")="Close"
+   .content.row
+      .labels.column
+         .row
+            .label="Login"
+         .row
+            .label="Theme"
+         .row
+            .label="Password"
+      .column
+         .row
+            .value="@" + model.get("login")
+         .row
+            .button(data-type="link", data-name="change-theme")=model.get("theme")
+         .row
+            .button(data-type="link", data-name="change-password")
+               !{"&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"}
 
-//- Настройки календарей
-.row.head.calendars
-   .header="Calendars"
-   .comment="This functional in development =)"
+//- Настройки статусов
+.statuses.settings-block
+   .top.row
+      .header="Statuses"
+      .button(data-type="link", data-name="add")="Add"
+   .form-edit-status
+   .list

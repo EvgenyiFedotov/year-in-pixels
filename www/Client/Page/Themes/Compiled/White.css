@@ -128,26 +128,6 @@ input[type="button"][data-type="block"]:hover {
 :-moz-placeholder {
   color: #BDBDBD;
 }
-.day-marker-block {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-.day-marker {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  border-radius: 2px;
-  border: 1px solid #EEEEEE;
-}
-.day-marker:hover {
-  border-color: #E0E0E0;
-  background-color: #E0E0E0;
-}
 @keyframes example {
   from {
     opacity: 0;
@@ -217,4 +197,7 @@ input[type="button"][data-type="block"]:hover {
 }
 [data-show="false"] {
   display: none;
+}
+[data-blur="true"] {
+  filter: blur(1px);
 }

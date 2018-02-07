@@ -1,5 +1,9 @@
-define(function() {
+define([
+   'Pages/Years/Data/statuses'
+], function(statuses) {
    'use strict';
+
+   console.log(statuses);
 
    return Backbone.Model.extend({
       /**
@@ -13,19 +17,16 @@ define(function() {
          date: new Date(),
 
          /**
-          * Статус
-          * @config {Object}
-          */
-         status: {
-            color: null,
-            text: 'Status'
-         },
-
-         /**
           * Описание дня
           * @config {String}
           */
-         note: ''
+         note: '',
+
+         /**
+          * Статус идентификатор
+          * @config {Number}
+          */
+         status_id: null
       },
 
       /**
@@ -38,38 +39,18 @@ define(function() {
             params.date = new Date(params.date);
          }
 
+         // Статус
+         params.status_id = parseInt(params.status_id);
+
          return params;
       },
 
       /**
-       * Получить стиль для маркера дня по объекту статуса
-       * @param {Object} status
+       * Получит модель статуса
+       * @return {Status.Model}
        */
-      styleMarkerDay: function(status) {
-         var color = status.color;
-         var style = {};
-
-         if (color) {
-            _.defaults(style, {
-               'border': '1px solid ' + color,
-               'background-color': color
-            });
-         }
-
-         return style;
-      },
-
-      /**
-       * Получить стиль для маркера дня по объекту статуса в виде строки
-       * @param {Object} status
-       */
-      styleMarkerDayString: function(status) {
-         var style = this.styleMarkerDay(status);
-
-         return Object.keys(style).reduce(function(result, key) {
-            result.push(key + ': ' + style[key]);
-            return result;
-         }, []).join('; ');
+      status: function() {
+         return statuses.get(this.get('status_id'));
       }
    });
 });

@@ -1,0 +1,30 @@
+.days-day-block {
+  margin-right: .3rem;
+  margin-bottom: .3rem;
+  line-height: 1.5rem;
+}
+.days {
+  overflow: hidden;
+}
+.days .name-month {
+  margin-right: .3rem;
+  margin-bottom: .3rem;
+  line-height: 1.5rem;
+}
+.days .content {
+  display: flex;
+  width: 106%;
+  height: calc(100% - (1.5rem + .3rem));
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.days .content .number-day {
+  margin-right: .3rem;
+  margin-bottom: .3rem;
+  line-height: 1.5rem;
+}
+.days .content .marker-day {
+  margin-right: .3rem;
+  margin-bottom: .3rem;
+  line-height: 1.5rem;
+}

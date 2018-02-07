@@ -20,7 +20,8 @@
             foreach ($paths["files"] as $index => $pathFile) {
                $pathInfo = pathinfo($pathFile);
    
-               if ($pathInfo["extension"] === "less") {
+               if ($pathInfo["extension"] === "less"
+               && !in_array("Var", explode(".", $pathInfo["filename"]))) {
                   $this->convertFile($pathFile);
                }
             }

@@ -1,9 +1,7 @@
-
+include ../StatusDay/Template.Mixin.jade
 
 //- Сама дата
 .date.row
-   - var d = "date";
-
    .header="Date"
    .text=model.get('date').toLocaleDateString()
 
@@ -11,9 +9,9 @@
 .status.row
 
    .header="Status"
-   .day-marker-block.row
+   .status-block.row
       span.row
-         include Templates/DayMarker.jade
+         +statusDay(model.status(), true)
 
 //- Описание дня
 .note

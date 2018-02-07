@@ -1,0 +1,13 @@
+.form-edit-status .content {
+  line-height: 2rem;
+}
+.form-edit-status .content .marker-day {
+  margin-right: 1rem;
+  margin-top: .25rem;
+}
+.form-edit-status .content input {
+  width: 90%;
+}
+.form-edit-status .content .button {
+  margin-left: 1rem;
+}

@@ -1,0 +1,88 @@
+@import "Page/Themes/Base/Fonts";
+
+.formEditDay() {
+   .form-edit-day {
+      width: 100%;
+
+      &>.date {
+         margin-bottom: 1rem;
+         line-height: 1.5rem;
+
+         .header {
+            margin-right: 1rem;
+         }
+
+         .text {
+            width: 100%;
+            text-align: right;
+            font-style: italic;
+            color: @color-label;
+         }
+      }
+
+      &>.status {
+         margin-bottom: 1rem;
+         line-height: 1.5rem;
+
+         .header {
+            margin-right: 1rem;
+         }
+
+         .status-block {
+            width: 100%;
+            justify-content: flex-end;
+
+            .marker-day {
+               margin-left: 1rem;
+            }
+   
+            .note {
+               font-style: italic;
+               color: @color-label;
+            }
+         }
+      }
+
+      // Описание дня
+      &>.note {
+         margin-bottom: 1rem;
+
+         .top {
+            line-height: 1.5rem;
+            margin-bottom: 1rem;
+
+            .header {
+               width: 100%;
+            }
+         }
+
+         .text {
+            color: @color-label;
+            line-height: 1.5rem;
+            font-style: italic;
+            text-align: justify;
+         }
+
+         textarea {
+            .font-encode-sans();
+            resize: none;
+            font-style: italic;
+            line-height: 1.5rem;
+            height: 1.5rem * 4;
+         }
+      }
+
+      &>.events {
+         margin-bottom: 1rem;
+
+         .top {
+            margin-bottom: 1rem;
+            line-height: 1.5rem;
+
+            .header {
+               width: 100%;
+            }
+         }
+      }
+   }
+}

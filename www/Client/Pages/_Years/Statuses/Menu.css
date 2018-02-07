@@ -1,0 +1,7 @@
+.statuses .item[data-status] {
+  display: flex;
+  padding: .3rem .5rem;
+}
+.statuses .item[data-status] .day-marker {
+  margin-right: .5rem;
+}
