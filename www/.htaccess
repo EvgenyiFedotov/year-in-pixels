@@ -1,30 +1,22 @@
 Options All -Indexes
 
-#-------------------
-
-#Options -MultiViews
-#RewriteEngine On
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteRule ^ index.php [QSA,L]
-
-#------------------
+# Клиент
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^.*(Client)(.*)$ /$1$2 [L,QSA]
 
+# Иконка
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.php/$1 [L,QSA]
+RewriteRule ^.*(favicon.ico)$ /$1 [L,QSA]
 
-#--------------
+# Если попытаются зайти на файлы сервера
+RewriteRule ^(Configs|Service).*$ /index.php/ [NC,L]
 
-#RewriteRule \.(json|jpg|jpeg|png|gif)$ - [NC,F,L]
-#RewriteRule .*(Configs|Service|Client/Pages).*$ - [NC,F,L]
-
-#RewriteEngine On
-#RewriteCond %{ENV:REDIRECT_FINISH} !^$
-#RewriteRule ^ - [L]
-
-#RewriteRule ^(.*)$ / [E=FINISH:1,L]
+# Все остально перенаправляется на index
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php/$1 [NC,L,QSA]
