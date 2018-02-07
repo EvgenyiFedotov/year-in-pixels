@@ -9,15 +9,15 @@
          $require->includeFiles(["data-base", "less-css", "jade"]);
 
          // Преобразуем Less в CSS
-         $lesscss = new LessCSS([
-            "inportDirs" => ["Client/"],
-            "convertDirs" => [
-               "Client/Page/Themes/Compiled",
-               "Client/Views",
-               "Client/Pages"
-            ]
-         ]);
-         $lesscss->convert();
+         // $lesscss = new LessCSS([
+         //    "inportDirs" => ["Client/"],
+         //    "convertDirs" => [
+         //       "Client/Page/Themes/Compiled",
+         //       "Client/Views",
+         //       "Client/Pages"
+         //    ]
+         // ]);
+         // $lesscss->convert();
 
          // Имя страницы
          $namePage = ucfirst($route[0]);

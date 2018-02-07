@@ -1,8 +1,8 @@
 <?php
    Query\route([
       "route" => "service\/service",
-      "type" => "service",
-      "priority" => 500,
+      "type" => "success",
+      "priority" => 600,
       "handler" => function($require, $route, $configRoute, $query) {
          $pathObject = $query->pathToObject();
          $require->includeFiles([
