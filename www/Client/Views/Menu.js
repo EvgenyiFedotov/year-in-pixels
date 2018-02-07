@@ -1,5 +1,5 @@
 define([
-   'Views/List/View'
+   'Views/List'
 ], function(List) {
    'use strict';
 

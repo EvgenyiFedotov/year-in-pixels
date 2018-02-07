@@ -1,6 +1,6 @@
 define([
-   'Views/ButtonPanel/View',
-   'Views/Menu/View'
+   'Views/ButtonPanel',
+   'Views/Menu'
 ], function(ButtonPanel, Menu) {
    'use strict';
    

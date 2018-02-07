@@ -2,7 +2,7 @@ define([
    'Core/View',
    'jade!Pages/Years/Settings/Template',
    'Pages/Years/Data/statuses',
-   'Views/List/View',
+   'Views/List',
    'jade!Pages/Years/StatusDay/Template',
    'css!Pages/Years/Settings/Style'
 ], function(View, template, statuses, List, tStatusDay) {
@@ -62,7 +62,7 @@ define([
       createButtonTheme: function(callback) {
          if (!this.buttonTheme) {
             requirejs([
-               'Views/ButtonMenu/View',
+               'Views/ButtonMenu',
                'Core/Service'
             ], function(ButtonMenu, CoreService) {
                Service = CoreService;
@@ -125,8 +125,8 @@ define([
       createPanelPassword: function(callback) {
          if (!this.panelPassword) {
             requirejs([
-               'Views/ButtonPanel/View',
-               'Pages/Years/Settings/PanelEditPassword/View'
+               'Views/ButtonPanel',
+               'Pages/Years/Settings/PanelEditPassword'
             ], function(ButtonPanel, PanelEditPassword) {
                var panelEditPassword = new PanelEditPassword();
 
@@ -168,12 +168,13 @@ define([
                this.childs.formEditStatus = child;
             }
 
+            // Добавим модель если это необходимо
             if (!child.model) {
                child.model = new statuses.model();
             }
 
             child.dataShow(true);
-         }, ['Pages/Years/Settings/FormEditStatus/View']);
+         }, ['Pages/Years/Settings/FormEditStatus']);
       }
    });
 });

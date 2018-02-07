@@ -1,9 +1,10 @@
 define([
    'Core/View',
-   'Pages/Years/Navigation/View',
-   'Pages/Years/Days/View',
-   'Pages/Years/FormEditDay/View',
-   'Core/Service'
+   'Pages/Years/Navigation',
+   'Pages/Years/Days',
+   'Pages/Years/FormEditDay',
+   'Core/Service',
+   'css!Pages/Years/Style'
 ], function(View, Navigation, Days, FormEditDay, Service) {
    'use strict';
 
@@ -113,7 +114,7 @@ define([
        */
       createSettings: function(callback) {
          if (!this.settings) {
-            requirejs(['Pages/Years/Settings/View'], function(Settings) {
+            requirejs(['Pages/Years/Settings'], function(Settings) {
                var $settings = $('<div />', {
                   class: 'settings',
                   attr: {

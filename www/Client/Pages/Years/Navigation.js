@@ -43,7 +43,7 @@ define([
        */
       createMenu: function(callback) {
          if (!this.menu) {
-            requirejs(['Views/ButtonMenu/View'], function(ButtonMenu) {
+            requirejs(['Views/ButtonMenu'], function(ButtonMenu) {
                this.menu = new ButtonMenu({
                   el: this.selector('buttonMenu'),
                   panel: {

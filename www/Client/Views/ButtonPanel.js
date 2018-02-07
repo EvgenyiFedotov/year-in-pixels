@@ -1,5 +1,5 @@
 define([
-   'Views/FloatArea/View'
+   'Views/FloatArea'
 ], function(FloatArea) {
    'use strict';
 

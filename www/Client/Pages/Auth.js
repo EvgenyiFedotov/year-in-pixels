@@ -1,6 +1,6 @@
 define([
    'Core/Service',
-   'Views/Informer/View'
+   'Views/Informer'
 ], function(Service, Informer) {
    'use strict';
 

@@ -1,58 +1,35 @@
 define([
-   'jade!Pages/Years/Settings/Password/Template',
+   'Core/Form',
+   'jade!Pages/Years/Settings/PanelEditPassword/Template',
+   'Views/Informer',
    'Core/Service',
-   'Views/Informer/View',
-   'css!Pages/Years/Settings/Password/Style'
-], function(template, Service, Informer) {
+   'css!Pages/Years/Settings/PanelEditPassword/Style'
+], function(Form, template, Informer, Service) {
    'use strict';
+   
+   return Form.extend({
+      className: 'panel-edit-password',
+      template: template,
 
-   return Backbone.View.extend({
-      className: 'form-password',
-
-      /**
-       * @config {Object}
-       */
       events: {
          'click input[data-name="cancel"]': 'cancel',
          'click input[data-name="save"]': 'save'
       },
 
       /**
-       * @param {Object} options
-       */
-      initialize: function (options) {
-         this.render(options);
-      },
-
-      /**
-       * Рендер
-       * @param {Object} params
-       */
-      render: function(params) {
-         var $template = $( template(params || {}) );
-         this.$el.html($template);
-         return this;
-      },
-
-      /**
-       * Клик на кнопку отмены
+       * Омена изменений
        */
       cancel: function(e) {
+         this.clearFiledsValues();
          this.trigger('cancel', e);
       },
 
       /**
-       * Клик на кнопку сохранения пароля
+       * Сохранение изменений
        */
       save: function(e) {
-         var values = {};
+         var values = this.fieldsValues();
          var isSend = false;
-         var $fields = this.$('input[data-field]');
-
-         $fields.each(function(index, el) {
-            var $el = $(el);
-            values[$el.attr('data-name')] = $el.val();
-         });
 
          isSend = _.values(values).reduce(function(result, value) {
             return result && !!value;
@@ -67,9 +44,7 @@ define([
                      note: jqXHR.statusText
                   }).show();
 
-                  $fields.each(function(index, el) {
-                     $(el).val('');
-                  });
+                  this.clearFiledsValues();
 
                   this.trigger('save', e);
                }.bind(this),

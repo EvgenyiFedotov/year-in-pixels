@@ -1,5 +1,5 @@
 define([
-   'Pages/Auth/View',
+   'Pages/Auth',
    'css!Pages/Auth/Style'
 ], function(Auth) {
    'use strict';
