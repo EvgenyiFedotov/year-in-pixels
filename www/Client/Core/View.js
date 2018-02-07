@@ -49,10 +49,21 @@ define(function() {
          // Подписка на события по карте селекторов
          this.delegateEvents(this.getEventsSelectors(options.eventsSelectors));
 
+         // Обработчик ининциализации перед рендерингом
+         this._init(options);
+
          // Произведем рендер, если это необходимо
          if (options.firstRender !== false) {
             this.render(options);
          }
+      },
+
+      /**
+       * Обработчик ининциализации перед рендерингом
+       * @param {Object} options
+       */
+      _init: function(options) {
+         // code...
       },
 
       /**
@@ -89,12 +100,25 @@ define(function() {
       },
 
       /**
+       * Выполняется перед рендерингом
+       * @param {Object} params
+       */
+      _beforeRender: function(params) {
+         // code...
+      },
+
+      /**
        * Рендер
        * @param {Object} [params]
        */
       render: function(params) {
          if (this.template) {
+            params = params instanceof Object ? params : {};
+
             params.model = params.model || this.model;
+
+            // Выполним обработчик перед редерингом
+            this._beforeRender(params);
 
             this.$el.html(this.template(params || {}));
          }

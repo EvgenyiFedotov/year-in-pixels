@@ -16,3 +16,8 @@
   width: 100%;
   text-align: right;
 }
+.settings .statuses .list .item {
+  height: 2rem;
+  margin-bottom: 1rem;
+  padding-top: .25rem;
+}

@@ -1,3 +1,5 @@
 include Template.Mixin.jade
 
-+statusDay(model)
+- attrs = model ? model.attributes : attributes;
+
++statusDay(attrs.note, attrs.styleMarker)

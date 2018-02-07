@@ -11,7 +11,8 @@ define([
       
       events: {
          'click .button[data-name="close"]': 'close',
-         'click .button[data-name="save"]': 'save'
+         'click .button[data-name="save"]': 'save',
+         'click .marker-day': 'showPalette'
       },
 
       /**
@@ -25,11 +26,24 @@ define([
        * Созхранить данные статуса
        */
       save: function() {
+         // Установим значения в форму
+         this.model.set(this.fieldsValues());
+
          this.trigger('save', this.model);
          this.dataShow(false);
 
+         // Очистим форму
+         this.clearFiledsValues();
+
          // Уберем ссылку на модель
          this.model = null;
+      },
+
+      /**
+       * Показать палитру
+       */
+      showPalette: function() {
+         console.log('showPalette');
       }
    });
 });

@@ -16,15 +16,35 @@ define(function() {
           * Описание
           * @config {String}
           */
-         note: 'Status'
+         note: 'Status',
+
+         /**
+          * Стиль маркера
+          * @config {String}
+          */
+         styleMarker: ''
+      },
+
+      initialize: function() {
+         this.on('change:color', function() {
+            console.log('change:color');
+         });
+      },
+
+      /**
+       * @param {Object}
+       */
+      parse: function(params) {
+         params.styleMarker = this.styleMarker(params.color, true);
+         return params;
       },
 
       /**
        * Получить стиль маркера
+       * @param {String} color
        * @param {Boolean} isString
        */
-      styleMarker: function(isString) {
-         var color = this.get('color');
+      styleMarker: function(color, isString) {
          var style = {};
 
          if (color) {

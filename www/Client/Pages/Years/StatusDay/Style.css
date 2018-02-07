@@ -1,0 +1,10 @@
+.status-day {
+  display: flex;
+}
+.status-day .marker-day {
+  margin-right: 1rem;
+}
+.status-day .note {
+  widows: 100%;
+  line-height: 1.5rem;
+}

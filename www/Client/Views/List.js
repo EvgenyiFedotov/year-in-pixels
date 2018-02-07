@@ -1,9 +1,19 @@
 define([
+   'Core/View',
    'jade!Views/List/Template'
-], function(template) {
+], function(View, template) {
    'use strict';
 
-   return Backbone.View.extend({
+   return View.extend({
+      className: 'list',
+      template: template,
+
+      /**
+       * Классы для итема
+       * @config {String}
+       */
+      classNameItem: '',
+
       /**
        * Шаблон итема
        * @config {Function}
@@ -12,37 +22,44 @@ define([
 
       /**
        * Массив итемов
-       * @config {Array.<Object>}
+       * @config {Backbone.Collection}
        */
-      items: [],
+      items: null,
 
       /**
        * Обратчики представления
-       * @return {Object}
        */
-      events: function() {
-         return {
-            /**
-             * Клик по итему списка
-             */
-            'click .item': function(e) {
-               var $item = $(e.target).closest('.item');
-
-               this.trigger('clickItem', $item.data(), $item, e);
-            }
-         };
+      events: {
+         // Клик по итему
+         'click .item': '_clickItem'
       },
 
       /**
+       * Обработчик инициализации
        * @param {Object} options
        */
-      initialize: function (options) {
-         // Установим класс
-         this.$el.addClass('list');
-         // Рендер списка
-         this.$el.html(this.render(options));
+      _init: function(options) {
+         var itemsIsCollection = options.items instanceof Backbone.Collection;
 
-         Backbone.View.prototype.initialize.apply(this, arguments);
+         // Классы для итемов
+         this.classNameItem = options.classNameItem || '';
+
+         // Итемы
+         if (_.isArray(options.items) || itemsIsCollection) {
+            this.items = options.items;
+         } else {
+            this.items = [];
+         }
+
+         // Если передали коллекцию, оформим корректные подписки
+         if (itemsIsCollection) {
+            console.log('collection');
+         }
+
+         // Шаблон итема
+         if (_.isFunction(options.templateItem)) {
+            this.templateItem = options.templateItem;
+         }
       },
 
       /**
@@ -51,21 +68,23 @@ define([
        * @param {Array.<Object>} [options.items]
        * @param {Function} [options.templateItem]
        */
-      render: function(options) {
-         options = options instanceof Object ? options : {};
+      _beforeRender: function(options) {
+         options.classNameItem = this.classNameItem;
+         options.templateItem = this.templateItem;
 
-         this.items = options.items instanceof Array
-            ? options.items
-            : this.items;
+         if (this.items instanceof Backbone.Collection) {
+            options.items = this.items.models;
+         } else {
+            options.items = this.items;
+         }
+      },
 
-         this.templateItem = options.templateItem instanceof Function
-            ? options.templateItem
-            : this.templateItem;
-
-         return $(template({
-            items: this.items,
-            templateItem: this.templateItem
-         }));
+      /**
+       * Обработчик клика по итему
+       */
+      _clickItem: function(e) {
+         var $item = $(e.target).closest('.item');
+         this.trigger('clickItem', $item.data(), $item, e);
       }
    });
 });

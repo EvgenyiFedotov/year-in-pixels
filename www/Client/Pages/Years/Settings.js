@@ -4,7 +4,8 @@ define([
    'Pages/Years/Data/statuses',
    'Views/List',
    'jade!Pages/Years/StatusDay/Template',
-   'css!Pages/Years/Settings/Style'
+   'css!Pages/Years/Settings/Style',
+   'css!Pages/Years/StatusDay/Style'
 ], function(View, template, statuses, List, tStatusDay) {
    'use strict';
 
@@ -33,6 +34,14 @@ define([
        */
       initialize: function(options) {
          View.prototype.initialize.apply(this, arguments);
+
+         // Создать список статусов
+         this.list = new List({
+            el: this.$('.statuses>.list'),
+            classNameItem: 'status-day',
+            templateItem: tStatusDay,
+            items: statuses
+         });
       },
 
       /**
@@ -163,6 +172,7 @@ define([
                // Подпишимся на положительное окончание редактирование статуса
                this.listenTo(child, 'save', function(model) {
                   statuses.add(model);
+                  this.list.render();
                });
 
                this.childs.formEditStatus = child;
