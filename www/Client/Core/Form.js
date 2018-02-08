@@ -41,6 +41,15 @@ define(['Core/View'], function(View) {
                $el.value(null);
             }
          });
+      },
+
+      /**
+       * Установить модель
+       * @param {Backbone.Model} model
+       */
+      setModel: function(model) {
+         this.model = model;
+         this.render();
       }
    });
 });

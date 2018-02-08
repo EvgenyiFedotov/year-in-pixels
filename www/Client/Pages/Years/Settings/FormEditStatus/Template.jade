@@ -1,5 +1,5 @@
 .content.row
    .marker-day
-   input(type="text", data-name="note", placeholder="Note status", data-is-field="true")
+   input(value=(model ? model.get('note') : ''), type="text", data-name="note", placeholder="Note status", data-is-field="true")
    .button(data-type="link", data-name="save")="Save"
    .button(data-type="link", data-name="close")="Close"

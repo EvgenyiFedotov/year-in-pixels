@@ -1,7 +1,8 @@
 define([
    'Core/View',
    'jade!Views/List/Template',
-   'jade!Views/List/ListItem'
+   'jade!Views/List/ListItem',
+   'theme!css!Views/List/Style'
 ], function(View, template, tListItem) {
    'use strict';
 
@@ -36,6 +37,12 @@ define([
       },
 
       /**
+       * Текст, при отсутсвии итемов
+       * @config {String}
+       */
+      nullText: 'The list is empty...',
+
+      /**
        * Обработчик инициализации
        * @param {Object} options
        */
@@ -55,12 +62,17 @@ define([
          // Если передали коллекцию, оформим корректные подписки
          if (itemsIsCollection) {
             this.listenTo(this.items, 'add', this._addItem);
+            this.listenTo(this.items, 'remove', this._removeItem);
+            this.listenTo(this.items, 'change', this._changeItem);
          }
 
          // Шаблон итема
          if (_.isFunction(options.templateItem)) {
             this.templateItem = options.templateItem;
          }
+
+         // Текст отсутствия итемов
+         this.nullText = options.nullText || this.nullText;
       },
 
       /**
@@ -72,6 +84,7 @@ define([
       _beforeRender: function(options) {
          options.classNameItem = this.classNameItem;
          options.templateItem = this.templateItem;
+         options.nullText = this.nullText;
 
          if (this.items instanceof Backbone.Collection) {
             options.items = this.items.models;
@@ -89,26 +102,55 @@ define([
       },
 
       /**
-       * Обрботчик добавления итема в коллекцию
+       * Рендер итема
        * @param {Backbone.Model} model
-       * @param {Backbone.Collection} collection
        */
-      _addItem: function(model, collection) {
-         var index = collection.indexOf(model);
-         var item = tListItem({
+      renderItem: function(model) {
+         return tListItem({
             item: model,
-            index: index,
+            index: this.items.indexOf(model),
             params: {
                classNameItem: this.classNameItem,
                templateItem: this.templateItem
             }
          });
+      },
 
-         if (index === 0) {
-            this.$el.append(item);
+      /**
+       * Обрботчик добавления итема в коллекцию
+       * @param {Backbone.Model} model
+       * @param {Backbone.Collection} collection
+       */
+      _addItem: function(model, collection) {
+         if (this.items.length === 1) {
+            this.render();
          } else {
-            this.$('.item').eq(index - 1).after(item);
+            this.$('.item').eq(this.items.indexOf(model) - 1)
+               .after(this.renderItem(model));
          }
+      },
+
+      /**
+       * Обработчик удаления итема из коллекции
+       * @param {Backbone.Model} model
+       * @param {Backbone.Collection} collection
+       */
+      _removeItem: function(model, collection, params) {
+         this.$('.item').eq(params.index).remove();
+
+         if (!this.items.length) {
+            this.render();
+         }
+      },
+
+      /**
+       * Обработчик редактирования итема из коллекции
+       * @param {Backbone.Model} model
+       */
+      _changeItem: function(model) {
+         var index = this.items.indexOf(model);
+
+         this.$('.item').eq(index).replaceWith(this.renderItem(model));
       }
    });
 });

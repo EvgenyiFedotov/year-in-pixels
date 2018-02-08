@@ -19,14 +19,18 @@ define([
       selectors: {
          close: '.main>.top>.button[data-name="close"]',
          buttonTheme: '.button[data-name="change-theme"]',
-         buttonPassword: '.button[data-name="change-password"]'
+         buttonPassword: '.button[data-name="change-password"]',
+         buttonEditStatus: '.statuses .item>.buttons>.button[data-name="edit"]',
+         buttonDeleteStatus: '.statuses .item>.buttons>.button[data-name="delete"]'
       },
 
       eventsSelectors: {
          'click close': 'close',
          'click buttonTheme': 'showMenuTheme',
          'click buttonPassword': 'showPanelPassword',
-         'click .statuses .button[data-name="add"]': 'statusAdd'
+         'click .statuses .button[data-name="add"]': 'statusAdd',
+         'click buttonEditStatus': "_statusEdit",
+         'click buttonDeleteStatus': "_statusDelete"
       },
 
       /**
@@ -183,6 +187,25 @@ define([
 
             child.dataShow(true);
          }, ['Pages/Years/Settings/FormEditStatus']);
+      },
+
+      /**
+       * Обработчик редактирования статуса
+       */
+      _statusEdit: function(e) {
+         var $button = $(e.target).closest(this.selector('buttonEditStatus'));
+         var formEditStatus = this.childs.formEditStatus;
+
+         formEditStatus.setModel(statuses.get($button.data().cid));
+         formEditStatus.dataShow(true);
+      },
+      
+      /**
+       * Обработчик удаления статуса
+       */
+      _statusDelete: function(e) {
+         var $button = $(e.target).closest(this.selector('buttonDeleteStatus'));
+         statuses.remove($button.data().cid);
       }
    });
 });
