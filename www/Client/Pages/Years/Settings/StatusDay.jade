@@ -1,0 +1,9 @@
+include ../StatusDay/Template.Mixin.jade
+
+- attrs = model ? model.attributes : attributes;
+
+.content.status-day
+   +statusDay(attrs.note, attrs.styleMarker)
+.buttons
+   .button(data-type="link", data-name="edit")="Edit"
+   .button(data-type="link", data-name="delete")="Delete"

@@ -34,9 +34,36 @@
    .statuses {
       .list {
          .item {
+            display: flex;
             height: 2rem;
             margin-bottom: 1rem;
-            padding-top: .25rem;
+            width: 100%;
+
+            .content {
+               width: 100%;
+               overflow: hidden;
+
+               .marker-day {
+                  margin-top: .25rem;
+               }
+
+               .note {
+                  width: 90%;
+                  line-height: 2rem;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+               }
+            }
+
+            .buttons {
+               display: flex;
+
+               .button {
+                  line-height: 2rem;
+                  margin-left: 1rem;
+               }
+            }
          }
       }
    }

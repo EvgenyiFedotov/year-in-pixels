@@ -1,7 +1,8 @@
 define([
    'Core/View',
-   'jade!Views/List/Template'
-], function(View, template) {
+   'jade!Views/List/Template',
+   'jade!Views/List/ListItem'
+], function(View, template, tListItem) {
    'use strict';
 
    return View.extend({
@@ -53,7 +54,7 @@ define([
 
          // Если передали коллекцию, оформим корректные подписки
          if (itemsIsCollection) {
-            console.log('collection');
+            this.listenTo(this.items, 'add', this._addItem);
          }
 
          // Шаблон итема
@@ -85,6 +86,29 @@ define([
       _clickItem: function(e) {
          var $item = $(e.target).closest('.item');
          this.trigger('clickItem', $item.data(), $item, e);
+      },
+
+      /**
+       * Обрботчик добавления итема в коллекцию
+       * @param {Backbone.Model} model
+       * @param {Backbone.Collection} collection
+       */
+      _addItem: function(model, collection) {
+         var index = collection.indexOf(model);
+         var item = tListItem({
+            item: model,
+            index: index,
+            params: {
+               classNameItem: this.classNameItem,
+               templateItem: this.templateItem
+            }
+         });
+
+         if (index === 0) {
+            this.$el.append(item);
+         } else {
+            this.$('.item').eq(index - 1).after(item);
+         }
       }
    });
 });

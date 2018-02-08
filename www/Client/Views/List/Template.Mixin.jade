@@ -1,11 +1,6 @@
+include ListItem.Mixin.jade
+
 mixin list(items, templateItem)
    if items && items.length
       each item, index in items
-         .item(class=(classNameItem || ''))&attributes(item.attrs || {})
-            //- Вставим сразу переданный контент, если так есть
-            !{item.content || ''}
-
-            //- Если передали шаблон итема
-            - var tItem = item.template !== undefined ? item.template : templateItem;
-            if tItem
-               !{tItem(item)}
+         +listItem(item, index, {classNameItem: classNameItem, templateItem: templateItem})
