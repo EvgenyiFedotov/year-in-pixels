@@ -7,7 +7,7 @@ define([
    'use strict';
 
    return View.extend({
-      className: 'list',
+      classNameDefault: 'list',
       template: template,
 
       /**

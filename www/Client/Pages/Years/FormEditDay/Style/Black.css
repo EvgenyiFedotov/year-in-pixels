@@ -49,9 +49,6 @@
   text-align: justify;
 }
 .form-edit-day>.note textarea {
-  font-size: 14px;
-  line-height: 1rem;
-  font-family: 'Encode Sans Expanded', sans-serif;
   resize: none;
   font-style: italic;
   line-height: 1.5rem;

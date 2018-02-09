@@ -1,0 +1,28 @@
+.FloatArea() {
+   @keyframes example {
+      from {
+         opacity: 0;
+      }
+      to {
+         opacity: 1;
+      }
+   }
+
+   .float-area {
+      position: fixed;
+      background-color: @color-background;
+      // display: none;
+      // transition: opacity 5s;
+   
+      &[data-shadow="true"] {
+         box-shadow: 0 0 1.5rem @color-shadow;
+      }
+   
+      // &[data-show="true"] {
+      //    display: block;
+      //    opacity: 1;
+      //    animation-name: example;
+      //    animation-duration: 0.2s;
+      // }
+   }
+}

@@ -198,6 +198,11 @@ define([
 
          formEditStatus.setModel(statuses.get($button.data().cid));
          formEditStatus.dataShow(true);
+
+         // Подпишимся на закрытие формы, чтобы убрать модель
+         this.listenToOnce(formEditStatus, 'hide', function() {
+            formEditStatus.setModel(null);
+         });
       },
       
       /**

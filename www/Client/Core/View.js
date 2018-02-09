@@ -3,6 +3,12 @@ define(function() {
 
    return Backbone.View.extend({
       /**
+       * Классы по-умолчанию
+       * @config {String}
+       */
+      classNameDefault: '',
+
+      /**
        * Шаблон
        * @config {Function}
        */
@@ -32,13 +38,25 @@ define(function() {
       childs: {},
 
       /**
+       * Индикатор отображения представления
+       * @config {Boolean}
+       */
+      isShow: true,
+
+      /**
        * @param {Object} options
        * @param {Function} [options.template]
        * @param {Boolean} [options.firstRender]
        * @param {Object|Function} [options.eventsSelectors]
+       * @param {Boolean} [options.isShow]
        */
       initialize: function(options) {
          options = options instanceof Object ? options : {};
+
+         // Классы по-умолчанию
+         if (this.classNameDefault) {
+            this.$el.addClass(this.classNameDefault);
+         }
 
          // Темлейт
          this.template = options.template || this.template;
@@ -49,8 +67,14 @@ define(function() {
          // Подписка на события по карте селекторов
          this.delegateEvents(this.getEventsSelectors(options.eventsSelectors));
 
+         // Отображение представления
+         this.isShow = _.isBoolean(options.isShow) ? options.isShow : !!this.isShow;
+
          // Обработчик ининциализации перед рендерингом
          this._init(options);
+
+         // Установим само отображение
+         this.dataShow(this.isShow, false);
 
          // Произведем рендер, если это необходимо
          if (options.firstRender !== false) {
@@ -165,15 +189,49 @@ define(function() {
       /**
        * Сменить отображение
        * @param {Boolean} value
+       * @param {Boolean} isTrigger
        */
-      dataShow: function(value) {
+      dataShow: function(value, isTrigger) {
+         value = !!value;
+
+         this.isShow = value;
+
          this.$el.attr('data-show', value);
 
-         if (value === false) {
-            this.trigger('hide');
-         } else {
-            this.trigger('show');
+         // Нужно ли сообщать об изменении режима отображения
+         if (isTrigger !== false) {
+            this.trigger(value === false ? 'hide' : 'show');
          }
+      },
+
+      /**
+       * Дополнительный обработчик
+       */
+      _show: function() {
+         // code...
+      },
+
+      /**
+       * Отобразить предастваление
+       */
+      show: function() {
+         this._show.apply(this, arguments);
+         this.dataShow(true);
+      },
+
+      /**
+       * Дополнительный обработчик
+       */
+      _hide: function() {
+         // code...
+      },
+
+      /**
+       * Скрыть предастваление
+       */
+      hide: function() {
+         this._hide.apply(this, arguments);
+         this.dataShow(false);
       },
 
       /**

@@ -1,110 +1,71 @@
-define(function() {
+define([
+   'Core/View',
+   'Views/FloatArea/Helpers',
+   'theme!css!Views/FloatArea/Style'
+], function(View, helpers) {
    'use sctrict';
 
-   /**
-    * Получить границы элемента
-    * @param {jQuery} $el
-    */
-   var borderElement = function($el) {
-      var offset = $el.offset();
+   var $body = $('body');
 
-      offset.right = offset.left + parseInt($el.css('width'));
-      offset.bottom = offset.top + parseInt($el.css('height'));
+   return View.extend({
+      classNameDefault: 'float-area',
 
-      return offset;
-   };
-
-   /**
-    * Получить флаги по сторонам, где контейнер выходдит за контейнер
-    * @param {Object} offset1
-    * @param {Object} offset2
-    */
-   var checkBorders = function(offset1, offset2) {
-      var result = {
-         top: false,
-         rigth: false,
-         bottom: false,
-         left: false
-      };
-
-      if (offset1.top < offset2.top) {
-         result.top = true;
-      }
-
-      if (offset1.right > offset2.right) {
-         result.rigth = true;
-      }
-
-      if (offset1.bottom > offset2.bottom) {
-         result.bottom = true;
-      }
-
-      if (offset1.left < offset2.left) {
-         result.left = true;
-      }
-
-      return result;
-   };
-
-   return Backbone.View.extend({
       /**
+       * Всплывающая область
        * @config {jQuery}
        */
-      $body: $('body'),
+      $area: null,
 
       /**
+       * Таргет
        * @config {jQuery}
        */
       $target: null,
 
       /**
+       * Смещение относительно таргета
+       * @config {Object}
+       */
+      offset: null,
+
+      /**
+       * Граница в виде контейнера, за которую нельзя выходить
        * @config {jQuery}
        */
       $border: null,
 
-      /**
-       * @config {Object}
-       */
-      offset: {},
-
-      /**
-       * @config {Boolean}
-       */
       isShow: false,
 
       /**
+       * Определим дополнительный обработчик инициализации
        * @param {Object} options
-       * @param {jQuery} options.$el
-       * @param {jQuery} options.$target
-       * @param {jQuery} options.$border
-       * @param {Object} options.offset
-       * @param {Boolean} options.shadow
        */
-      initialize: function(options) {
-         var $el = options.$el;
-
-         // Настроить всплывающую область
-         if ($el && $el.length) {
-            this.$el = $el;
-            this.$body.append(this.$el);
+      _init: function(options) {
+         // Всплывающая область
+         if (options.area instanceof Backbone.View) {
+            this.$area = options.area.$el;
+         } else if (options.area) {
+            this.$area = options.area;
          }
 
-         // Настроим основные опции
-         this.className = (this.className || '') + ' float-area';
-         this.$el.addClass(this.className);
-         this.$el.attr({
-            'data-cid': this.cid,
-            'data-shadow': options.show === undefined ? true : !!(options.shadow)
-         });
-
-         // Если передали target, то закиним в него панель
-         this.setTarget(options.$target);
-
-         // Элемент ограницения
-         this.setTargetBorder(options.$border);
+         // Таргет
+         this.setTarget(options.target || this.$target);
 
          // Оффсет
-         this.setOffset(options.offset);
+         this.offset = _.isObject(options.offset)
+            ? options.offset
+            : ( _.isObject(this.offset) ? this.offset : {} );
+
+         // Бордер
+         this.$border = options.border || this.$border;
+
+         // Установим область в контейнер представления
+         if (this.$area) {
+            this.$el.append(this.$area);
+         }
+
+         // Установим контейнер представления в $body
+         $body.append(this.$el);
       },
 
       /**
@@ -112,14 +73,14 @@ define(function() {
        */
       _onClickBody: function() {
          // Обработчик на клик вне области всплывающей панели
-         this.$body.on('click.click-body-' + this.cid, this._clickBody.bind(this));
+         $body.on('click.click-body-' + this.cid, this._clickBody.bind(this));
       },
 
       /**
-       * Отписать от события клика по body
+       * Отписаться от события клика по body
        */
       _offClickBody: function() {
-         this.$body.off('click.click-body-' + this.cid);
+         $body.off('click.click-body-' + this.cid);
       },
 
       /**
@@ -135,26 +96,24 @@ define(function() {
       },
 
       /**
-       * Установить target
-       * @param  {jQuery} $target
+       * Установить таргет
+       * @param {jQuery} $target
        */
       setTarget: function($target) {
          if ($target && $target.length) {
             this.$target = $target;
-         }
-
-         if (this.$target) {
             this.$el.css(this.$target.offset());
          }
       },
 
       /**
-       * Установить targetBorder
+       * Установить бордер
        * @param  {jQuery} $border
        */
-      setTargetBorder: function($border) {
+      setBorder: function($border) {
          if ($border && $border.length) {
             this.$border = $border;
+
             this.checkPosition();
          }
       },
@@ -167,9 +126,9 @@ define(function() {
          var $border = this.$border;
 
          if ($border && $border.length) {
-            var borderEl = borderElement(this.$el);
-            var borderBorder = borderElement(this.$border);
-            var isBorder = checkBorders(borderEl, borderBorder);
+            var borderEl = helpers.borderElement(this.$el);
+            var borderBorder = helpers.borderElement(this.$border);
+            var isBorder = helpers.checkBorders(borderEl, borderBorder);
 
             if (isBorder.top) {
                this.$el.css('top', borderBorder.top);
@@ -194,64 +153,48 @@ define(function() {
        * @param {Object} offset
        */
       setOffset: function(offset) {
-         this.offset = offset instanceof Object ? offset : this.offset;
+         if (_.isObject(offset)) {
+            var $el = this.$el;
 
-         var top = this.offset.top || 0;
-         var left = this.offset.left || 0;
-
-         this.$el.css('top', parseInt(this.$el.css('top')) + top);
-         this.$el.css('left', parseInt(this.$el.css('left')) + left);
+            $el.css('top', parseInt($el.css('top')) + (offset.top || 0));
+            $el.css('left', parseInt($el.css('left')) + (offset.left || 0));
+         }
       },
 
       /**
-       * Отобразить панель
+       * Обработчик отображения
        * @param {jQuery} [$target]
-       * @param {Object} offset
+       * @param {Object} [offset]
        */
-      show: function($target, offset) {
-         if (!this.isShow) {
+      _show: function($target, offset) {
+         if (this.isShow === false) {
+            // Установим таргет
             this.setTarget($target);
 
-            this.$el.attr('data-show', 'true');
+            // Установим оффест
             this.setOffset(offset);
-            this.checkPosition();
 
-            this.trigger('show');
+            // Проверим позицию относительно бордера
+            this.checkPosition();
 
             /**
              * Подпишимся на событие клика по body
-               * (используем setTimeout, чтобы сразу не скрыть панель)
-               */
+             * (используем setTimeout, чтобы сразу не скрыть панель)
+             */
             setTimeout(function() {
                this._onClickBody();
             }.bind(this), 0);
-
-            this.isShow = true;
          }
       },
 
       /**
-       * Скрыть панель
+       * Обработчик отображения
        */
-      hide: function () {
-         if (!!this.isShow) {
+      _hide: function() {
+         if (this.isShow === true) {
             // Отпишимся от события клика по body
             this._offClickBody();
-            this.$el.attr('data-show', 'false');
-            this.trigger('hide');
-
-            this.isShow = false;
          }
-      },
-
-      /**
-       * До переопределим удаление представления
-       */
-      remove: function() {
-         // Отпишимся от события клика по body
-         this._offClickBody();
-
-         Backbone.View.prototype.remove(this, arguments);
       }
    });
 });

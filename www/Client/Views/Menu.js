@@ -4,6 +4,6 @@ define([
    'use strict';
 
    return List.extend({
-      className: 'menu ' +  List.prototype.className
+      classNameDefault: 'menu ' +  List.prototype.classNameDefault
    });
 });
