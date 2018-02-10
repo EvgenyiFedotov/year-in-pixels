@@ -27,7 +27,16 @@ define(function() {
       selectors: {},
 
       /**
+       * Параметры для создания дочерних компонентов
+       * @config {Object}
+       * @config {Array.<String>} child.include
+       * @config {Function} callback
+       */
+      _childs: {},
+
+      /**
        * Дочерние представления
+       * @config {Object}
        */
       childs: {},
 
@@ -50,6 +59,8 @@ define(function() {
          if (this.classNameDefault) {
             this.$el.addClass(this.classNameDefault);
          }
+
+         this.childs = _.defaults({}, this.childs || {});
 
          // Темлейт
          this.template = options.template || this.template;
@@ -233,16 +244,58 @@ define(function() {
       },
 
       /**
+       * Создать дочернее представление
+       * @param {String} name
+       * @param {Function} callback
+       */
+      createChild: function(name, callback) {
+         var configChild = this._childs[name];
+
+         if (configChild) {
+            requirejs(configChild.include || [], function() {
+               var args = Array.prototype.slice.call(arguments);
+
+               // Если уже существует такое дочернее предстваление, отпишимся от его событий
+               if (this.childs[name]) {
+                  this.stopListening(this.childs[name]);
+               }
+
+               /**
+                * Добавим callback, если будут зависимости внутри
+                * создания дочернего представления
+                * (Если был ассинхронный вызов)
+                */
+               args.push(function(child) {
+                  this.childs[name] = child;
+
+                  // Вызовем обратню фунцию
+                  if (this.childs[name] && _.isFunction(callback)) {
+                     callback.call(this, this.childs[name]);
+                  }
+               }.bind(this));
+
+               this.childs[name] = configChild.callback.apply(this, args) || null;
+
+               // Вызовем обратню фунцию
+               if (this.childs[name] && _.isFunction(callback)) {
+                  callback.call(this, this.childs[name]);
+               }
+            }.bind(this));
+         }
+      },
+
+      /**
        * Загрузить, создать и получить экземпляр дочернего представления
        * @param {String} name
        * @param {Function} callback
-       * @param {Array.<String>} load
        */
-      child: function(name, callback, load) {
+      child: function(name, callback) {
          var child = this.childs[name] || null;
 
-         if (_.isFunction(callback)) {
-            requirejs(load || [], callback.bind(this, child));
+         if (child && _.isFunction(callback)) {
+            callback.call(this, child);
+         } else {
+            this.createChild(name, callback);
          }
 
          return child;

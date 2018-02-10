@@ -1,9 +1,9 @@
 define([
    'Core/Form',
-   'jade!Pages/Years/Settings/PanelEditPassword/Template',
+   'jade!Pages/Years/Settings/FormEditPassword/Template',
    'Views/Informer',
    'Core/Service',
-   'css!Pages/Years/Settings/PanelEditPassword/Style'
+   'css!Pages/Years/Settings/FormEditPassword/Style'
 ], function(Form, template, Informer, Service) {
    'use strict';
    

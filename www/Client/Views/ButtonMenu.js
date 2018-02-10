@@ -1,67 +1,93 @@
 define([
-   'Views/ButtonPanel',
-   'Views/Menu'
-], function(ButtonPanel, Menu) {
+   'Core/View'
+], function(View) {
    'use strict';
-   
-   return ButtonPanel.extend({
-      /**
-       * Автоматически скрывать панель, при клике на итем меню
-       * @config {Boolean}
-       */
-      autoHide: true,
 
+   return View.extend({
       /**
-       * Настройки меню
+       * Конфигурация меню
        * @config {Object}
        */
       _menu: null,
 
       /**
-       * Меню
-       * @config {Views/Menu}
+       * Дочерние представления
+       * @config {Object}
        */
-      menu: null,
+      _childs: {
+         /**
+          * Меню
+          */
+         menu: {
+            include: ['Views/Menu'],
+            callback: function(Menu) {
+               var menu;
+
+               if (_.isObject(this._menu)) {
+                  menu = new Menu(this._menu);
+               }
+
+               this.listenTo(menu, 'clickItem', function() {
+                  var args = Array.prototype.slice.call(arguments);
+
+                  args.unshift('clickItem');
+
+                  this.trigger.apply(this, args);
+               });
+
+               return menu;
+            }
+         },
+
+         /**
+          * Кнопка со всплывающей панелью
+          */
+         buttonArea: {
+            include: ['Views/ButtonArea'],
+            callback: function(ButtonArea, callback) {
+               this.child('menu', function(menu) {
+                  var buttonArea = new ButtonArea({
+                     el: this.$el,
+                     floatArea: {
+                        area: menu.$el
+                     }
+                  });
+
+                  callback(buttonArea);
+               });
+            }
+         }
+      },
 
       /**
        * @param {Object} options
        * @param {Object} options.menu
        */
-      initialize: function (options) {
-         options.panel = !options.panel ? {} : options.panel;
-
-         this.autoHide = options.autoHide !== undefined ? !!options.autoHide : true;
-
-         // Настроки меню
-         if (options.menu instanceof Object) {
-            this._menu = options.menu;
+      _init: function(options) {
+         // Настройки меню
+         if (_.isObject(options.menu)) {
+            this._menu = _.defaults({}, options.menu || this.menu);
          }
-
-         ButtonPanel.prototype.initialize.apply(this, arguments);
       },
 
       /**
-       * Создать всплывающую панель
+       * Показать меню
        */
-      createPanel: function() {
-         /**
-          * Создадим всплывающую меню, если не еще создали
-          */
-         if (!this.menu && this._menu) {
-            this.menu = new Menu(this._menu);
-            this._panel.$el = this.menu.$el;
+      showMenu: function() {
+         this.child('buttonArea', function(button) {
+            button.showArea();
+            this.trigger('showMenu');
+         });
+      },
 
-            this.listenTo(this.menu, 'clickItem', function(data, $item, e) {
-               this.trigger('clickItem', data, $item, e);
-
-               // Если установили автоматическое скрытие панели
-               if (this.autoHide === true) {
-                  this.hide();
-               }
-            });
-         }
-
-         return ButtonPanel.prototype.createPanel.apply(this, arguments);
+      /**
+       * Показать меню
+       */
+      hideMenu: function() {
+         this.child('buttonArea', function(button) {
+            button.hideArea();
+            this.trigger('hideMenu');
+         });
       }
    });
 });

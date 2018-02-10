@@ -9,8 +9,6 @@ define([
 ], function(View, template, statuses, List, tStatusDay) {
    'use strict';
 
-   var Service;
-
    return View.extend({
       className: 'settings',
       template: template,
@@ -26,11 +24,105 @@ define([
 
       events: {
          'click close': 'close',
-         'click buttonTheme': 'showMenuTheme',
-         'click buttonPassword': 'showPanelPassword',
+         'click buttonTheme': 'showThemeMenu',
+         'click buttonPassword': 'showFormEditPassword',
          'click .statuses .button[data-name="add"]': 'statusAdd',
          'click buttonEditStatus': "_statusEdit",
          'click buttonDeleteStatus': "_statusDelete"
+      },
+
+      /**
+       * Настройки дочерних компонентов
+       */
+      _childs: {
+         /**
+          * Меню редактирования темы
+          */
+         themeMenu: {
+            include: ['Views/ButtonMenu', 'Core/Service'],
+            callback: function(ButtonMenu, Service) {
+               var menu = new ButtonMenu({
+                  el: this.selector('buttonTheme'),
+                  menu: {
+                     items: [
+                        {
+                           content: "White",
+                           attrs: {'data-name': 'White'}
+                        }, {
+                           content: "Black",
+                           attrs: {'data-name': 'Black'}
+                        }
+                     ]
+                  }
+               });
+
+               // Событие клика по итему
+               this.listenTo(menu, 'clickItem', function(data) {
+                  Service.post('Auth.ChangeTheme', data, {
+                     success: function(result) {
+                        window.location.reload();
+                     }.bind(this)
+                  });
+               });
+
+               return menu;
+            }
+         },
+
+         /**
+          * Форма редактирования пароля
+          */
+         formEditPassword: {
+            include: ['Pages/Years/Settings/FormEditPassword'],
+            callback: function(FormEditPassword) {
+               return new FormEditPassword();
+            }
+         },
+
+         /**
+          * Форма редактирования пароля
+          */
+         buttonEditPassword: {
+            include: ['Views/ButtonArea'],
+            callback: function(ButtonArea, callback) {
+               this.child('formEditPassword', function(form) {
+                  var button = new ButtonArea({
+                     el: this.selector('buttonPassword'),
+                     floatArea: {
+                        area: form.$el,
+                        border: $('body'),
+                        autoHide: false
+                     }
+                  });
+
+                  // Обработчик закрытия формы
+                  this.listenTo(form, 'cancel', function () {
+                     button.hideArea();
+                  });
+
+                  callback(button);
+               });
+            }
+         },
+
+         /**
+          * Форма редактирования статуса
+          */
+         formEditStatus: {
+            include: ['Pages/Years/Settings/FormEditStatus'],
+            callback: function(FormEditStatus) {
+               var child = new FormEditStatus({
+                  el: this.$('.statuses>.form-edit-status')
+               });
+
+               // Подпишимся на положительное окончание редактирование статуса
+               this.listenTo(child, 'save', function(model) {
+                  statuses.add(model);
+               });
+
+               return child;
+            }
+         }
       },
 
       /**
@@ -57,151 +149,49 @@ define([
       /**
        * Показать меню с темами
        */
-      showMenuTheme: function() {
-         this.createButtonTheme(function(menu) {
-            menu.show();
+      showThemeMenu: function() {
+         this.child('themeMenu', function(menu) {
+            menu.showMenu();
          });
-
-         if (this.buttonTheme) {
-            this.buttonTheme.show();
-         }
-      },
-
-      /**
-       * Создать представление (Меню) для кнопки с темой
-       * @param {Function} callback
-       */
-      createButtonTheme: function(callback) {
-         if (!this.buttonTheme) {
-            requirejs([
-               'Views/ButtonMenu',
-               'Core/Service'
-            ], function(ButtonMenu, CoreService) {
-               Service = CoreService;
-
-               this.buttonTheme = new ButtonMenu({
-                  el: this.selector('buttonTheme'),
-                  menu: {
-                     items: [
-                        {
-                           content: "White",
-                           attrs: {'data-name': 'White'}
-                        }, {
-                           content: "Black",
-                           attrs: {'data-name': 'Black'}
-                        }
-                     ]
-                  }
-               });
-
-               // Событие клика по итему
-               this.listenTo(this.buttonTheme, 'clickItem', function(data) {
-                  Service.post('Auth.ChangeTheme', data, {
-                     success: function(result) {
-                        window.location.reload();
-                     }.bind(this)
-                  });
-               });
-
-               // Событие обображения
-               this.listenTo(this.buttonTheme, 'show', function() {
-                  if (this.buttonPassword) {
-                     this.buttonPassword.hide();
-                  }
-               });
-
-               if (_.isFunction(callback)) {
-                  callback.call(this, this.buttonTheme);
-               }
-            }.bind(this));
-         }
       },
 
       /**
        * Показать панель для редактирования пароля
        */
-      showPanelPassword: function() {
-         this.createPanelPassword(function(view) {
-            view.show();
+      showFormEditPassword: function() {
+         this.child('buttonEditPassword', function(button) {
+            button.showArea();
          });
-
-         if (this.panelPassword) {
-            this.panelPassword.show();
-         }
-      },
-
-      /**
-       * Создать кнопку с панелью редактирования пароля
-       * @param {Function} callback
-       */
-      createPanelPassword: function(callback) {
-         if (!this.panelPassword) {
-            requirejs([
-               'Views/ButtonPanel',
-               'Pages/Years/Settings/PanelEditPassword'
-            ], function(ButtonPanel, PanelEditPassword) {
-               var panelEditPassword = new PanelEditPassword();
-
-               this.panelPassword = new ButtonPanel({
-                  el: this.selector('buttonPassword'),
-                  panel: {
-                     $el: panelEditPassword.$el,
-                     $border: $('body')
-                  }
-               });
-
-               // Подпишися на события панели
-               this.listenTo(panelEditPassword, 'cancel save', function() {
-                  this.panelPassword.hide();
-               });
-
-               if (_.isFunction(callback)) {
-                  callback.call(this, this.panelPassword);
-               }
-            }.bind(this));
-         }
       },
 
       /**
        * Добавить статус
        */
       statusAdd: function() {
-         this.child('formEditStatus', function(child, FormEditStatus) {
-            if (!child) {
-               child = new FormEditStatus({
-                  el: this.$('.statuses>.form-edit-status')
-               });
-
-               // Подпишимся на положительное окончание редактирование статуса
-               this.listenTo(child, 'save', function(model) {
-                  statuses.add(model);
-               });
-
-               this.childs.formEditStatus = child;
-            }
-
+         this.child('formEditStatus', function(form) {
             // Добавим модель если это необходимо
-            if (!child.model) {
-               child.model = new statuses.model();
+            if (!form.model) {
+               form.model = new statuses.model();
             }
 
-            child.dataShow(true);
-         }, ['Pages/Years/Settings/FormEditStatus']);
+            form.dataShow(true);
+         });
       },
 
       /**
        * Обработчик редактирования статуса
        */
       _statusEdit: function(e) {
-         var $button = $(e.target).closest(this.selector('buttonEditStatus'));
-         var formEditStatus = this.childs.formEditStatus;
+         this.child('formEditStatus', function(form) {
+            var $button = $(e.target).closest(this.selector('buttonEditStatus'));
 
-         formEditStatus.setModel(statuses.get($button.data().cid));
-         formEditStatus.dataShow(true);
+            form.setModel(statuses.get($button.data().id));
+            form.dataShow(true);
 
-         // Подпишимся на закрытие формы, чтобы убрать модель
-         this.listenToOnce(formEditStatus, 'hide', function() {
-            formEditStatus.setModel(null);
+            // Подпишимся на закрытие формы, чтобы убрать модель
+            this.listenToOnce(form, 'hide', function() {
+               form.setModel(null);
+            });
          });
       },
       

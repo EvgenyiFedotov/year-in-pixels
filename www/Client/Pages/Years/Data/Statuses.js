@@ -3,7 +3,9 @@ define([
 ], function(Statuses) {
    'use strict';
 
-   var statuses = new Statuses(window.statuses || []);
+   var statuses = new Statuses(window.statuses || [], {
+      parse: true
+   });
 
    if (window.statuses) {
       delete window.statuses;

@@ -1,7 +1,14 @@
-define(function() {
+define([
+   'Core/Model'
+],function(Model) {
    'use strict';
 
-   return Backbone.Model.extend({
+   return Model.extend({
+      /**
+       * @config {String}
+       */
+      object: 'Statuses',
+
       /**
        * @config {Object}
        */

@@ -5,5 +5,6 @@ include ../StatusDay/Template.Mixin.jade
 .content.status-day
    +statusDay(attrs.note, attrs.styleMarker)
 .buttons
-   .button(data-type="link", data-name="edit", data-cid=cid)="Edit"
-   .button(data-type="link", data-name="delete", data-cid=cid)="Delete"
+   - var id = attrs.id || cid;
+   .button(data-type="link", data-name="edit", data-id=id)="Edit"
+   .button(data-type="link", data-name="delete", data-id=id)="Delete"

@@ -21,35 +21,13 @@ define([
       },
 
       /**
-       * Скрыть форму
+       * Конфигарация дочерних представлений
+       * @config {Object}
        */
-      close: function() {
-         this.dataShow(false);
-      },
-
-      /**
-       * Созхранить данные статуса
-       */
-      save: function() {
-         // Установим значения в форму
-         this.model.set(this.fieldsValues());
-
-         this.trigger('save', this.model);
-         this.dataShow(false);
-
-         // Очистим форму
-         this.clearFields();
-
-         // Уберем ссылку на модель
-         this.setModel(null);
-      },
-
-      /**
-       * Показать палитру
-       */
-      showPalette: function(e) {
-         this.child('palette', function(child, List, FloatArea) {
-            if (!child) {
+      _childs: {
+         palette: {
+            include: ['Views/List', 'Views/FloatArea'],
+            callback: function(List, FloatArea) {
                var listPalette = new List({
                   className: 'palette',
                   classNameItem: 'marker-day',
@@ -68,7 +46,7 @@ define([
                   })
                });
 
-               this.childs.palette = new FloatArea({
+               var palette = new FloatArea({
                   area: listPalette,
                   offset: {
                      top: -7,
@@ -86,10 +64,44 @@ define([
                   });
                   $marker.val(data.color);
                });
-            }
 
+               return palette;
+            }
+         }
+      },
+
+      /**
+       * Скрыть форму
+       */
+      close: function() {
+         this.dataShow(false);
+      },
+
+      /**
+       * Созхранить данные статуса
+       */
+      save: function() {
+         // Установим значения в форму
+         this.model.set(this.fieldsValues());
+
+         this.model.save();
+         this.trigger('save', this.model);
+         this.dataShow(false);
+
+         // Очистим форму
+         this.clearFields();
+
+         // Уберем ссылку на модель
+         this.setModel(null);
+      },
+
+      /**
+       * Показать палитру
+       */
+      showPalette: function(e) {
+         this.child('palette', function(palette, ) {
             this.childs.palette.show($(e.target));
-         }, ['Views/List', 'Views/FloatArea']);
+         }, []);
       }
    });
 });

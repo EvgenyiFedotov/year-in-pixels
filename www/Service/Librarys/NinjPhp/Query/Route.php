@@ -8,7 +8,7 @@
     *
     * @config {Array} Route
     * @config {String} Route.route Регулярное выражение
-    * @config {String} Route.method Метод запроса (POST|GET|PUT|DELETE)
+    * @config {String} Route.method Метод запроса (POST|GET|PUT|DELETE|PUTCH)
     *    ! Если метод не указан, то обработчик будет применен к любому методу
     * @config {String} Route.type Тип обработчика,
     *    чтобы можно разграничить обработчики под разные нужды
