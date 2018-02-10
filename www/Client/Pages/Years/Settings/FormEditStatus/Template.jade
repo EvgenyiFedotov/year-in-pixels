@@ -2,6 +2,7 @@
    .marker-day(
       data-name="color",
       data-is-field="true"
+      style=(model ? model.get('styleMarker') : '')
    )
    input(
       value=(model ? model.get('note') : ''),

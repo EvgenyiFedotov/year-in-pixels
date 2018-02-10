@@ -27,8 +27,6 @@ define(['Core/View'], function(View) {
                value = $el.val();
             } else if ($el.value) {
                value = $el.value();
-            } else {
-               value = $el.attr('data-value');
             }
 
             values[$el.attr('data-name')] = value;
@@ -40,10 +38,10 @@ define(['Core/View'], function(View) {
       /**
        * Очистить значения полей
        */
-      clearFiledsValues: function() {
+      clearFields: function() {
          this.$fields().each(function(index, el) {
             var $el = $(el);
-            
+
             if ($el.val) {
                $el.val(null);
             } else if ($el.value) {
@@ -59,6 +57,37 @@ define(['Core/View'], function(View) {
       setModel: function(model) {
          this.model = model;
          this.render();
+
+         // Если передали модель, то установим значения
+         if (model) {
+            this.setValues(model.attributes);
+
+         // Иначе очистим поля
+         } else {
+            this.clearFields();
+         }
+      },
+
+      /**
+       * Установить значния в DOM элементы
+       * @param {Object} values
+       */
+      setValues: function(values) {
+         this.$fields().each(function(index, el) {
+            var $el = $(el);
+            var name = $el.attr('data-name');
+            var value;
+
+            if (name in values) {
+               value = values[name];
+
+               if ($el.val) {
+                  $el.val(value);
+               } else if ($el.value) {
+                  $el.value(value);
+               }
+            }
+         });
       }
    });
 });

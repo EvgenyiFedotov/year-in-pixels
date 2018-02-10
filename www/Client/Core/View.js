@@ -119,6 +119,14 @@ define(function() {
       },
 
       /**
+       * Выполняется после рендерингом
+       * @param {Object} params
+       */
+      _afterRender: function(params) {
+         // code...
+      },
+
+      /**
        * Рендер
        * @param {Object} [params]
        */
@@ -132,6 +140,9 @@ define(function() {
             this._beforeRender(params);
 
             this.$el.html(this.template(params || {}));
+
+            // Выполним обработчик после редерингом
+            this._afterRender(params);
          }
 
          return this;

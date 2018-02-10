@@ -32,14 +32,13 @@ define([
        */
       save: function() {
          // Установим значения в форму
-         console.log(this.fieldsValues());
          this.model.set(this.fieldsValues());
 
          this.trigger('save', this.model);
          this.dataShow(false);
 
          // Очистим форму
-         this.clearFiledsValues();
+         this.clearFields();
 
          // Уберем ссылку на модель
          this.setModel(null);

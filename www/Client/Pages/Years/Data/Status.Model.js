@@ -27,7 +27,7 @@ define(function() {
 
       initialize: function() {
          this.on('change:color', function(model, value) {
-            model.set('color', this.styleMarker(value, true));
+            model.set('styleMarker', this.styleMarker(value, true));
          });
       },
 

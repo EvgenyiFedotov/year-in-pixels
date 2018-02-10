@@ -20,7 +20,7 @@ define([
        * Омена изменений
        */
       cancel: function(e) {
-         this.clearFiledsValues();
+         this.clearFields();
          this.trigger('cancel', e);
       },
 
@@ -44,7 +44,7 @@ define([
                      note: jqXHR.statusText
                   }).show();
 
-                  this.clearFiledsValues();
+                  this.clearFields();
 
                   this.trigger('save', e);
                }.bind(this),
