@@ -1,5 +1,14 @@
 .content.row
-   .marker-day
-   input(value=(model ? model.get('note') : ''), type="text", data-name="note", placeholder="Note status", data-is-field="true")
+   .marker-day(
+      data-name="color",
+      data-is-field="true"
+   )
+   input(
+      value=(model ? model.get('note') : ''),
+      type="text",
+      placeholder="Note status",
+      data-name="note",
+      data-is-field="true"
+   )
    .button(data-type="link", data-name="save")="Save"
    .button(data-type="link", data-name="close")="Close"

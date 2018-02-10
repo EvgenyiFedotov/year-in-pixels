@@ -27,12 +27,6 @@ define(function() {
       selectors: {},
 
       /**
-       * События по карте селекторов
-       * @config {Object|Function}
-       */
-      eventsSelectors: {},
-
-      /**
        * Дочерние представления
        */
       childs: {},
@@ -47,7 +41,6 @@ define(function() {
        * @param {Object} options
        * @param {Function} [options.template]
        * @param {Boolean} [options.firstRender]
-       * @param {Object|Function} [options.eventsSelectors]
        * @param {Boolean} [options.isShow]
        */
       initialize: function(options) {
@@ -65,7 +58,7 @@ define(function() {
          this.router = options.router || this.router;
 
          // Подписка на события по карте селекторов
-         this.delegateEvents(this.getEventsSelectors(options.eventsSelectors));
+         this.events = this.getEventsSelectors();
 
          // Отображение представления
          this.isShow = _.isBoolean(options.isShow) ? options.isShow : !!this.isShow;
@@ -92,29 +85,23 @@ define(function() {
 
       /**
        * Получить хэш событий по селекторам
-       * @param {Object|Function} eventsSelectors
        */
-      getEventsSelectors: function(eventsSelectors) {
-         eventsSelectors = _.defaults({},
-            (_.isFunction(eventsSelectors)
-               ? (eventsSelectors.call(this) || {})
-               : (eventsSelectors || {})
-            ),
-            (_.isFunction(this.eventsSelectors)
-               ? (this.eventsSelectors.call(this) || {})
-               : (this.eventsSelectors || {})
-            ),
-            (_.isFunction(this.events)
-               ? (this.events.call(this) || {})
-               : (this.events || {})
-            )
-         );
+      getEventsSelectors: function() {
+         var events = _.isFunction(this.events)
+            ? (this.events.call(this) || {})
+            : (this.events || {});
 
-         return _.reduce(eventsSelectors, function(result, value, key) {
+         return _.reduce(events, function(result, value, key) {
             var keyArr = key.split(' ');
+            var selector;
 
             if (keyArr.length == 2) {
-               result[keyArr[0] + ' ' + this.selector(keyArr[1])] = value;
+               selector = this.selector(keyArr[1]);
+               if (!!selector) {
+                  result[keyArr[0] + ' ' + selector] = value;
+               } else {
+                  result[key] = value;
+               }
             } else {
                result[key] = value;
             }

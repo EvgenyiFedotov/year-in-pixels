@@ -34,11 +34,33 @@ define([
        */
       $border: null,
 
+      /**
+       * Дополнительные аттрибуты
+       * @config {Object}
+       */
+      attributes: {
+         'data-shadow': true
+      },
+
+      /**
+       * Автозакрытие
+       * @config {Boolean}
+       */
+      autoHide: true,
+
+      /**
+       * @config {Boolean}
+       */
       isShow: false,
 
       /**
        * Определим дополнительный обработчик инициализации
        * @param {Object} options
+       * @param {Backbone.View|jQuery} options.area
+       * @param {jQuery} options.target
+       * @param {Object} options.offset
+       * @param {jQuery} options.border
+       * @param {Boolean} options.autoHide
        */
       _init: function(options) {
          // Всплывающая область
@@ -64,6 +86,14 @@ define([
             this.$el.append(this.$area);
          }
 
+         // Установим флаг автоматического закрытия
+         this.autoHide = _.isBoolean(options.autoHide)
+            ? options.autoHide
+            : !!this.autoHide;
+
+         // Установим sid в аттрибуты представления
+         this.$el.attr('data-cid', this.cid);
+
          // Установим контейнер представления в $body
          $body.append(this.$el);
       },
@@ -87,11 +117,16 @@ define([
        * Обработчик клика по body
        */
       _clickBody: function(e) {
-         var $panel = $(e.target).closest('.float-area[data-cid="' + this.cid + '"]');
-
-         // Скроем панель если кликнули не на нее
-         if (!$panel.length) {
+         // Если автозакрытие, то просто закроем
+         if (this.autoHide) {
             this.hide();
+         } else {
+            var $panel = $(e.target).closest('.float-area[data-cid="' + this.cid + '"]');
+
+            // Скроем панель если кликнули не на нее
+            if (!$panel.length) {
+               this.hide();
+            }
          }
       },
 
@@ -156,6 +191,8 @@ define([
          if (_.isObject(offset)) {
             var $el = this.$el;
 
+            this.offset = offset;
+
             $el.css('top', parseInt($el.css('top')) + (offset.top || 0));
             $el.css('left', parseInt($el.css('left')) + (offset.left || 0));
          }
@@ -172,7 +209,7 @@ define([
             this.setTarget($target);
 
             // Установим оффест
-            this.setOffset(offset);
+            this.setOffset(_.isObject(offset) ? offset : this.offset);
 
             // Проверим позицию относительно бордера
             this.checkPosition();

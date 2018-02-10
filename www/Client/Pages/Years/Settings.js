@@ -24,7 +24,7 @@ define([
          buttonDeleteStatus: '.statuses .item>.buttons>.button[data-name="delete"]'
       },
 
-      eventsSelectors: {
+      events: {
          'click close': 'close',
          'click buttonTheme': 'showMenuTheme',
          'click buttonPassword': 'showPanelPassword',

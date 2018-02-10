@@ -20,9 +20,18 @@ define(['Core/View'], function(View) {
 
          this.$fields().each(function(index, el) {
             var $el = $(el);
-            values[$el.attr('data-name')] = $el.val
-               ? $el.val()
-               : ($el.value ? $el.value() : undefined);
+            var value = undefined;
+
+            // Получим корректное значние
+            if ($el.val) {
+               value = $el.val();
+            } else if ($el.value) {
+               value = $el.value();
+            } else {
+               value = $el.attr('data-value');
+            }
+
+            values[$el.attr('data-name')] = value;
          });
 
          return values;
