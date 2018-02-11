@@ -4,9 +4,10 @@ define([
    'Pages/Years/Data/statuses',
    'Views/List',
    'jade!Pages/Years/Settings/StatusDay',
+   'Views/Informer',
    'css!Pages/Years/Settings/Style',
    'css!Pages/Years/StatusDay/Style'
-], function(View, template, statuses, List, tStatusDay) {
+], function(View, template, statuses, List, tStatusDay, Informer) {
    'use strict';
 
    return View.extend({
@@ -120,19 +121,39 @@ define([
                   event: 'save',
                   callback: function(values) {
                      var form = this.childs.formEditStatus;
-                     // var model = form.model;
+                     var model = form.model;
+                     var isNew = false;
 
                      // Уберем ссылку на модель
                      form.setModel(null);
 
-                     // // Установим значения в модель
-                     // model.set(values);
+                     /**
+                      * Если есть модель, то редактировали,
+                      * иначе создадим новую
+                      */
+                     if (model) {
+                        model.set(values);
+                     } else {
+                        model = new statuses.model(values);
+                        isNew = true;
+                     }
 
-                     // // Сохраним модель
-                     // model.save();
-
-                     // // Добавим модель в коллекцию
-                     // statuses.add(model);
+                     // Сохраним модель
+                     model.save(null, {
+                        success: function() {
+                           // Добавим модель в коллекцию
+                           if (isNew) {
+                              statuses.add(model);
+                           }
+                        },
+                        error: function(model, options, res) {
+                           new Informer({
+                              type: 'error',
+                              header: 'Error',
+                              note: res.xhr.statusText
+                           }).show();
+                        }
+                     });
                   }
                }, {
                   event: 'hide',
@@ -169,12 +190,8 @@ define([
        */
       statusAdd: function() {
          this.child('formEditStatus', function(form) {
-            // Добавим модель если это необходимо
-            // if (!form.model) {
-            //    form.setModel(new statuses.model());
-            // }
-
             form.dataShow(true);
+            form.setModel(null);
          });
       },
 
@@ -195,7 +212,13 @@ define([
        */
       _statusDelete: function(e) {
          var $button = $(e.target).closest(this.selector('buttonDeleteStatus'));
-         statuses.remove($button.data().id);
+         var model = statuses.get($button.data().id);
+
+         if (model) {
+            model.destroy({
+               wait: true
+            });
+         }
       }
    });
 });

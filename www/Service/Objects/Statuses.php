@@ -16,7 +16,8 @@
             return $connect->select("statuses", [
                "id", "color", "note"
             ], [
-               "user_id" => $userId
+               "user_id" => $userId,
+               "is_delete" => 0
             ]);
          } else {
             $this->error();
@@ -31,19 +32,27 @@
 
          // Настройка данных
          $data = $query->data();
-         $data = [
-            "user_id" => $_SESSION["user"]["id"],
-            "color" => $data["color"],
-            "note" => $data["note"]
-         ];
+         $color = $data["color"];
+         $note = $data["note"];
 
-         $result = $connect->insert("statuses", $data);
+         if (isset($color) && $color !== ""
+         && isset($note) && $note !== "") {
+            $data = [
+               "user_id" => $_SESSION["user"]["id"],
+               "color" => $color,
+               "note" => $note
+            ];
 
-         if ($result->rowCount()) {
-            $data["id"] = $connect->id();
-            $query->response($data);
+            $result = $connect->insert("statuses", $data);
+
+            if ($result->rowCount()) {
+               $data["id"] = $connect->id();
+               $query->response($data);
+            } else {
+               $query->error(503, true);
+            }
          } else {
-            $query->error(503, true);
+            $query->error(503, "The entered data is incorrect!");
          }
       }
 
@@ -64,6 +73,29 @@
 
          if ($result->rowCount()) {
             $query->response($data);
+         } else {
+            $query->error(503, true);
+         }
+      }
+
+      /**
+       * Удалить статус
+       */
+      public function delete($query) {
+         $connect = $this->connect();
+         $data = $query->data();
+         $id = $data["id"];
+
+         $result = $connect->update("statuses", [
+            "is_delete" => 1
+         ], [
+            "id" => $id
+         ]);
+
+         if ($result->rowCount()) {
+            $query->response([
+               "id" => $id
+            ]);
          } else {
             $query->error(503, true);
          }

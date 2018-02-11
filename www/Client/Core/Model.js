@@ -23,6 +23,14 @@ define(function() {
             };
          }
 
+         // Доработаем настройки для метода удаления
+         if (method === 'delete') {
+            options.data = JSON.stringify({
+               id: model.id
+            });
+            options.contentType = 'application/json';
+         }
+
          Backbone.Model.prototype.sync.apply(this, arguments);
       }
    });
