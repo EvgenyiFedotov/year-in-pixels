@@ -36,7 +36,7 @@ define([
          }, true);
 
          if (isSend) {
-            Service.post('Auth.PasswordEdit', values, {
+            Service.post('User.PasswordEdit', values, {
                success: function(result, textStatus, jqXHR) {
                   new Informer({
                      type: 'success',

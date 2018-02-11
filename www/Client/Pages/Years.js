@@ -28,62 +28,56 @@ define([
       },
 
       /**
+       * @config {Object}
+       */
+      _childs: {
+         navigation: {
+            include: ['Pages/Years/Navigation'],
+            callback: function(Navigation ) {
+               var navigation = new Navigation({
+                  el: this.selector('nav')
+               });
+
+               return navigation;
+            },
+            handlers: [
+               {
+                  event: 'navigate:settings',
+                  callback: function(url) {
+                     this.navigate('settings', {
+                        trigger: false
+                     });
+
+                     this.showSettings();
+                  }
+               }, {
+                  event: 'navigate:sign-out',
+                  callback: function(url) {
+                     Service.get('User.Singout', {}, {
+                        success: function(result) {
+                           window.location.reload();
+                        }.bind(this)
+                     });
+                  }
+               }
+            ]
+         }
+      },
+
+      /**
        * @param {Object} options
        */
       initialize: function(options) {
          View.prototype.initialize.apply(this, arguments);
 
          // Создадим панель навигации
-         this.ctreateNavigation();
+         this.child('navigation');
 
          // Создать область с данными дней
          this.createDays();
 
          // Создать форму редактирования дня
          this.createFormEditDay();
-      },
-
-      /**
-       * Создать панель навигации
-       */
-      ctreateNavigation: function() {
-         if (!this.navigation) {
-            this.navigation = new Navigation({
-               el: this.selector('nav')
-            });
-
-            // Обработчики событий навигации
-            this.listenToOnce(this.navigation, 'createMenu', function() {
-               // Обработчики событий меню
-               this.listenTo(this.navigation.menu, 'hide', function() {
-                  if (window.location.hash !== '#settings') {
-                     this.navigate(null);
-                  }
-               });
-
-               this.listenTo(this.navigation.menu, 'show', function() {
-                  this.navigate('menu');
-               });
-
-               this.listenTo(this.navigation.menu, 'clickItem', function(data) {
-                  // Настройки
-                  if (data.name === 'settings') {
-                     // Создалим панель настроек, если это необходимо и отобразим ее
-                     this.showSettings();
-
-                     this.navigate('settings');
-
-                  // Выход
-                  } else if (data.name === 'sign-out') {
-                     Service.get('Auth.Singout', {}, {
-                        success: function(result) {
-                           window.location.reload();
-                        }.bind(this)
-                     });
-                  }
-               });
-            });
-         }
       },
 
       /**
@@ -131,6 +125,9 @@ define([
                this.listenTo(this.settings, 'hide', function() {
                   this.$elementDataShow('days', true);
                   this.$elementDataShow('formEditDay', true);
+                  this.navigate(null, {
+                     trigger: false
+                  });
                });
 
                if (callback instanceof Function) {

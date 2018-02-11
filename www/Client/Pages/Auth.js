@@ -35,7 +35,7 @@ define([
             values[$el.attr('name')] = $el.val();
          });
 
-         Service.post('Auth.' + formState.replace('-', ''), values, {
+         Service.post('User.' + formState.replace('-', ''), values, {
             success: function(result, textStatus, jqXHR) {
                if (formState === 'sing-up') {
                   $form.attr('state', 'sing-in');

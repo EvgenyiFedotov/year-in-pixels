@@ -1,10 +1,15 @@
 <?php
    class Object {
       /**
-       * Коннеест
+       * Коннект
        * @config {Connect}
        */
       private $connect;
+
+      /**
+       * Объект запроса
+       */
+      private $query;
 
       /**
        * Получить коннект с БД
@@ -17,11 +22,19 @@
          return $this->connect;
       }
 
+      protected function query() {
+         if (!$this->query) {
+            $this->query = new Query\Query();
+         }
+
+         return $this->query;
+      }
+
       /**
        * Ошибка выполнения
        */
       protected function error() {
-         $query = new Query\Query();
+         $query = $this->query();
          $query->error(503, true);
       }
    }

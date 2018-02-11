@@ -31,6 +31,10 @@ define(function() {
        * @config {Object}
        * @config {Array.<String>} child.include
        * @config {Function} callback
+       * @config {Array.<Object>} handlers
+       * @config {Object} handler
+       * @config {String} handler.event
+       * @config {Function} handler.callback
        */
       _childs: {},
 
@@ -164,10 +168,20 @@ define(function() {
        * @param {String} url
        * @param {Object} [options]
        */
-      navigate: function() {
+      navigate: function(url) {
+         var args = Array.prototype.slice.call(arguments);
+
          if (this.router) {
-            this.router.navigate.apply(this.router, arguments);
+            this.router.navigate.apply(this.router, args);
          }
+
+         // Общее событие
+         args.unshift('navigate');
+         this.trigger.apply(this, args);
+
+         // Событие с текущим url
+         args[0] += ':' + url;
+         this.trigger.apply(this, args);
       },
 
       /**
@@ -254,33 +268,81 @@ define(function() {
          if (configChild) {
             requirejs(configChild.include || [], function() {
                var args = Array.prototype.slice.call(arguments);
+               var childNew;
 
                // Если уже существует такое дочернее предстваление, отпишимся от его событий
-               if (this.childs[name]) {
-                  this.stopListening(this.childs[name]);
-               }
+               // if (this.childs[name]) {
+               //    this.stopListening(this.childs[name]);
+               // }
 
                /**
                 * Добавим callback, если будут зависимости внутри
                 * создания дочернего представления
                 * (Если был ассинхронный вызов)
                 */
-               args.push(function(child) {
-                  this.childs[name] = child;
-
-                  // Вызовем обратню фунцию
-                  if (this.childs[name] && _.isFunction(callback)) {
-                     callback.call(this, this.childs[name]);
-                  }
+               args.push(function(childNew) {
+                  // Вызовем jбработчик окончания создания дочернего представления
+                  this._afterCreateChild(name, childNew, callback);
                }.bind(this));
 
-               this.childs[name] = configChild.callback.apply(this, args) || null;
+               childNew = configChild.callback.apply(this, args) || null;
 
-               // Вызовем обратню фунцию
-               if (this.childs[name] && _.isFunction(callback)) {
-                  callback.call(this, this.childs[name]);
-               }
+               // Вызовем jбработчик окончания создания дочернего представления
+               this._afterCreateChild(name, childNew, callback);
             }.bind(this));
+         }
+      },
+
+      /**
+       * Обработчик окончания создания дочернего представления
+       * @param {String} name
+       * @param {View} childNew
+       * @param {Function} callback
+       */
+      _afterCreateChild: function(name, childNew, callback) {
+         if (name && childNew) {
+            var childOld = this.childs[name];
+            var config = this._childs[name];
+
+            // Установим новое дочернее представление
+            this.childs[name] = childNew;
+
+            // Подписка / отписка на события представления
+            this.listenToChild(name, childOld, childNew, config.handlers);
+
+            // Вызовем обратню фунцию
+            if (_.isFunction(callback)) {
+               callback.call(this, childNew);
+            }
+         }
+      },
+
+      /**
+       * Прослушивать события дочерего представления
+       * @param {String} name
+       * @param {View} [childOld]
+       * @param {View} [childNew]
+       * @param {Array.<Object>} [handlers]
+       * @param {Object} handler
+       * @param {String} handler.event
+       * @param {Function} handler.callback
+       */
+      listenToChild: function(name, childOld, childNew, handlers) {
+         if (name) {
+            // Отписка от событий
+            if (childOld) {
+               this.stopListening(childOld);
+            }
+
+            /**
+             * Если передали новое дочернее представление и его обработчики,
+             * то подпишимся
+             */
+            if (childNew && handlers && handlers.length) {
+               handlers.forEach(function(handler) {
+                  this.listenTo(childNew, handler.event, handler.callback);
+               }.bind(this));
+            }
          }
       },
 

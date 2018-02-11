@@ -53,6 +53,14 @@ define([
                      }
                   });
 
+                  this.listenTo(buttonArea, 'showArea', function() {
+                     this.trigger('showMenu');
+                  });
+
+                  this.listenTo(buttonArea, 'hideArea', function() {
+                     this.trigger('hideMenu');
+                  });
+
                   callback(buttonArea);
                });
             }
@@ -68,6 +76,9 @@ define([
          if (_.isObject(options.menu)) {
             this._menu = _.defaults({}, options.menu || this.menu);
          }
+
+         // Создадим кнопку
+         this.child('buttonArea');
       },
 
       /**
@@ -76,7 +87,6 @@ define([
       showMenu: function() {
          this.child('buttonArea', function(button) {
             button.showArea();
-            this.trigger('showMenu');
          });
       },
 
@@ -86,7 +96,6 @@ define([
       hideMenu: function() {
          this.child('buttonArea', function(button) {
             button.hideArea();
-            this.trigger('hideMenu');
          });
       }
    });

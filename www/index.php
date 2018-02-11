@@ -15,11 +15,6 @@
       "arguments" => [$require]
    ]);
 
-   set_error_handler(function() {
-      $query = new Query\Query();
-      $query->error(503);
-   });
-
    // Запустим обработку запроса
    $query->autoResponse();
 ?>

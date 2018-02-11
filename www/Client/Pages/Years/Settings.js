@@ -23,9 +23,7 @@ define([
       },
 
       events: {
-         'click close': 'close',
-         'click buttonTheme': 'showThemeMenu',
-         'click buttonPassword': 'showFormEditPassword',
+         'click close': 'hide',
          'click .statuses .button[data-name="add"]': 'statusAdd',
          'click buttonEditStatus': "_statusEdit",
          'click buttonDeleteStatus': "_statusDelete"
@@ -58,7 +56,7 @@ define([
 
                // Событие клика по итему
                this.listenTo(menu, 'clickItem', function(data) {
-                  Service.post('Auth.ChangeTheme', data, {
+                  Service.post('User.ChangeTheme', data, {
                      success: function(result) {
                         window.location.reload();
                      }.bind(this)
@@ -96,7 +94,7 @@ define([
                   });
 
                   // Обработчик закрытия формы
-                  this.listenTo(form, 'cancel', function () {
+                  this.listenTo(form, 'cancel save', function () {
                      button.hideArea();
                   });
 
@@ -137,31 +135,12 @@ define([
             templateItem: tStatusDay,
             items: statuses
          });
-      },
 
-      /**
-       * Скрыть / закрыть окно
-       */
-      close: function() {
-         this.dataShow(false);
-      },
+         // Создать кнопку смены темы
+         this.child('themeMenu');
 
-      /**
-       * Показать меню с темами
-       */
-      showThemeMenu: function() {
-         this.child('themeMenu', function(menu) {
-            menu.showMenu();
-         });
-      },
-
-      /**
-       * Показать панель для редактирования пароля
-       */
-      showFormEditPassword: function() {
-         this.child('buttonEditPassword', function(button) {
-            button.showArea();
-         });
+         // Создать кнопку смены пароля
+         this.child('buttonEditPassword');
       },
 
       /**

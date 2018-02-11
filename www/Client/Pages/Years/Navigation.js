@@ -2,7 +2,7 @@ define([
    'Core/View',
    'jade!Pages/Years/Navigation/Template',
    'css!Pages/Years/Navigation/Style'
-], function(View, template, ButtonMenu) {
+], function(View, template) {
    'use strict';
    
    return View.extend({
@@ -10,46 +10,14 @@ define([
       template: template,
 
       /**
-       * Селекторы
        * @config {Object}
        */
-      selectors: {
-         // Кнопка меню
-         'buttonMenu': '.button[data-name="menu"]'
-      },
-
-      /**
-       * @config {Function}
-       * @return {Object}
-       */
-      events: function() {
-         var events = {};
-
-         events['click ' + this.selector('buttonMenu')] = 'showMenu';
-
-         return events;
-      },
-
-      /**
-       * @param {Object} options
-       */
-      initialize: function(options) {
-         View.prototype.initialize.apply(this, arguments);
-      },
-
-      /**
-       * Создать меню
-       * @param {Function} callback
-       */
-      createMenu: function(callback) {
-         if (!this.menu) {
-            requirejs(['Views/ButtonMenu'], function(ButtonMenu) {
-               this.menu = new ButtonMenu({
-                  el: this.selector('buttonMenu'),
-                  panel: {
-                     $border: $('body'),
-                     className: 'menu-settings'
-                  },
+      _childs: {
+         buttonMenu: {
+            include: ['Views/ButtonMenu'],
+            callback: function(ButtonMenu) {
+               var button = new ButtonMenu({
+                  el: this.$('.button[data-name="menu"]'),
                   menu: {
                      items: [
                         {
@@ -63,26 +31,22 @@ define([
                   }
                });
 
-               this.trigger('createMenu');
-
-               if (callback instanceof Function) {
-                  callback.call(this, this.menu);
+               return button;
+            },
+            handlers: [
+               {
+                  event: 'clickItem',
+                  callback: function(data) {
+                     this.navigate(data.name);
+                  }
                }
-            }.bind(this));
+            ]
          }
       },
 
-      /**
-       * Показать меню
-       */
-      showMenu: function() {
-         this.createMenu(function(menu) {
-            menu.show();
-         });
-
-         if (this.menu) {
-            this.menu.show();
-         }
+      _init: function() {
+         // Создадим кнопку
+         this.child('buttonMenu');
       }
    });
 });

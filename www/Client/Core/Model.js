@@ -16,8 +16,6 @@ define(function() {
        * @param {Object} options
        */
       sync: function(method, model, options) {
-         console.log(arguments);
-
          // Назначим объект сервиса
          if (this.object) {
             options.headers = {
