@@ -109,17 +109,38 @@ define([
          formEditStatus: {
             include: ['Pages/Years/Settings/FormEditStatus'],
             callback: function(FormEditStatus) {
-               var child = new FormEditStatus({
+               var form = new FormEditStatus({
                   el: this.$('.statuses>.form-edit-status')
                });
 
-               // Подпишимся на положительное окончание редактирование статуса
-               this.listenTo(child, 'save', function(model) {
-                  statuses.add(model);
-               });
+               return form;
+            },
+            handlers: [
+               {
+                  event: 'save',
+                  callback: function(values) {
+                     var form = this.childs.formEditStatus;
+                     // var model = form.model;
 
-               return child;
-            }
+                     // Уберем ссылку на модель
+                     form.setModel(null);
+
+                     // // Установим значения в модель
+                     // model.set(values);
+
+                     // // Сохраним модель
+                     // model.save();
+
+                     // // Добавим модель в коллекцию
+                     // statuses.add(model);
+                  }
+               }, {
+                  event: 'hide',
+                  callback: function() {
+                     this.childs.formEditStatus.setModel(null);
+                  }
+               }
+            ]
          }
       },
 
@@ -149,9 +170,9 @@ define([
       statusAdd: function() {
          this.child('formEditStatus', function(form) {
             // Добавим модель если это необходимо
-            if (!form.model) {
-               form.model = new statuses.model();
-            }
+            // if (!form.model) {
+            //    form.setModel(new statuses.model());
+            // }
 
             form.dataShow(true);
          });
@@ -166,11 +187,6 @@ define([
 
             form.setModel(statuses.get($button.data().id));
             form.dataShow(true);
-
-            // Подпишимся на закрытие формы, чтобы убрать модель
-            this.listenToOnce(form, 'hide', function() {
-               form.setModel(null);
-            });
          });
       },
       
@@ -179,7 +195,7 @@ define([
        */
       _statusDelete: function(e) {
          var $button = $(e.target).closest(this.selector('buttonDeleteStatus'));
-         statuses.remove($button.data().cid);
+         statuses.remove($button.data().id);
       }
    });
 });

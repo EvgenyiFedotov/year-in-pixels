@@ -71,36 +71,11 @@ define([
       },
 
       /**
-       * Скрыть форму
-       */
-      close: function() {
-         this.dataShow(false);
-      },
-
-      /**
-       * Созхранить данные статуса
-       */
-      save: function() {
-         // Установим значения в форму
-         this.model.set(this.fieldsValues());
-
-         this.model.save();
-         this.trigger('save', this.model);
-         this.dataShow(false);
-
-         // Очистим форму
-         this.clearFields();
-
-         // Уберем ссылку на модель
-         this.setModel(null);
-      },
-
-      /**
        * Показать палитру
        */
       showPalette: function(e) {
-         this.child('palette', function(palette, ) {
-            this.childs.palette.show($(e.target));
+         this.child('palette', function(palette) {
+            palette.show($(e.target));
          }, []);
       }
    });

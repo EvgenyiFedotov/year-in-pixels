@@ -88,6 +88,34 @@ define(['Core/View'], function(View) {
                }
             }
          });
+      },
+
+      /**
+       * Обработчик сохранения данных
+       */
+      save: function() {
+         this.trigger('save', this.fieldsValues());
+
+         // Очистим форму
+         this.clearFields();
+      },
+
+      /**
+       * Отмена изменений
+       */
+      clear: function() {
+         this.trigger('clear', this.fieldsValues());
+
+         // Очистим форму
+         this.clearFields();
+      },
+
+      /**
+       * Закрыть форму
+       */
+      close: function() {
+         this.clear();
+         this.hide();
       }
    });
 });

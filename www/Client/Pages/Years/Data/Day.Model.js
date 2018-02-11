@@ -3,8 +3,6 @@ define([
 ], function(statuses) {
    'use strict';
 
-   console.log(statuses);
-
    return Backbone.Model.extend({
       /**
        * @config {function}

@@ -46,5 +46,27 @@
             $query->error(503, true);
          }
       }
+
+      /**
+       * Обновить статус
+       */
+      public function update($query) {
+         $connect = $this->connect();
+
+         $data = $query->data();
+
+         $result = $connect->update("statuses", [
+            "color" => $data["color"],
+            "note" => $data["note"]
+         ], [
+            "id" => $data["id"]
+         ]);
+
+         if ($result->rowCount()) {
+            $query->response($data);
+         } else {
+            $query->error(503, true);
+         }
+      }
    }
 ?>

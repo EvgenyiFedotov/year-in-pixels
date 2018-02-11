@@ -23,7 +23,7 @@ define([
           * Описание
           * @config {String}
           */
-         note: 'Status',
+         note: '',
 
          /**
           * Стиль маркера
