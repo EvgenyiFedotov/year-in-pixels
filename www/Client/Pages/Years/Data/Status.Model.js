@@ -1,7 +1,14 @@
-define(function() {
+define([
+   'Core/Model'
+],function(Model) {
    'use strict';
 
-   return Backbone.Model.extend({
+   return Model.extend({
+      /**
+       * @config {String}
+       */
+      object: 'Statuses',
+
       /**
        * @config {Object}
        */
@@ -16,15 +23,35 @@ define(function() {
           * Описание
           * @config {String}
           */
-         note: 'Status'
+         note: '',
+
+         /**
+          * Стиль маркера
+          * @config {String}
+          */
+         styleMarker: ''
+      },
+
+      initialize: function() {
+         this.on('change:color', function(model, value) {
+            model.set('styleMarker', this.styleMarker(value, true));
+         });
+      },
+
+      /**
+       * @param {Object}
+       */
+      parse: function(params) {
+         params.styleMarker = this.styleMarker(params.color, true);
+         return params;
       },
 
       /**
        * Получить стиль маркера
+       * @param {String} color
        * @param {Boolean} isString
        */
-      styleMarker: function(isString) {
-         var color = this.get('color');
+      styleMarker: function(color, isString) {
          var style = {};
 
          if (color) {

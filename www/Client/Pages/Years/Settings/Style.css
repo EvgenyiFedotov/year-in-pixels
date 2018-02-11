@@ -16,3 +16,30 @@
   width: 100%;
   text-align: right;
 }
+.settings .statuses .list .item {
+  display: flex;
+  height: 2rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.settings .statuses .list .item .content {
+  width: 100%;
+  overflow: hidden;
+}
+.settings .statuses .list .item .content .marker-day {
+  margin-top: .25rem;
+}
+.settings .statuses .list .item .content .note {
+  width: 90%;
+  line-height: 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.settings .statuses .list .item .buttons {
+  display: flex;
+}
+.settings .statuses .list .item .buttons .button {
+  line-height: 2rem;
+  margin-left: 1rem;
+}

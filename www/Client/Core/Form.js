@@ -20,9 +20,16 @@ define(['Core/View'], function(View) {
 
          this.$fields().each(function(index, el) {
             var $el = $(el);
-            values[$el.attr('data-name')] = $el.val
-               ? $el.val()
-               : ($el.value ? $el.value() : undefined);
+            var value = undefined;
+
+            // Получим корректное значние
+            if ($el.val) {
+               value = $el.val();
+            } else if ($el.value) {
+               value = $el.value();
+            }
+
+            values[$el.attr('data-name')] = value;
          });
 
          return values;
@@ -31,16 +38,84 @@ define(['Core/View'], function(View) {
       /**
        * Очистить значения полей
        */
-      clearFiledsValues: function() {
+      clearFields: function() {
          this.$fields().each(function(index, el) {
             var $el = $(el);
-            
+
             if ($el.val) {
                $el.val(null);
             } else if ($el.value) {
                $el.value(null);
             }
          });
+      },
+
+      /**
+       * Установить модель
+       * @param {Backbone.Model} model
+       */
+      setModel: function(model) {
+         this.model = model;
+         this.render();
+
+         // Если передали модель, то установим значения
+         if (model) {
+            this.setValues(model.attributes);
+
+         // Иначе очистим поля
+         } else {
+            this.clearFields();
+         }
+      },
+
+      /**
+       * Установить значния в DOM элементы
+       * @param {Object} values
+       */
+      setValues: function(values) {
+         this.$fields().each(function(index, el) {
+            var $el = $(el);
+            var name = $el.attr('data-name');
+            var value;
+
+            if (name in values) {
+               value = values[name];
+
+               if ($el.val) {
+                  $el.val(value);
+               } else if ($el.value) {
+                  $el.value(value);
+               }
+            }
+         });
+      },
+
+      /**
+       * Обработчик сохранения данных
+       */
+      save: function() {
+         this.trigger('save', this.fieldsValues());
+
+         // Очистим форму
+         this.clearFields();
+      },
+
+      /**
+       * Отмена изменений
+       */
+      clear: function() {
+         this.trigger('clear', this.fieldsValues());
+
+         // Очистим форму
+         this.clearFields();
+      },
+
+      /**
+       * Закрыть форму
+       */
+      close: function() {
+         this.clear();
+         this.hide();
       }
    });
 });

@@ -1,8 +1,7 @@
 var year;
 
 define([
-   'Pages/Years/View',
-   'css!Pages/Years/Style'
+   'Pages/Years'
 ], function (Year) {
    'use strict';
 
@@ -11,6 +10,16 @@ define([
    });
 
    var Router = Backbone.Router.extend({
+      routes: {
+         'settings': 'settings'
+      },
+
+      /**
+       * Открыть сразу настройки
+       */
+      settings: function() {
+         year.showSettings();
+      }
    });
 
    year.router = new Router();

@@ -21,7 +21,6 @@
       .markers-days
          while indexDay < 31
             - date = [year, monthIndex + 1, indexDay + 1].join('-');
-            - day = days.findWhere({date: date + ' 00:00:00'});
             if day
                .marker-day(title=date, data-date=date)
             else

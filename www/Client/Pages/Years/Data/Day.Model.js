@@ -3,8 +3,6 @@ define([
 ], function(statuses) {
    'use strict';
 
-   console.log(statuses);
-
    return Backbone.Model.extend({
       /**
        * @config {function}
@@ -41,6 +39,8 @@ define([
 
          // Статус
          params.status_id = parseInt(params.status_id);
+
+         console.log(params);
 
          return params;
       },

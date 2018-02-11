@@ -1,0 +1,8 @@
+include ListItem.Mixin.jade
+
+mixin list(items, templateItem)
+   if items && items.length
+      each item, index in items
+         +listItem(item, index, {classNameItem: classNameItem, templateItem: templateItem})
+   else
+      .null-text=nullText

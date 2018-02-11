@@ -112,7 +112,8 @@
          if ($this->method("GET")) {
             $data = $_GET;
          } else {
-            parse_str(file_get_contents('php://input', false , null, -1 , $_SERVER['CONTENT_LENGTH'] ), $data);
+            // parse_str(file_get_contents('php://input', false , null, -1 , $_SERVER['CONTENT_LENGTH']), $data);
+            $data = json_decode(file_get_contents('php://input'));
          }
 
          return (array) $data;

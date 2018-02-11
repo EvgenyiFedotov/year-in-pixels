@@ -3,11 +3,7 @@ define([
 ], function(Model) {
    'use strict';
 
-   var Days = Backbone.Collection.extend({
+   return Backbone.Collection.extend({
       model: Model
-   });
-
-   return new Days(window.days, {
-      parse: true
    });
 });

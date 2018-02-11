@@ -6,8 +6,20 @@
   margin-top: .25rem;
 }
 .form-edit-status .content input {
-  width: 90%;
+  width: 80%;
 }
 .form-edit-status .content .button {
   margin-left: 1rem;
+}
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  width: 8.5rem;
+  padding-top: .5rem;
+  padding-left: .5rem;
+  border-radius: 2rem;
+}
+.palette .item {
+  margin-right: .5rem;
+  margin-bottom: .5rem;
 }
