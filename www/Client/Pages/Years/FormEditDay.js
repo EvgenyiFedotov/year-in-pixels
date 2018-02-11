@@ -8,34 +8,31 @@ define([
 ], function(View, template, /*tStatusDay,*/ Model, FloatArea) {
    'use strict';
 
-   // Карта селекторов представления
-   var selectors = {
-      // Статус
-      status: '.status .day-marker-block>span',
-
-      // Описание
-      noteButtonEdit: '.note>.top>.button[data-name="edit"]',
-      noteButtonSave: '.note>.top>.button[data-name="save"]',
-      noteText: '.note>.text',
-      noteTextarea: '.note>textarea'
-   };
-
-   // Статусы и ее всплывающая панель
-
    return View.extend({
       className: 'form-edit-day',
       template: template,
-      events: function() {
-         var events = {};
 
+      /**
+       * @config {Object}
+       */
+      selectors: {
          // Статус
-         events['click ' + selectors.status] = 'editStatus';
+         status: '.status .day-marker-block>span',
 
          // Описание
-         events['click ' + selectors.noteButtonEdit] = 'editNote';
-         events['click ' + selectors.noteButtonSave] = 'saveNote';
+         noteButtonEdit: '.note>.top>.button[data-name="edit"]',
+         noteButtonSave: '.note>.top>.button[data-name="save"]',
+         noteText: '.note>.text',
+         noteTextarea: '.note>textarea'
+      },
 
-         return events;
+      /**
+       * @config {Object}
+       */
+      events: {
+         'click status': 'editStatus',
+         'click noteButtonEdit': 'editNote',
+         'click noteButtonSave': 'saveNote'
       },
 
       /**
@@ -71,10 +68,10 @@ define([
        */
       editNote: function() {
          // Настройка видимости
-         this.$(selectors.noteButtonEdit).attr('data-show', false);
-         this.$(selectors.noteText).attr('data-show', false);
-         this.$(selectors.noteButtonSave).attr('data-show', true);
-         this.$(selectors.noteTextarea).attr('data-show', true);
+         this.$element('noteButtonEdit').attr('data-show', false);
+         this.$element('noteText').attr('data-show', false);
+         this.$element('noteButtonSave').attr('data-show', true);
+         this.$element('noteTextarea').attr('data-show', true);
       },
 
       /**

@@ -1,10 +1,9 @@
 define([
    'Core/View',
    'jade!Pages/Years/Days/Template',
-   'Pages/Years/Data/Day.Collection',
    'theme!css!Pages/Years/StatusDay/Marker',
    'css!Pages/Years/Days/Style'
-], function(View, template, days) {
+], function(View, template) {
    'use strict';
 
    return View.extend({
@@ -29,12 +28,16 @@ define([
       /**
        * @param {Object} options
        */
-      initialize: function(options) {
+      _init: function(options) {
          options.nameMonths = this.nameMonths;
-         options.days = days;
          options.year = parseInt(options.year || this.year);
-
-         View.prototype.initialize.apply(this, arguments);
       }
+      // initialize: function(options) {
+         // options.nameMonths = this.nameMonths;
+         // options.days = days;
+         // options.year = parseInt(options.year || this.year);
+
+         // View.prototype.initialize.apply(this, arguments);
+      // }
    });
 });

@@ -40,6 +40,8 @@ define([
          // Статус
          params.status_id = parseInt(params.status_id);
 
+         console.log(params);
+
          return params;
       },
 

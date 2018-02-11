@@ -7,11 +7,10 @@ include ../StatusDay/Template.Mixin.jade
 
 //- Статус дня
 .status.row
-
    .header="Status"
    .status-block.row
       span.row
-         +statusDay(model.status(), true)
+         +statusDay('', '', true)
 
 //- Описание дня
 .note
