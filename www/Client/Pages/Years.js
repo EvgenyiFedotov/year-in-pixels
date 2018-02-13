@@ -40,27 +40,22 @@ define([
 
                return navigation;
             },
-            handlers: [
-               {
-                  event: 'navigate:settings',
-                  callback: function(url) {
-                     this.navigate('settings', {
-                        trigger: false
-                     });
+            events: {
+               'navigate:settings': function(url) {
+                  this.navigate('settings', {
+                     trigger: false
+                  });
 
-                     this.showSettings();
-                  }
-               }, {
-                  event: 'navigate:sign-out',
-                  callback: function(url) {
-                     Service.get('User.Singout', {}, {
-                        success: function(result) {
-                           window.location.reload();
-                        }.bind(this)
-                     });
-                  }
+                  this.showSettings();
+               },
+               'navigate:sign-out': function() {
+                  Service.get('User.Singout', {}, {
+                     success: function(result) {
+                        window.location.reload();
+                     }.bind(this)
+                  });
                }
-            ]
+            }
          }
       },
 
@@ -123,8 +118,8 @@ define([
                });
 
                this.listenTo(this.settings, 'hide', function() {
-                  this.$elementDataShow('days', true);
-                  this.$elementDataShow('formEditDay', true);
+                  this.elementDataShow('days', true);
+                  this.elementDataShow('formEditDay', true);
                   this.navigate(null, {
                      trigger: false
                   });
@@ -143,8 +138,8 @@ define([
       _showSetting: function(settings) {
          if (settings) {
             settings.dataShow(true);
-            this.$elementDataShow('days', false);
-            this.$elementDataShow('formEditDay', false);
+            this.elementDataShow('days', false);
+            this.elementDataShow('formEditDay', false);
          }
       },
 

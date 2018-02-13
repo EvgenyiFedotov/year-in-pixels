@@ -1,27 +1,33 @@
 include ../StatusDay/Template.Mixin.jade
 
-//- Сама дата
+//- Дата
 .date.row
    .header="Date"
-   .text=model.get('date').toLocaleDateString()
+   .text=(model ? model.get('date') : new Date()).toLocaleDateString()
 
 //- Статус дня
 .status.row
    .header="Status"
-   .status-block.row
+   .status-block.row(data-name="status_id", data-is-field="true")
       span.row
-         +statusDay('', '', true)
+         +statusDay('', '', {
+            isRevert: true
+         })
 
 //- Описание дня
 .note
-   - var note = model.get('note');
+   - var note = model ? model.get('note') : '';
 
    .top.row
       .header="Note"
       .button(data-type="link", data-name="edit")="Edit"
       .button(data-type="link", data-name="save", data-show="false")="Save"
    .text=note
-   textarea(placeholder="Note", data-show="false")=note
+   textarea(
+   placeholder="Note",
+   data-show="false",
+   data-name="note",
+   data-is-field="true")=note
 
 //- События дня
 .events

@@ -1,24 +1,20 @@
 define([
-   'Core/View',
+   'Core/Form',
    'jade!Pages/Years/FormEditDay/Template',
-   // 'jade!Pages/Years/StatusDay/Template',
    'Pages/Years/Data/Day.Model',
-   'Views/FloatArea',
    'theme!css!Pages/Years/FormEditDay/Style'
-], function(View, template, /*tStatusDay,*/ Model, FloatArea) {
+], function(Form, template, DayModel) {
    'use strict';
 
-   return View.extend({
+   return Form.extend({
       className: 'form-edit-day',
       template: template,
+      instanceModel: DayModel,
 
       /**
        * @config {Object}
        */
       selectors: {
-         // Статус
-         status: '.status .day-marker-block>span',
-
          // Описание
          noteButtonEdit: '.note>.top>.button[data-name="edit"]',
          noteButtonSave: '.note>.top>.button[data-name="save"]',
@@ -30,95 +26,47 @@ define([
        * @config {Object}
        */
       events: {
-         'click status': 'editStatus',
-         'click noteButtonEdit': 'editNote',
-         'click noteButtonSave': 'saveNote'
+         'click noteButtonEdit': 'noteEdit',
+         'click noteButtonSave': 'noteSave'
       },
 
       /**
-       * @param {Object} options
+       * @config {Object}
        */
-      initialize: function(options) {
-         options = options instanceof Object ? options : {};
-
-         // Настроим модель
-         if (!(options.model instanceof Model)) {
-            options.model = new Model();
-            this.model = options.model;
-         }
-
-         // Подписка на события палетки
-         // this.listenTo(palette, 'clickItem', this._clickItemPalette);
-
-         // Подписка на события модели
-         this.listenTo(this.model, 'change:note', this._changeNote);
-         this.listenTo(this.model, 'change:status', this._changeStatus);
-
-         View.prototype.initialize.apply(this, arguments);
+      eventsModel: {
+         'change:note': '_changeNote'
       },
 
       /**
-       * Редактирование статуса дня
+       * Сменить видимость элементов редактирования описания
+       * @param {Boolean} isEdit
        */
-      editStatus: function() {
+      _visibleViewsNote: function(isEdit) {
+         this.elementDataShow('noteButtonEdit', !isEdit);
+         this.elementDataShow('noteText', !isEdit);
+         this.elementDataShow('noteButtonSave', isEdit);
+         this.elementDataShow('noteTextarea', isEdit);
       },
 
       /**
-       * Редактирование описания дня
+       * Редактировать описание
        */
-      editNote: function() {
-         // Настройка видимости
-         this.$element('noteButtonEdit').attr('data-show', false);
-         this.$element('noteText').attr('data-show', false);
-         this.$element('noteButtonSave').attr('data-show', true);
-         this.$element('noteTextarea').attr('data-show', true);
+      noteEdit: function() {
+         this._visibleViewsNote(true);
       },
 
       /**
-       * Сохранить описание
+       * Сохранить описание (в модель)
        */
-      saveNote: function() {
-         var $textarea = this.$(selectors.noteTextarea);
+      noteSave: function() {
+         this._visibleViewsNote(false);
 
          // Установим значение описания в модель
-         this.model.set('note', $textarea.val());
-
-         // Настройка видимости
-         this.$(selectors.noteButtonEdit).attr('data-show', true);
-         this.$(selectors.noteText).attr('data-show', true);
-         this.$(selectors.noteButtonSave).attr('data-show', false);
-         $textarea.attr('data-show', false);
+         this.model.set('note',this.fieldsValues().note);
       },
 
-      /**
-       * Обработчик изменения описания в модели
-       * @param {Day.Model}
-       * @param {String} value
-       */
-      _changeNote: function(model, value) {
-         this.$(selectors.noteTextarea).val(value);
-         this.$(selectors.noteText).text(value);
-      },
-
-      /**
-       * Обработчик клика по итему палетки
-       * @param {Object} data
-       */
-      _clickItemPalette: function(data) {
-         this.model.set({
-            status: data.status,
-            statusColor: data.color,
-            statusText: data.text
-         });
-      },
-
-      /**
-       * Обработчик изменения статуса в модели
-       * @param {Day.Model} model
-       * @param {Object} status
-       */
-      _changeStatus: function(model, status) {
-         // this.$(selectors.status).html(tStatusDay({model: model}));
+      _changeNote: function() {
+         console.log(arguments);
       }
    });
 });

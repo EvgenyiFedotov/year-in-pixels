@@ -27,15 +27,16 @@ define([
                   menu = new Menu(this._menu);
                }
 
-               this.listenTo(menu, 'clickItem', function() {
+               return menu;
+            },
+            events: {
+               'clickItem': function() {
                   var args = Array.prototype.slice.call(arguments);
 
                   args.unshift('clickItem');
 
                   this.trigger.apply(this, args);
-               });
-
-               return menu;
+               }
             }
          },
 
@@ -53,16 +54,16 @@ define([
                      }
                   });
 
-                  this.listenTo(buttonArea, 'showArea', function() {
-                     this.trigger('showMenu');
-                  });
-
-                  this.listenTo(buttonArea, 'hideArea', function() {
-                     this.trigger('hideMenu');
-                  });
-
                   callback(buttonArea);
                });
+            },
+            events: {
+               'showArea': function() {
+                  this.trigger('showMenu');
+               },
+               'hideArea': function() {
+                  this.trigger('hideMenu');
+               }
             }
          }
       },

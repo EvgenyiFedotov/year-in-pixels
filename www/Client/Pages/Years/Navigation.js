@@ -33,14 +33,11 @@ define([
 
                return button;
             },
-            handlers: [
-               {
-                  event: 'clickItem',
-                  callback: function(data) {
-                     this.navigate(data.name);
-                  }
+            events: {
+               'clickItem': function(data) {
+                  this.navigate(data.name);
                }
-            ]
+            }
          }
       },
 

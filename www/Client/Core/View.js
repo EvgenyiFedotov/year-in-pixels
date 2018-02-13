@@ -31,10 +31,7 @@ define(function() {
        * @config {Object}
        * @config {Array.<String>} child.include
        * @config {Function} callback
-       * @config {Array.<Object>} handlers
-       * @config {Object} handler
-       * @config {String} handler.event
-       * @config {Function} handler.callback
+       * @config {Object} events
        */
       _childs: {},
 
@@ -51,10 +48,28 @@ define(function() {
       isShow: true,
 
       /**
+       * Инстанс модели, если будет указан,
+       * то модель, если она не будет передана,
+       * будет создана автоматически
+       * @config {Backbone.Model}
+       */
+      instanceModel: null,
+
+      /**
+       * Настройки обработчиков событий модели
+       * Их можно передать при простороении представления
+       * НО, если некоторые обработчики уже настроены в представлении,
+       * то их НЕЛЬЗЯ переопределить
+       * @config {Object}
+       */
+      eventsModel: {},
+
+      /**
        * @param {Object} options
        * @param {Function} [options.template]
        * @param {Boolean} [options.firstRender]
        * @param {Boolean} [options.isShow]
+       * @param {Array.<Object>} [options.eventsModel]
        */
       initialize: function(options) {
          options = options instanceof Object ? options : {};
@@ -78,8 +93,19 @@ define(function() {
          // Отображение представления
          this.isShow = _.isBoolean(options.isShow) ? options.isShow : !!this.isShow;
 
+         // Создадим модель, если это необходимо и вообще возможно
+         if (!this.model && this.instanceModel) {
+            this.model = new this.instanceModel();
+         }
+
+         // Настроим конфиг обработчик событий модели
+         this.eventsModel = _.defaults({}, this.eventsModel || {}, options.eventsModel || {});
+
          // Обработчик ининциализации перед рендерингом
          this._init(options);
+
+         // Подпишимся на события модели
+         this.listenToModel(this.model, this.eventsModel);
 
          // Установим само отображение
          this.dataShow(this.isShow, false);
@@ -197,15 +223,15 @@ define(function() {
        * @param {String} key
        */
       $element: function(key) {
-         return this.$(this.selector(key));
+         return this.$(this.selector(key) || key);
       },
 
       /**
-       * Сменить отображения jQuery объекта
+       * Сменить отображения jQuery объекта по ключу селектора
        * @param {String} key
        * @param {Boolean} value
        */
-      $elementDataShow: function(key, value) {
+      elementDataShow: function(key, value) {
          this.$element(key).attr('data-show', value);
       },
 
@@ -270,11 +296,6 @@ define(function() {
                var args = Array.prototype.slice.call(arguments);
                var childNew;
 
-               // Если уже существует такое дочернее предстваление, отпишимся от его событий
-               // if (this.childs[name]) {
-               //    this.stopListening(this.childs[name]);
-               // }
-
                /**
                 * Добавим callback, если будут зависимости внутри
                 * создания дочернего представления
@@ -301,47 +322,18 @@ define(function() {
        */
       _afterCreateChild: function(name, childNew, callback) {
          if (name && childNew) {
-            var childOld = this.childs[name];
-            var config = this._childs[name];
+            // Отпишимся от событий старого дочернего представления
+            this.listenToChild(this.childs[name]);
 
             // Установим новое дочернее представление
             this.childs[name] = childNew;
 
-            // Подписка / отписка на события представления
-            this.listenToChild(name, childOld, childNew, config.handlers);
+            // Подписка на события нового дочернего представления
+            this.listenToChild(childNew, this._childs[name].events);
 
-            // Вызовем обратню фунцию
+            // Вызовем обратную фунцию
             if (_.isFunction(callback)) {
                callback.call(this, childNew);
-            }
-         }
-      },
-
-      /**
-       * Прослушивать события дочерего представления
-       * @param {String} name
-       * @param {View} [childOld]
-       * @param {View} [childNew]
-       * @param {Array.<Object>} [handlers]
-       * @param {Object} handler
-       * @param {String} handler.event
-       * @param {Function} handler.callback
-       */
-      listenToChild: function(name, childOld, childNew, handlers) {
-         if (name) {
-            // Отписка от событий
-            if (childOld) {
-               this.stopListening(childOld);
-            }
-
-            /**
-             * Если передали новое дочернее представление и его обработчики,
-             * то подпишимся
-             */
-            if (childNew && handlers && handlers.length) {
-               handlers.forEach(function(handler) {
-                  this.listenTo(childNew, handler.event, handler.callback);
-               }.bind(this));
             }
          }
       },
@@ -361,6 +353,50 @@ define(function() {
          }
 
          return child;
+      },
+
+      /**
+       * Корректная подписка на любой (конечно же корректный) объект
+       * Внимание! Если не передали события, то просто произойдет отписка
+       * @param {Object} object
+       * @param {Object} [events]
+       */
+      listenToObject: function(object, events) {
+         if (object) {
+            // Отпишимся от старого набора событий
+            this.stopListening(object);
+
+            // Подпишимся на события
+            if (_.isObject(events) && _.keys(events).length) {
+               _.each(events, function(handler, nameEvent) {
+                  // Если передали строкой
+                  handler = _.isString(handler) ? this[handler] : handler;
+
+                  if (_.isFunction(handler)) {
+                     this.listenTo(object, nameEvent, handler);
+                  }
+               }, this);
+            }
+         }
+      },
+
+      /**
+       * Прослушивать события дочерего представления
+       * @param {View} child
+       * @param {Object} [events]
+       */
+      listenToChild: function(child, events) {
+         this.listenToObject(child, events);
+      },
+
+      /**
+       * Слушать модель
+       * #TODO Чем то похоже на listenToChild
+       * @param {Model} model
+       * @param {Object} [events]
+       */
+      listenToModel: function(model, events) {
+         this.listenToObject(model, events);
       }
    });
 });
