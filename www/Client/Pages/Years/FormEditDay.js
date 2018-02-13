@@ -49,7 +49,7 @@ define([
       _childs: {
          // Кнопка редактирования статуса
          buttonStatuses: {
-            init: true,
+            fastCreate: true,
             include: ['Views/ButtonMenu'],
             callback: function(ButtonMenu) {
                var button = new ButtonMenu({
@@ -96,7 +96,7 @@ define([
          this._visibleViewsNote(false);
 
          // Установим значение описания в модель
-         this.model.set('note',this.fieldsValues().note);
+         this.model.set('note', this.fieldsValues().note);
       },
 
       /**
@@ -115,7 +115,7 @@ define([
        * @param {Number} statusId
        */
       _changeStatus: function(model, statusId) {
-         var status = statuses.get(statusId);
+         var status = model.status();
 
          this.$element('statusMarker').attr('style', status.get('styleMarker'));
          this.$element('statusNote').text(status.get('note'));

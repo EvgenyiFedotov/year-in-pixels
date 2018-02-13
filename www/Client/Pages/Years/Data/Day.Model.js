@@ -1,9 +1,17 @@
 define([
+   'Core/Model',
    'Pages/Years/Data/statuses'
-], function(statuses) {
+], function(Model, statuses) {
    'use strict';
 
-   return Backbone.Model.extend({
+   console.log(statuses);
+
+   return Model.extend({
+      /**
+       * @config {String}
+       */
+      object: 'Days',
+
       /**
        * @config {function}
        */
@@ -24,7 +32,19 @@ define([
           * Статус идентификатор
           * @config {Number}
           */
-         status_id: null
+         status_id: null,
+
+         /**
+          * Дата в формате SQL
+          * @config {String}
+          */
+         dateSQL: null,
+
+         /**
+          * Год (для быстрой фильтрации)
+          * @config {Number}
+          */
+         year: null
       },
 
       /**
@@ -38,9 +58,13 @@ define([
          }
 
          // Статус
-         params.status_id = parseInt(params.status_id);
+         params.status_id = params.status_id ? parseInt(params.status_id) : null;
 
-         console.log(params);
+         // Дата SQL
+         params.dateSQL = this.dateSQL(params.date);
+
+         // Год
+         params.year = params.date.getFullYear();
 
          return params;
       },
@@ -51,6 +75,19 @@ define([
        */
       status: function() {
          return statuses.get(this.get('status_id'));
+      },
+
+      /**
+       * Получить дату в формате SQL
+       * @param {Date} date
+       * @return {String}
+       */
+      dateSQL: function(date) {
+         return _.isDate(date)
+            ? _.map([date.getFullYear(), date.getMonth() + 1, date.getDate()], function(value) {
+                  return value < 10 ? ('0' + value) : value;
+               }).join('-')
+            : null;
       }
    });
 });

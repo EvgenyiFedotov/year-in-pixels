@@ -58,13 +58,9 @@ define(['Core/View'], function(View) {
          this.model = model;
          this.render();
 
-         // Если передали модель, то установим значения
+         // Если передали модель, то установим значения в поля
          if (model) {
             this.setValues(model.attributes);
-
-         // Иначе очистим поля
-         } else {
-            this.clearFields();
          }
       },
 

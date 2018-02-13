@@ -29,7 +29,7 @@ define(function() {
       /**
        * Параметры для создания дочерних компонентов
        * @config {Object}
-       * @config {Object} child.init Если необходимо подлкючить при инициализации
+       * @config {Object} child.fastCreate Если необходимо подлкючить после сразу после рендера
        * @config {Array.<String>} child.include
        * @config {Function} child.callback
        * @config {Object} child.events
@@ -107,6 +107,7 @@ define(function() {
          this._init(options);
 
          // Подпишимся на события модели
+         // #TODO
          this.listenToModel(this.model, this.eventsModel);
 
          // Установим само отображение
@@ -115,13 +116,6 @@ define(function() {
          // Произведем рендер, если это необходимо
          if (options.firstRender !== false) {
             this.render(options);
-
-            // Создадим и подлкючим необходимые дочерние компоненты
-            _.each(this._childs, function(childConfig, name) {
-               if (!!childConfig.init) {
-                  this.createChild(name);
-               }
-            }, this);
          }
       },
 
@@ -191,7 +185,10 @@ define(function() {
 
             this.$el.html(this.template(params || {}));
 
-            // Выполним обработчик после редерингом
+            // Создадим и подключим необходимые дочерние компоненты
+            this.fastCreateChilds();
+
+            // Выполним обработчик после редеринга
             this._afterRender(params);
          }
 
@@ -317,7 +314,7 @@ define(function() {
 
                childNew = configChild.callback.apply(this, args) || null;
 
-               // Вызовем jбработчик окончания создания дочернего представления
+               // Вызовем обработчик окончания создания дочернего представления
                this._afterCreateChild(name, childNew, callback);
             }.bind(this));
          }
@@ -331,8 +328,18 @@ define(function() {
        */
       _afterCreateChild: function(name, childNew, callback) {
          if (name && childNew) {
-            // Отпишимся от событий старого дочернего представления
-            this.listenToChild(this.childs[name]);
+            var childOld = this.childs[name];
+
+            // Удалим старое дочернее представление, если оно создано
+            if (childOld) {
+               childOld.remove();
+
+               // Отпишимся от событий старого дочернего представления
+               this.listenToChild(this.childs[name]);
+ 
+               // Очистим ссылку на старое дочернее представление
+               this.childs[name] = null;
+            }
 
             // Установим новое дочернее представление
             this.childs[name] = childNew;
@@ -345,6 +352,17 @@ define(function() {
                callback.call(this, childNew);
             }
          }
+      },
+
+      /**
+       * Создать / пересоздать дочерние копоненты, которые помечениы fastCreate
+       */
+      fastCreateChilds: function() {
+         _.each(this._childs, function(childConfig, name) {
+            if (!!childConfig.fastCreate) {
+               this.createChild(name);
+            }
+         }, this);
       },
 
       /**
