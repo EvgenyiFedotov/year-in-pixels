@@ -49,6 +49,7 @@ define([
                this.child('menu', function(menu) {
                   var buttonArea = new ButtonArea({
                      el: this.$el,
+                     className: this.className,
                      floatArea: {
                         area: menu.$el
                      }

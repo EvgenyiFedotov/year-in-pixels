@@ -5,9 +5,10 @@ define([
    'Views/List',
    'jade!Pages/Years/Settings/StatusDay',
    'Views/Informer',
+   'Core/Service',
    'css!Pages/Years/Settings/Style',
    'css!Pages/Years/StatusDay/Style'
-], function(View, template, statuses, List, tStatusDay, Informer) {
+], function(View, template, statuses, List, tStatusDay, Informer, Service) {
    'use strict';
 
    return View.extend({
@@ -38,8 +39,8 @@ define([
           * Меню редактирования темы
           */
          themeMenu: {
-            include: ['Views/ButtonMenu', 'Core/Service'],
-            callback: function(ButtonMenu, Service) {
+            include: ['Views/ButtonMenu'],
+            callback: function(ButtonMenu) {
                var menu = new ButtonMenu({
                   el: this.selector('buttonTheme'),
                   menu: {

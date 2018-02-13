@@ -30,10 +30,6 @@
             width: 100%;
             justify-content: flex-end;
 
-            .marker-day {
-               margin-left: 1rem;
-            }
-
             .note {
                font-style: italic;
                color: @color-label;
@@ -79,6 +75,26 @@
             .header {
                width: 100%;
             }
+         }
+      }
+   }
+
+   // Меню редактирования статусов
+   .form-edit-day-menu-statuses {
+      .item {
+         display: flex;
+         margin-bottom: .5rem;
+
+         &:last-child {
+            margin-bottom: 0;
+         }
+
+         .note {
+            max-width: 6rem;
+            width: 6rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
          }
       }
    }

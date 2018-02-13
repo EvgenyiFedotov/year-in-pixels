@@ -8,7 +8,7 @@ include ../StatusDay/Template.Mixin.jade
 //- Статус дня
 .status.row
    .header="Status"
-   .status-block.row(data-name="status_id", data-is-field="true")
+   .status-block.row
       span.row
          +statusDay('', '', {
             isRevert: true
@@ -30,7 +30,7 @@ include ../StatusDay/Template.Mixin.jade
    data-is-field="true")=note
 
 //- События дня
-.events
+//- .events
    .top.row
       .header="Events"
       .button(data-type="link", data-name="add")="Add"

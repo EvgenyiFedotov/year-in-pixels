@@ -29,9 +29,10 @@ define(function() {
       /**
        * Параметры для создания дочерних компонентов
        * @config {Object}
+       * @config {Object} child.init Если необходимо подлкючить при инициализации
        * @config {Array.<String>} child.include
-       * @config {Function} callback
-       * @config {Object} events
+       * @config {Function} child.callback
+       * @config {Object} child.events
        */
       _childs: {},
 
@@ -78,6 +79,7 @@ define(function() {
          if (this.classNameDefault) {
             this.$el.addClass(this.classNameDefault);
          }
+         this.$el.addClass(this.className);
 
          this.childs = _.defaults({}, this.childs || {});
 
@@ -113,6 +115,13 @@ define(function() {
          // Произведем рендер, если это необходимо
          if (options.firstRender !== false) {
             this.render(options);
+
+            // Создадим и подлкючим необходимые дочерние компоненты
+            _.each(this._childs, function(childConfig, name) {
+               if (!!childConfig.init) {
+                  this.createChild(name);
+               }
+            }, this);
          }
       },
 

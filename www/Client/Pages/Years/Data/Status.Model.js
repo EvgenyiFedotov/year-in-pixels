@@ -70,6 +70,15 @@ define([
          }
 
          return style;
+      },
+
+      /**
+       * Аттрибуты для верстки
+       */
+      attrs: function() {
+         return {
+            'data-id': this.id
+         };
       }
    });
 });

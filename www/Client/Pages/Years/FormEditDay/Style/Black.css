@@ -25,9 +25,6 @@
   width: 100%;
   justify-content: flex-end;
 }
-.form-edit-day>.status .status-block .marker-day {
-  margin-left: 1rem;
-}
 .form-edit-day>.status .status-block .note {
   font-style: italic;
   color: #BDBDBD;
@@ -63,4 +60,18 @@
 }
 .form-edit-day>.events .top .header {
   width: 100%;
+}
+.form-edit-day-menu-statuses .item {
+  display: flex;
+  margin-bottom: .5rem;
+}
+.form-edit-day-menu-statuses .item:last-child {
+  margin-bottom: 0;
+}
+.form-edit-day-menu-statuses .item .note {
+  max-width: 6rem;
+  width: 6rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
