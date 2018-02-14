@@ -28,8 +28,6 @@
        * Создать / записать статус
        */
       public function create($query) {
-         $connect = $this->connect();
-
          // Настройка данных
          $data = $query->data();
          $color = $data["color"];
@@ -43,14 +41,7 @@
                "note" => $note
             ];
 
-            $result = $connect->insert("statuses", $data);
-
-            if ($result->rowCount()) {
-               $data["id"] = $connect->id();
-               $query->response($data);
-            } else {
-               $query->error(503, true);
-            }
+            $this->createRecord("statuses", $data);
          } else {
             $query->error(503, "The entered data is incorrect!");
          }
@@ -60,22 +51,12 @@
        * Обновить статус
        */
       public function update($query) {
-         $connect = $this->connect();
-
          $data = $query->data();
 
-         $result = $connect->update("statuses", [
+         $this->updateRecord("statuses", [
             "color" => $data["color"],
             "note" => $data["note"]
-         ], [
-            "id" => $data["id"]
-         ]);
-
-         if ($result->rowCount()) {
-            $query->response($data);
-         } else {
-            $query->error(503, true);
-         }
+         ], $data["id"]);
       }
 
       /**

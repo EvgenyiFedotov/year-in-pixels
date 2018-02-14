@@ -3,6 +3,8 @@ define([
 ], function(Days) {
    'use strict';
 
+   console.log(window.days);
+
    var days = new Days(window.days || [
       {
          date: '2018-02-13',

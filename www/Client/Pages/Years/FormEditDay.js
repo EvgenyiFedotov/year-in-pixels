@@ -66,6 +66,7 @@ define([
             events: {
                'clickItem': function(data) {
                   this.model.set('status_id', parseInt(data.id));
+                  this.model.save();
                }
             }
          }
@@ -97,6 +98,7 @@ define([
 
          // Установим значение описания в модель
          this.model.set('note', this.fieldsValues().note);
+         this.model.save();
       },
 
       /**

@@ -128,8 +128,14 @@ define([
       showSettings: function() {
          this.child('settings', function(settings) {
             settings.dataShow(true);
-            this.childs.days.dataShow(false);
-            this.childs.formEditDay.dataShow(false);
+
+            this.child('days', function(days) {
+               days.dataShow(false);
+            });
+
+            this.child('formEditDay', function(formEditDay) {
+               formEditDay.dataShow(false)
+            });
          });
       },
 
@@ -147,9 +153,22 @@ define([
             dateSQL: dateSQL ? dateSQL : toSQL(new Date())
          });
 
-         return day ? day : new days.model({
-            date: date ? new Date(date) : new Date()
-         });
+         // Если не нашли создадим новую и добавим в коллекцию
+         if (!day) {
+            day = new days.model({
+               date: date ? new Date(date) : new Date()
+            }, {
+               parse: true
+            });
+
+            // Запишим модель в базу
+            day.save();
+
+            // Добавим в коллекцию
+            days.add(day);
+         }
+
+         return day;
       }
    });
 });

@@ -60,11 +60,13 @@ define([
          // Статус
          params.status_id = params.status_id ? parseInt(params.status_id) : null;
 
-         // Дата SQL
-         params.dateSQL = this.dateSQL(params.date);
+         if (params.date) {
+            // Дата SQL
+            params.dateSQL = this.dateSQL(params.date);
 
-         // Год
-         params.year = params.date.getFullYear();
+            // Год
+            params.year = params.date.getFullYear();
+         }
 
          return params;
       },

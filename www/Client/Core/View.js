@@ -106,10 +106,6 @@ define(function() {
          // Обработчик ининциализации перед рендерингом
          this._init(options);
 
-         // Подпишимся на события модели
-         // #TODO
-         this.listenToModel(this.model, this.eventsModel);
-
          // Установим само отображение
          this.dataShow(this.isShow, false);
 
@@ -117,6 +113,9 @@ define(function() {
          if (options.firstRender !== false) {
             this.render(options);
          }
+
+         // Подпишимся на события модели
+         this.listenToModel(this.model, this.eventsModel);
       },
 
       /**

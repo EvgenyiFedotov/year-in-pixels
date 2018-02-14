@@ -39,6 +39,11 @@ define([
        */
       _init: function(options) {
          this.year = parseInt(options.year || this.year);
+
+         // Подпишимся на события коллекции дней
+         this.listenToObject(days, {
+            'change:status_id': '_changeStatusId'
+         });
       },
 
       /**
@@ -86,6 +91,15 @@ define([
          var $marker = $(e.target);
 
          this.trigger('clickDay', $marker.data(), $marker, e);
+      },
+
+      /**
+       * Обработчик изменения статуса дня в коллекции дней
+       * @param {Day.Model} model
+       */
+      _changeStatusId: function(model) {
+         this.$('.content>.markers-days>.marker-day[data-date="' + model.get('dateSQL') + '"]')
+            .attr('style', model.status().get('styleMarker'));
       }
    });
 });
