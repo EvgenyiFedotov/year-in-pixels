@@ -45,6 +45,10 @@ define([
       /**
        * Обработчик инициализации
        * @param {Object} options
+       * @param {Function} options.templateItem
+       * @param {Array.<Object>|Collection} options.items
+       * @param {String} options.classNameItem
+       * @param {String} options.nullText
        */
       _init: function(options) {
          var itemsIsCollection = options.items instanceof Backbone.Collection;

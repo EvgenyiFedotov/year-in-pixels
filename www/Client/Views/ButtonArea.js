@@ -22,17 +22,17 @@ define([
 
                if (_.isObject(this._floatArea)) {
                   floatArea = new FloatArea(this._floatArea);
-
-                  this.listenTo(floatArea, 'show', function() {
-                     this.trigger('showArea');
-                  });
-
-                  this.listenTo(floatArea, 'hide', function() {
-                     this.trigger('hideArea');
-                  });
                }
 
                return floatArea;
+            },
+            events: {
+               'show': function() {
+                  this.trigger('showArea');
+               },
+               'hide': function() {
+                  this.trigger('hideArea');
+               }
             }
          }
       },

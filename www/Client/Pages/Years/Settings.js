@@ -5,9 +5,10 @@ define([
    'Views/List',
    'jade!Pages/Years/Settings/StatusDay',
    'Views/Informer',
+   'Core/Service',
    'css!Pages/Years/Settings/Style',
    'css!Pages/Years/StatusDay/Style'
-], function(View, template, statuses, List, tStatusDay, Informer) {
+], function(View, template, statuses, List, tStatusDay, Informer, Service) {
    'use strict';
 
    return View.extend({
@@ -38,8 +39,8 @@ define([
           * Меню редактирования темы
           */
          themeMenu: {
-            include: ['Views/ButtonMenu', 'Core/Service'],
-            callback: function(ButtonMenu, Service) {
+            include: ['Views/ButtonMenu'],
+            callback: function(ButtonMenu) {
                var menu = new ButtonMenu({
                   el: this.selector('buttonTheme'),
                   menu: {
@@ -55,16 +56,16 @@ define([
                   }
                });
 
-               // Событие клика по итему
-               this.listenTo(menu, 'clickItem', function(data) {
+               return menu;
+            },
+            events: {
+               'clickItem': function(data) {
                   Service.post('User.ChangeTheme', data, {
                      success: function(result) {
                         window.location.reload();
                      }.bind(this)
                   });
-               });
-
-               return menu;
+               }
             }
          },
 
@@ -116,52 +117,47 @@ define([
 
                return form;
             },
-            handlers: [
-               {
-                  event: 'save',
-                  callback: function(values) {
-                     var form = this.childs.formEditStatus;
-                     var model = form.model;
-                     var isNew = false;
+            events: {
+               'save': function(values) {
+                  var form = this.childs.formEditStatus;
+                  var model = form.model;
+                  var isNew = false;
 
-                     // Уберем ссылку на модель
-                     form.setModel(null);
+                  // Уберем ссылку на модель
+                  form.setModel(null);
 
-                     /**
-                      * Если есть модель, то редактировали,
-                      * иначе создадим новую
-                      */
-                     if (model) {
-                        model.set(values);
-                     } else {
-                        model = new statuses.model(values);
-                        isNew = true;
-                     }
+                  /**
+                   * Если есть модель, то редактировали,
+                   * иначе создадим новую
+                   */
+                  if (model) {
+                     model.set(values);
+                  } else {
+                     model = new statuses.model(values);
+                     isNew = true;
+                  }
 
-                     // Сохраним модель
-                     model.save(null, {
-                        success: function() {
-                           // Добавим модель в коллекцию
-                           if (isNew) {
-                              statuses.add(model);
-                           }
-                        },
-                        error: function(model, options, res) {
-                           new Informer({
-                              type: 'error',
-                              header: 'Error',
-                              note: res.xhr.statusText
-                           }).show();
+                  // Сохраним модель
+                  model.save(null, {
+                     success: function() {
+                        // Добавим модель в коллекцию
+                        if (isNew) {
+                           statuses.add(model);
                         }
-                     });
-                  }
-               }, {
-                  event: 'hide',
-                  callback: function() {
-                     this.childs.formEditStatus.setModel(null);
-                  }
+                     },
+                     error: function(model, options, res) {
+                        new Informer({
+                           type: 'error',
+                           header: 'Error',
+                           note: res.xhr.statusText
+                        }).show();
+                     }
+                  });
+               },
+               'hide': function() {
+                  this.childs.formEditStatus.setModel(null);
                }
-            ]
+            }
          }
       },
 

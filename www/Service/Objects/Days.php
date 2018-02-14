@@ -1,34 +1,54 @@
 <?php
-   include_once("Protected/Days.php");
+   include_once("Service/Core/Object.php");
 
-   class Days {
+   class Days extends Object {
       /**
-       * Записать данные по дню
+       * Получить список дней по идентификатору пользователя
+       * @param {String|Number} $user_id
+       * @param {}
        */
-      public function write($query) {
-         if ($query->method("POST")) {
-            $data = $query->data();
-            $pDays = new PDays();
-            $login = $_SESSION["user"]["login"];
+      public function listByUserId($user_id) {
+         if (is_int($user_id) || is_string($user_id)) {
+            $connect = $this->connect();
 
-            $data["login"] = $login;
-
-            $id = $pDays->write($data, [
-               "date" => $data["date"],
-               "login" => $login
+            return $connect->select("days", [
+               "id", "date", "status_id", "note"
+            ], [
+               "user_id" => $user_id
             ]);
-
-            $query->response([
-               "id" => $id
-            ]);
+         } else {
+            $this->error();
          }
       }
 
-      public function list($query) {
-         if ($query->method("GET")) {
-            $pDays = new PDays();
-            $query->response($pDays->list());
-         }
+      /**
+       * Создать / записать модель дня
+       */
+      public function create($query) {
+         // Настройка данных
+         $data = $query->data();
+         $data = [
+            "user_id" => $data["user_id"] || $_SESSION["user"]["id"],
+            "date" => $data["dateSQL"],
+            "status_id" => $data["status_id"],
+            "note" => $data["note"]
+         ];
+
+         // Запишим данные
+         $this->createRecord("days", $data);
+      }
+
+      /**
+       * Обновить запись дня
+       */
+      public function update($query) {
+         $data = $query->data();
+
+         $this->updateRecord("days", [
+            "status_id" => $data["status_id"],
+            "note" => $data["note"],
+            "date" => $data["dateSQL"]
+         ], $data["id"]);
       }
    }
 ?>

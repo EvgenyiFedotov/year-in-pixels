@@ -1,9 +1,10 @@
-mixin statusDay(note, styleMarker, isRevert)
+mixin statusDay(note, styleMarker, options)
    - note = note || 'Status';
+   - options = typeof options === 'object' ? options : {};
 
-   if isRevert
+   if options.isRevert
       .note=note
-      .marker-day(style=styleMarker)
+      .marker-day(style=styleMarker, data-side="right")
    else
-      .marker-day(style=styleMarker)
+      .marker-day(style=styleMarker, data-side="left")
       .note=note

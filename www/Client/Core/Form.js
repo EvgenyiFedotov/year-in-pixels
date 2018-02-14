@@ -56,15 +56,14 @@ define(['Core/View'], function(View) {
        */
       setModel: function(model) {
          this.model = model;
+
          this.render();
 
-         // Если передали модель, то установим значения
          if (model) {
+            // Установим значения в поля
             this.setValues(model.attributes);
-
-         // Иначе очистим поля
-         } else {
-            this.clearFields();
+            // Подпишимся на события модели
+            this.listenToModel(this.model, this.eventsModel);
          }
       },
 

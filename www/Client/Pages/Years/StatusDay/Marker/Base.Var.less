@@ -1,6 +1,8 @@
 .MarkerDayBlock() {
    width: 1.5rem;
+   min-width: 1.5rem;
    height: 1.5rem;
+   min-height: 1.5rem;
    text-align: center;
    box-sizing: border-box;
    cursor: pointer;
@@ -19,6 +21,14 @@
       &:hover {
          border-color: @color-day-marker-hover;
          background-color: @color-day-marker-hover;
+      }
+
+      &[data-side="right"] {
+         margin-left: 1rem;
+      }
+
+      &[data-side="left"] {
+         margin-right: 1rem;
       }
    }
 }

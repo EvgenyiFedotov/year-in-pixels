@@ -1,5 +1,5 @@
 mixin listItem(item, index, params)
-   .item(class=(params.classNameItem || ''))&attributes(item.attrs || {})
+   .item(class=(params.classNameItem || ''))&attributes((item.attrs instanceof Function ? item.attrs() : item.attrs) || {})
       //- Вставим сразу переданный контент, если так есть
       !{item.content || ''}
 

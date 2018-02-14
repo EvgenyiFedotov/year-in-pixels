@@ -1,13 +1,17 @@
 .marker-day-block {
   width: 1.5rem;
+  min-width: 1.5rem;
   height: 1.5rem;
+  min-height: 1.5rem;
   text-align: center;
   box-sizing: border-box;
   cursor: pointer;
 }
 .marker-day {
   width: 1.5rem;
+  min-width: 1.5rem;
   height: 1.5rem;
+  min-height: 1.5rem;
   text-align: center;
   box-sizing: border-box;
   cursor: pointer;
@@ -17,4 +21,10 @@
 .marker-day:hover {
   border-color: #E0E0E0;
   background-color: #E0E0E0;
+}
+.marker-day[data-side="right"] {
+  margin-left: 1rem;
+}
+.marker-day[data-side="left"] {
+  margin-right: 1rem;
 }

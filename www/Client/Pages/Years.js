@@ -1,11 +1,10 @@
 define([
    'Core/View',
-   'Pages/Years/Navigation',
-   'Pages/Years/Days',
-   'Pages/Years/FormEditDay',
    'Core/Service',
-   'css!Pages/Years/Style'
-], function(View, Navigation, Days, FormEditDay, Service) {
+   'Pages/Years/Data/Days',
+   'css!Pages/Years/Style',
+   'theme!css!Pages/Years/StatusDay/Marker'
+], function(View, Service, days) {
    'use strict';
 
    return View.extend({
@@ -31,132 +30,145 @@ define([
        * @config {Object}
        */
       _childs: {
+         // Панель навигации
          navigation: {
+            fastCreate: true,
             include: ['Pages/Years/Navigation'],
-            callback: function(Navigation ) {
+            callback: function(Navigation) {
                var navigation = new Navigation({
                   el: this.selector('nav')
                });
 
                return navigation;
             },
-            handlers: [
-               {
-                  event: 'navigate:settings',
-                  callback: function(url) {
-                     this.navigate('settings', {
-                        trigger: false
-                     });
+            events: {
+               'navigate:settings': function(url) {
+                  this.navigate('settings', {
+                     trigger: false
+                  });
 
-                     this.showSettings();
-                  }
-               }, {
-                  event: 'navigate:sign-out',
-                  callback: function(url) {
-                     Service.get('User.Singout', {}, {
-                        success: function(result) {
-                           window.location.reload();
-                        }.bind(this)
-                     });
-                  }
+                  // Отобразим интерфейс настроек пользователя
+                  this.showSettings();
+               },
+               'navigate:sign-out': function() {
+                  Service.get('User.Singout', {}, {
+                     success: function(result) {
+                        window.location.reload();
+                     }.bind(this)
+                  });
                }
-            ]
+            }
+         },
+
+         // Сетка дней
+         days: {
+            fastCreate: true,
+            include: ['Pages/Years/Days'],
+            callback: function(Days) {
+               return new Days({
+                  el: this.selector('days')
+               });
+            },
+            events: {
+               'clickDay': function(data) {
+                  this.childs.formEditDay.setModel(this.findDay(data.date));
+               }
+            }
+         },
+
+         /**
+          * Форма редактирования дня
+          */
+         formEditDay: {
+            fastCreate: true,
+            include: ['Pages/Years/FormEditDay'],
+            callback: function(FormEditDay) {
+               return new FormEditDay({
+                  el: this.selector('formEditDay'),
+                  model: this.findDay()
+               });
+            }
+         },
+
+         /**
+          * Пользовательские настройки
+          */
+         settings: {
+            include: ['Pages/Years/Settings'],
+            callback: function(Settings) {
+               var settings = new Settings({
+                  el: '.content>.center>.settings'
+               });
+
+               return settings;
+            },
+            events: {
+               'hide': function() {
+                  this.elementDataShow('days', true);
+                  this.elementDataShow('formEditDay', true);
+                  this.navigate(null, {
+                     trigger: false
+                  });
+               }
+            }
          }
       },
 
       /**
        * @param {Object} options
        */
-      initialize: function(options) {
-         View.prototype.initialize.apply(this, arguments);
-
-         // Создадим панель навигации
-         this.child('navigation');
-
-         // Создать область с данными дней
-         this.createDays();
-
-         // Создать форму редактирования дня
-         this.createFormEditDay();
-      },
-
-      /**
-       * Создать область с данными дней
-       */
-      createDays: function() {
-         if (!this.days) {
-            this.days = new Days({
-               el: this.selector('days')
-            });
-         }
-      },
-
-      /**
-       * Создать форму редактирования дня
-       */
-      createFormEditDay: function() {
-         if (!this.formEditDay) {
-            this.formEditDay = new FormEditDay({
-               el: this.selector('formEditDay')
-            });
-         }
-      },
-
-      /**
-       * Создать панель с настройками пользователя
-       * @param {Function}
-       */
-      createSettings: function(callback) {
-         if (!this.settings) {
-            requirejs(['Pages/Years/Settings'], function(Settings) {
-               var $settings = $('<div />', {
-                  class: 'settings',
-                  attr: {
-                     'data-show': false
-                  }
-               });
-
-               this.$(this.selector('contentCenter')).append($settings);
-
-               this.settings = new Settings({
-                  el: $settings
-               });
-
-               this.listenTo(this.settings, 'hide', function() {
-                  this.$elementDataShow('days', true);
-                  this.$elementDataShow('formEditDay', true);
-                  this.navigate(null, {
-                     trigger: false
-                  });
-               });
-
-               if (callback instanceof Function) {
-                  callback.call(this, this.settings);
-               }
-            }.bind(this));
-         }
-      },
-
-      /**
-       * Отобразить панель с настройками
-       */
-      _showSetting: function(settings) {
-         if (settings) {
-            settings.dataShow(true);
-            this.$elementDataShow('days', false);
-            this.$elementDataShow('formEditDay', false);
-         }
+      _init: function(options) {
+         // Создадим и подключим необходимые дочерние компоненты
+         this.fastCreateChilds();
       },
 
       /**
        * Создать и отобразить панель с настройками пользователя
        */
       showSettings: function() {
-         // Создадим панель
-         this.createSettings(this._showSetting);
+         this.child('settings', function(settings) {
+            settings.dataShow(true);
 
-         // Если уже создали
-         this._showSetting(this.settings);
+            this.child('days', function(days) {
+               days.dataShow(false);
+            });
+
+            this.child('formEditDay', function(formEditDay) {
+               formEditDay.dataShow(false)
+            });
+         });
+      },
+
+      /**
+       * Найти модель дня, по dateSQL
+       * если она будет не найдена
+       * то создадим ее
+       * @param {String|Date} date
+       * @return {Day.Model}
+       */
+      findDay: function(date) {
+         var toSQL = days.model.prototype.dateSQL;
+         var dateSQL = _.isDate(date) ? toSQL(date) : date;
+         var day = days.findWhere({
+            dateSQL: dateSQL ? dateSQL : toSQL(new Date())
+         });
+
+         // Если не нашли создадим новую и добавим в коллекцию
+         if (!day) {
+            day = new days.model({
+               date: date ? new Date(date) : new Date()
+            }, {
+               parse: true
+            });
+
+            // Запишим модель в базу
+            day.save();
+
+            // Добавим в коллекцию
+            days.add(day);
+         }
+
+         return day;
       }
    });
 });

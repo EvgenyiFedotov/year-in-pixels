@@ -20,11 +20,12 @@
       - indexDay = 0;
       .markers-days
          while indexDay < 31
-            - date = [year, monthIndex + 1, indexDay + 1].join('-');
-            if day
-               .marker-day(title=date, data-date=date)
-            else
-               .marker-day(title=date, data-date=date)
+            - var date = arrToDateSQL([year, monthIndex + 1, indexDay + 1]);
+            - var day = yearDays[date] || {};
+            .marker-day(
+            title=date + '\n' + (day.note || ''),
+            data-date=date,
+            style=(day.style || ''))
 
             - indexDay++;
       - monthIndex++;
