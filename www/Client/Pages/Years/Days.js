@@ -6,8 +6,6 @@ define([
 ], function(View, template, days) {
    'use strict';
 
-   console.log(days);
-
    return View.extend({
       className: 'days',
 
