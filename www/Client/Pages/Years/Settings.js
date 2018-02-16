@@ -2,13 +2,14 @@ define([
    'Core/View',
    'jade!Pages/Years/Settings/Template',
    'Pages/Years/Data/statuses',
+   'Pages/Years/Data/statusesAll',
    'Views/List',
    'jade!Pages/Years/Settings/StatusDay',
    'Views/Informer',
    'Core/Service',
    'css!Pages/Years/Settings/Style',
    'css!Pages/Years/StatusDay/Style'
-], function(View, template, statuses, List, tStatusDay, Informer, Service) {
+], function(View, template, statuses, statusesAll, List, tStatusDay, Informer, Service) {
    'use strict';
 
    return View.extend({
@@ -143,6 +144,7 @@ define([
                         // Добавим модель в коллекцию
                         if (isNew) {
                            statuses.add(model);
+                           statusesAll.add(model);
                         }
                      },
                      error: function(model, options, res) {
