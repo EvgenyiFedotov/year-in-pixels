@@ -25,10 +25,16 @@
        * Создать / записать модель дня
        */
       public function create($query) {
+         $user_id = $_SESSION["user"]["id"];
+
+         if (!isset($user_id)) {
+            $user_id = $data["user_id"];
+         }
+
          // Настройка данных
          $data = $query->data();
          $data = [
-            "user_id" => $data["user_id"] || $_SESSION["user"]["id"],
+            "user_id" => $user_id,
             "date" => $data["dateSQL"],
             "status_id" => $data["status_id"],
             "note" => $data["note"]
