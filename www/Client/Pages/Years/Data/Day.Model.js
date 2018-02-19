@@ -1,7 +1,8 @@
 define([
    'Core/Model',
-   'Pages/Years/Data/StatusesAll'
-], function(Model, statusesAll) {
+   'Pages/Years/Data/Statuses',
+   'Pages/Years/Data/StatusesIsDelete'
+], function(Model, statuses, statusesIsDelete) {
    'use strict';
 
    return Model.extend({
@@ -74,7 +75,10 @@ define([
        * @return {Status.Model}
        */
       status: function() {
-         return statusesAll.get(this.get('status_id'));
+         var status_id = this.get('status_id');
+
+         return statuses.get(status_id)
+            || statusesIsDelete.get(status_id);
       },
 
       /**

@@ -26,6 +26,12 @@ define([
          note: '',
 
          /**
+          * Удален ли статус
+          * @config {Boolean}
+          */
+         is_delete: false,
+
+         /**
           * Стиль маркера
           * @config {String}
           */
@@ -43,6 +49,7 @@ define([
        */
       parse: function(params) {
          params.styleMarker = this.styleMarker(params.color, true);
+         params.is_delete = params.is_delete === false || params.is_delete === '1';
          return params;
       },
 

@@ -24,7 +24,7 @@
             }
 
             return $connect->select("statuses", [
-               "id", "color", "note"
+               "id", "color", "note", "is_delete"
             ], $where);
          } else {
             $this->error();
