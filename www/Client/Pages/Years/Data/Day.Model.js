@@ -1,6 +1,6 @@
 define([
    'Core/Model',
-   'Pages/Years/Data/statusesAll'
+   'Pages/Years/Data/StatusesAll'
 ], function(Model, statusesAll) {
    'use strict';
 

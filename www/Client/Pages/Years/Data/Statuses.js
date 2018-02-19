@@ -7,6 +7,8 @@ define([
       parse: true
    });
 
+   console.log(window.statuses);
+
    if (window.statuses) {
       delete window.statuses;
    }

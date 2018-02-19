@@ -2,7 +2,7 @@ define([
    'Core/Form',
    'jade!Pages/Years/FormEditDay/Template',
    'Pages/Years/Data/Day.Model',
-   'Pages/Years/Data/statuses',
+   'Pages/Years/Data/Statuses',
    'jade!Pages/Years/StatusDay/Template',
    'theme!css!Pages/Years/FormEditDay/Style'
 ], function(Form, template, DayModel, statuses, tStatusDay) {

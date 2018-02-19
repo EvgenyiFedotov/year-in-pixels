@@ -1,8 +1,8 @@
 define([
    'Core/View',
    'jade!Pages/Years/Settings/Template',
-   'Pages/Years/Data/statuses',
-   'Pages/Years/Data/statusesAll',
+   'Pages/Years/Data/Statuses',
+   'Pages/Years/Data/StatusesAll',
    'Views/List',
    'jade!Pages/Years/Settings/StatusDay',
    'Views/Informer',
