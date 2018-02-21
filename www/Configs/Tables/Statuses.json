@@ -1,0 +1,10 @@
+{
+   "name": "statuses",
+   "columns": {
+      "id": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
+      "user_id": "INT NOT NULL, FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)",
+      "color": "VARCHAR(255)",
+      "note": "VARCHAR(255)",
+      "is_delete": "BIT DEFAULT 0"
+   }
+}

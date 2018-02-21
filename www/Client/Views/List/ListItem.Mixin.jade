@@ -1,0 +1,9 @@
+mixin listItem(item, index, params)
+   .item(class=(params.classNameItem || ''))&attributes((item.attrs instanceof Function ? item.attrs() : item.attrs) || {})
+      //- Вставим сразу переданный контент, если так есть
+      !{item.content || ''}
+
+      //- Если передали шаблон итема
+      - var tItem = item.template !== undefined ? item.template : params.templateItem;
+      if tItem
+            !{tItem(item)}

@@ -1,7 +1,22 @@
-Options -Indexes
+Options All -Indexes
+
+# Клиент
 RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*(Client)(.*)$ /$1$2 [L,QSA]
 
-RewriteCond %{ENV:REDIRECT_FINISH} !^$
-RewriteRule ^ - [L]
+# Иконка
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*(favicon.ico)$ /$1 [L,QSA]
 
-RewriteRule ^(.*)$ / [E=FINISH:1,L]
+# Если попытаются зайти на файлы сервера
+RewriteRule ^(Configs|Service).*$ /index.php/ [NC,L]
+
+# Все остально перенаправляется на index
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php/$1 [NC,L,QSA]

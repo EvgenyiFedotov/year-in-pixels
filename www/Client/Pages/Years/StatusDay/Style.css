@@ -1,0 +1,7 @@
+.status-day {
+  display: flex;
+}
+.status-day .note {
+  width: 100%;
+  line-height: 1.5rem;
+}

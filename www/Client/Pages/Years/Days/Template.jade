@@ -1,0 +1,32 @@
+//- Названия месяцев
+.names-months.row
+   .name-month.marker-day-block
+   each name, index in nameMonths
+      .name-month.marker-day-block=name[0]
+
+//- Данные дней
+.content
+   - var indexDay = 0;
+
+   //- Номера дней
+   .numbers-days
+      while indexDay < 31
+         .number-day.marker-day-block=(indexDay + 1)
+         - indexDay++;
+
+   //- Сами данные дней
+   - var monthIndex = 0;
+   while monthIndex < 12
+      - indexDay = 0;
+      .markers-days
+         while indexDay < 31
+            - var date = arrToDateSQL([year, monthIndex + 1, indexDay + 1]);
+            - var day = yearDays[date] || {};
+            .marker-day(
+            title=date + '\n' + (day.note || ''),
+            data-date=date,
+            data-status-id=day.statusId,
+            style=(day.style || ''))
+
+            - indexDay++;
+      - monthIndex++;

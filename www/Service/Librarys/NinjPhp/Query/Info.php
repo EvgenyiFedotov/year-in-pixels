@@ -39,29 +39,16 @@
       }
 
       /**
-       * Получить путь относительно пути запроса
-       * @param {String} $host
+       * Получить путь до файла относительно пути запроса
        */
-      public function requestUrlByReferer($host) {
+      public function pathToFile() {
          $referer = $this->headers()["Referer"];
          $url = $this->requestUrl(true);
 
          $matches = [];
-         preg_match_all('/.*' . $host . '\/(.*)/', $referer, $matches);
+         preg_match_all('/.*' . $this->server()['HTTP_HOST'] . '\/(.*\/)/', $referer, $matches);
 
-         $pathinfo = pathinfo($matches[1][0]);
-
-         $dirname = $pathinfo["dirname"];
-
-         if (substr($matches[1][0], -1) === "/") {
-            $dirname .= "/" . $pathinfo["filename"];
-         }
-
-         if ($dirname) {
-            $url = str_replace($dirname . "/", "", $url);
-         }
-
-         return $url;
+         return str_replace($matches[1][0], "", $url);
       }
 
       /**
@@ -125,7 +112,8 @@
          if ($this->method("GET")) {
             $data = $_GET;
          } else {
-            parse_str(file_get_contents('php://input', false , null, -1 , $_SERVER['CONTENT_LENGTH'] ), $data);
+            // parse_str(file_get_contents('php://input', false , null, -1 , $_SERVER['CONTENT_LENGTH']), $data);
+            $data = json_decode(file_get_contents('php://input'));
          }
 
          return (array) $data;

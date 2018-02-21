@@ -15,6 +15,10 @@ html
 
       script(src="Client/Page/Config.js")
 
+      //- Настройка темы
+      if $theme
+         script !{"config.theme = '" . $theme . "';"}
+
       //- Блок вставки кода ДО загрускии requirejs
       block headBefore
 
@@ -23,13 +27,10 @@ html
       //- Блок вставки кода ПОСЛЕ загрускии requirejs
       block headAfter
 
+      // Данные о днях
+      if $loadParams
+         each $data, $key in $loadParams
+            script !{"window." . $key . " = " . json_encode($data) . ";"}
+
    body(style="visibility: hidden; overflow: hidden;")
-      block bodyBeforeContent
-      .content
-         .content-top
-            block contentTop
-         .content-center
-            block contentCenter
-         .content-bottom
-            block contentBottom
-      block bodyAfterContent
+      block body

@@ -1,0 +1,57 @@
+@import "../Colors";
+@import "../Fonts";
+@import "Button";
+
+@boder-radius: 3px;
+
+.input-block() {
+   .font-encode-sans();
+   height: 2rem;
+   padding: 0 .5rem;
+   font-size: 1rem;
+   background-color: @color-background;
+   border-radius: @boder-radius;
+   color: @color-input-text;
+   border: 1px solid @color-input-border;
+}
+
+.input-text() {
+   .input-block();
+   width: 100%;
+}
+
+.Inputs() {
+   input[type="text"] {
+      .input-text();
+   }
+
+   input[type="password"] {
+      .input-text();
+   }
+
+   textarea {
+      .input-text();
+      min-width: 100%;
+      max-width: 100%;
+   }
+
+   input[type="button"] {
+      .button();
+   }
+
+   ::-webkit-input-placeholder {
+      color: @color-label;
+   }
+   
+   ::-moz-placeholder {
+      color: @color-label;
+   }
+   
+   :-ms-input-placeholder {
+      color: @color-label;
+   }
+   
+   :-moz-placeholder {
+      color: @color-label;
+   }
+}

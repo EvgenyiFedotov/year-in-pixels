@@ -5,7 +5,9 @@
       "resp": "Service/Responses",
       "Object": "Service/Objects",
       "PObject": "Service/Objects/Protected",
-      "NinjPhp": "Service/Librarys/NinjPhp"
+      "NinjPhp": "Service/Librarys/NinjPhp",
+      "PathConv": "Service/Librarys/Path-converter/src",
+      "Minify": "Service/Librarys/Minify/src"
    },
    "modules": {
       "data-base": {
@@ -34,6 +36,15 @@
          "include": [
             "Libs/Lessphp/lessc.inc.php",
             "Service/Core/LessCSS.php"
+         ]
+      },
+      "min": {
+         "include": [
+            "PathConv/ConverterInterface.php",
+            "PathConv/Converter.php",
+            "Minify/Minify.php",
+            "Minify/CSS.php",
+            "Minify/JS.php"
          ]
       }
    }

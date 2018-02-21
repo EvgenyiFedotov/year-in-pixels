@@ -2,8 +2,9 @@
    "name": "days",
    "columns": {
       "id": "INT NOT NULL PRIMARY KEY AUTO_INCREMENT",
-      "login": "VARCHAR(255) NOT NULL",
-      "date": "TIMESTAMP NOT NULL",
-      "status": "INT NOT NULL"
+      "user_id": "INT NOT NULL, FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)",
+      "date": "TIMESTAMP NOT NULL, UNIQUE `data_index` (`date`, `user_id`)",
+      "status_id": "INT DEFAULT NULL",
+      "note": "VARCHAR(255) NOT NULL"
    }
 }

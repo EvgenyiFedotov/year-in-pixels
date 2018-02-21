@@ -1,115 +1,29 @@
-@import "Page/Themes/Main/Colors";
-
-.block() {
-   width: 1.5rem;
-   height: 1.5rem;
-   text-align: center;
-   box-sizing: border-box;
-   cursor: pointer;
-}
-
-.block-color {
-   .block();
-   border-radius: 2px;
-   border: 1px solid @color-border;
-
-   &:hover {
-      border-color: @color-hover;
-      background-color: @color-hover;
-   }
-}
+@content-column: 23.38rem;
 
 body {
-   & > .content {
-      &[data-blur="true"] {
-         filter: blur(1px);
-      }
+   &>.content {
+      height: 100%;
+      margin: 0 auto;
 
-      .block-null {
-         .block();
-      }
-
-      .content-top {
-         margin-bottom: 1rem;
-
+      &>.top {
          .name-project {
             text-align: left;
          }
-
-         .buttons {
-            display: flex;
-            padding-top: 2rem;
-            height: 1rem;
-            margin-top: 0.3rem;
-
-            .button {
-               color: @color-text;
-               font-size: 1rem;
-               margin-left: 1rem;
-               cursor: pointer;
-
-               &:hover {
-                  text-decoration: underline;
-               }
-            }
-         }
       }
 
-      .content-center {
-         width: 23.38rem;
+      &>.center {
+         width: @content-column * 2;
+         height: 100%;
 
-         .table {
-            overflow: hidden;
-            display: none;
-            flex-direction: column;
-
-            &[data-show="true"] {
-               display: flex;
-            }
-
-            .names-months {
-               display: flex;
-
-               .name-month {
-                  .block();
-                  margin-left: .3rem;
-               }
-            }
-
-            .days {
-               display: flex;
-               height: 100%;
-               overflow-y: auto;
-
-               .days-month {
-                  .day-number {
-                     .block();
-                     margin-right: .3rem;
-                     margin-bottom: .3rem;
-                     padding-top: .2rem;
-                  }
-
-                  .block-color {
-                     margin-right: .3rem;
-                     margin-bottom: .3rem;
-                  }
-               }
-            }
+         // Данные дней
+         .days {
+            width: @content-column;
          }
 
-         .palette {
+         // Форма редактирования дня
+         .form-edit-day {
             margin-left: 1rem;
-            padding-top: 1.7rem;
-
-            .palette-item {
-               cursor: pointer;
-               display: flex;
-               margin-bottom: 1.5rem;
-
-               .note {
-                  line-height: 1.5rem;
-               }
-            }
+            width: @content-column - 1rem;
          }
       }
    }

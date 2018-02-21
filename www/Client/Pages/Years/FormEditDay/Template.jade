@@ -1,0 +1,42 @@
+include ../StatusDay/Template.Mixin.jade
+
+
+- var dateText = (model ? model.get('date') : new Date()).toLocaleDateString();
+- var status = model ? model.status() : {};
+- var dayNote = model ? model.get('note') : '';
+
+//- Дата
+.date.row
+   .header="Date"
+   .text=dateText
+
+//- Статус дня
+.status.row
+   .header="Status"
+   .status-block.row
+      span.row
+         +statusDay(
+         status ? status.get('note') : '',
+         status ? status.get('styleMarker') : '', {
+            isRevert: true
+         })
+
+//- Описание дня
+.note
+   .top.row
+      .header="Note"
+      .button(data-type="link", data-name="edit")="Edit"
+      .button(data-type="link", data-name="save", data-show="false")="Save"
+   .text=dayNote
+   textarea(
+   placeholder="Note",
+   data-show="false",
+   data-name="note",
+   data-is-field="true")=dayNote
+
+//- События дня
+//- .events
+   .top.row
+      .header="Events"
+      .button(data-type="link", data-name="add")="Add"
+   .null.comment="No events for the selected date"

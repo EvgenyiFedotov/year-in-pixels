@@ -1,0 +1,40 @@
+@import "Colors";
+@import "Views/Button";
+@import "Views/Inputs";
+@import "Views/Menu";
+
+.Views() {
+   // Кнопка
+   .Button();
+
+   // Поля ввода
+   .Inputs();
+
+   // Меню
+   .Menu();
+
+   // Метка
+   .label {
+      display: inline-block;
+      color: @color-label;
+      margin-right: 1rem;
+      cursor: default;
+   
+      &[data-side="right"] {
+         margin-left: 0rem;
+         margin-left: 1rem;
+      }
+   }
+   
+   // Комментарий
+   .comment {
+      color: @color-label;
+      font-size: .8rem;
+      font-style: italic;
+   }
+
+   // Форма
+   .form {
+      background-color: @color-background;
+   }
+}

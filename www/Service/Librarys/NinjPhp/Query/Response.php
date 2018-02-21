@@ -39,11 +39,11 @@
       /**
        * Отправить server-status
        * @param {Integer} [$status]
-       * @param {String} [$message]
+       * @param {String|Boolean} [$message]
        */
       public function status($status = 503, $message = null) {
          // Если не передали сообщение, поставим дефолтное
-         if (!$message) {
+         if (!$message || is_bool($message)) {
             $message = $this->statusList[$status];
          }
 

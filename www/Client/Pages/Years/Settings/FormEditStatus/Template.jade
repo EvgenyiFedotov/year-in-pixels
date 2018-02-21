@@ -1,0 +1,15 @@
+.content.row
+   .marker-day(
+      data-name="color",
+      data-is-field="true"
+      style=(model ? model.get('styleMarker') : '')
+   )
+   input(
+      value=(model ? model.get('note') : ''),
+      type="text",
+      placeholder="Note status",
+      data-name="note",
+      data-is-field="true"
+   )
+   .button(data-type="link", data-name="save")="Save"
+   .button(data-type="link", data-name="close")="Close"

@@ -1,0 +1,29 @@
+//- Блок основных настроек
+.main.settings-block
+   .top.row
+      .header="Settings"
+      .button(data-type="link", data-name="close")="Close"
+   .content.row
+      .labels.column
+         .row
+            .label="Login"
+         .row
+            .label="Theme"
+         .row
+            .label="Password"
+      .column
+         .row
+            .value="@" + model.get("login")
+         .row
+            .button(data-type="link", data-name="change-theme")=model.get("theme")
+         .row
+            .button(data-type="link", data-name="change-password")
+               !{"&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"}
+
+//- Настройки статусов
+.statuses.settings-block
+   .top.row
+      .header="Statuses"
+      .button(data-type="link", data-name="add")="Add"
+   .form-edit-status
+   .list

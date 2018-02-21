@@ -1,0 +1,32 @@
+@day-marker-line-height: 1.5rem;
+@day-marker-margin-right-bottom: .3rem;
+
+.days-day-block {
+   margin-right: @day-marker-margin-right-bottom;
+   margin-bottom: @day-marker-margin-right-bottom;
+   line-height: @day-marker-line-height;
+}
+
+.days {
+   overflow: hidden;
+
+   .name-month {
+      .days-day-block();
+   }
+
+   .content {
+      display: flex;
+      width: 106%;
+      height: calc(~"100% - (@{day-marker-line-height} + @{day-marker-margin-right-bottom})");
+      overflow-x: hidden;
+      overflow-y: scroll;
+
+      .number-day {
+         .days-day-block();
+      }
+
+      .marker-day {
+         .days-day-block();
+      }
+   }
+}

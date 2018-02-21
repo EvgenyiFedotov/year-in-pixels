@@ -1,0 +1,76 @@
+@import "Fonts";
+@import "Colors";
+@import "Views";
+@import "Grid";
+
+.html-body() {
+   .font-encode-sans();
+   height: 100%;
+   overflow: hidden;
+   color: @color-text;
+}
+
+.Style() {
+   * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+   }
+   
+   html {
+      .html-body();
+      background-color: @color-background;
+   }
+   
+   body {
+      .html-body();
+      display: flex;
+      flex-direction: column;
+
+      .name-project {
+         width: 100%;
+         cursor: default;
+         font-size: 2rem;
+         color: @color-text;
+         padding: 2rem 0;
+         text-align: center;
+      }
+   }
+   
+   // selection
+   .selection() {
+      background-color: @color-text;
+      color: @color-background;
+   }
+
+   ::selection {
+      .selection();
+   }
+
+   ::-moz-selection {
+      .selection();
+   }
+
+   // Добавим в общие стили, слити представлений
+   .Views();
+
+   // Добавим в общие стили, слити сетки
+   .Grid();
+
+   // Обрезать строку, поставить троеточие
+   .line-ellipsis {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
+
+   // Видимость
+   [data-show="false"] {
+      display: none;
+   }
+
+   // Размытие
+   &[data-blur="true"] {
+      filter: blur(1px);
+   }
+}

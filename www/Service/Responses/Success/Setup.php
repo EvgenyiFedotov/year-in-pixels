@@ -25,7 +25,12 @@
             echo "Table: " . $table->name . "</br>";
 
             $connect->query($table->sqlDrop());
+
+            // Создать таблицу
             $connect->query($table->sqlCreate());
+
+            // Добавить столбцы
+            $connect->query($table->sqlColumnsAdd());
          }
 
          exit;

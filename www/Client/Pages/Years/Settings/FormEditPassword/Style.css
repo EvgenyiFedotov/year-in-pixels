@@ -1,0 +1,19 @@
+.panel-edit-password {
+  width: 15rem;
+  padding: 1rem 1rem 0 1rem;
+}
+.panel-edit-password input {
+  margin-bottom: 1rem;
+}
+.panel-edit-password .buttons {
+  display: flex;
+}
+.panel-edit-password .buttons input {
+  width: 100%;
+}
+.panel-edit-password .buttons input[data-name="cancel"] {
+  margin-right: .5rem;
+}
+.panel-edit-password .buttons input[data-name="save"] {
+  margin-left: .5rem;
+}

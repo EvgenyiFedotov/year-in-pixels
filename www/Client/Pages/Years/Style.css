@@ -1,97 +1,18 @@
-.block-color {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  border-radius: 2px;
-  border: 1px solid #eeeeee;
+body>.content {
+  height: 100%;
+  margin: 0 auto;
 }
-.block-color:hover {
-  border-color: #e0e0e0;
-  background-color: #e0e0e0;
-}
-body > .content[data-blur="true"] {
-  filter: blur(1px);
-}
-body > .content .block-null {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-body > .content .content-top {
-  margin-bottom: 1rem;
-}
-body > .content .content-top .name-project {
+body>.content>.top .name-project {
   text-align: left;
 }
-body > .content .content-top .buttons {
-  display: flex;
-  padding-top: 2rem;
-  height: 1rem;
-  margin-top: 0.3rem;
+body>.content>.center {
+  width: 46.76rem;
+  height: 100%;
 }
-body > .content .content-top .buttons .button {
-  color: #757575;
-  font-size: 1rem;
-  margin-left: 1rem;
-  cursor: pointer;
-}
-body > .content .content-top .buttons .button:hover {
-  text-decoration: underline;
-}
-body > .content .content-center {
+body>.content>.center .days {
   width: 23.38rem;
 }
-body > .content .content-center .table {
-  overflow: hidden;
-  display: none;
-  flex-direction: column;
-}
-body > .content .content-center .table[data-show="true"] {
-  display: flex;
-}
-body > .content .content-center .table .names-months {
-  display: flex;
-}
-body > .content .content-center .table .names-months .name-month {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  margin-left: .3rem;
-}
-body > .content .content-center .table .days {
-  display: flex;
-  height: 100%;
-  overflow-y: auto;
-}
-body > .content .content-center .table .days .days-month .day-number {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  margin-right: .3rem;
-  margin-bottom: .3rem;
-  padding-top: .2rem;
-}
-body > .content .content-center .table .days .days-month .block-color {
-  margin-right: .3rem;
-  margin-bottom: .3rem;
-}
-body > .content .content-center .palette {
+body>.content>.center .form-edit-day {
   margin-left: 1rem;
-  padding-top: 1.7rem;
-}
-body > .content .content-center .palette .palette-item {
-  cursor: pointer;
-  display: flex;
-  margin-bottom: 1.5rem;
-}
-body > .content .content-center .palette .palette-item .note {
-  line-height: 1.5rem;
+  width: 22.38rem;
 }

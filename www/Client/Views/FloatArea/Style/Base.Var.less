@@ -1,0 +1,19 @@
+.FloatArea() {
+   @keyframes example {
+      from {
+         opacity: 0;
+      }
+      to {
+         opacity: 1;
+      }
+   }
+
+   .float-area {
+      position: fixed;
+      background-color: @color-background;
+   
+      &[data-shadow="true"] {
+         box-shadow: 0 0 1.5rem @color-shadow;
+      }
+   }
+}

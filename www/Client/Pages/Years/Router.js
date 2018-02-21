@@ -1,29 +1,22 @@
+var year;
+
 define([
-   'Pages/Years/View',
-   'css!Pages/Years/Style'
+   'Pages/Years'
 ], function (Year) {
    'use strict';
 
-   var year = new Year({
+   year = new Year({
       el: $('body')
    });
 
    var Router = Backbone.Router.extend({
       routes: {
-         'date=:date': 'date',
-         'palette': 'palette',
-         'menu': 'menu',
          'settings': 'settings'
       },
-      date: function(date) {
-         year.$('.block-color[data-date="' + date + '"]').click();
-      },
-      palette: function() {
-         year.$('.button[name="palette"]').click();
-      },
-      menu: function() {
-         year.showMenu();
-      },
+
+      /**
+       * Открыть сразу настройки
+       */
       settings: function() {
          year.showSettings();
       }

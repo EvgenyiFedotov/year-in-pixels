@@ -8,6 +8,12 @@
       protected function setupConfig($params = []) {
          // Преобразуем настройки столбцов в массив
          $this->columns = (array) $this->columns;
+
+         /**
+          * Преобразуем настройки дополнительных столбцов в массив
+          * Такие могу пригодится для дополнительной настроки таблицы
+          */
+         $this->columnsAdd = (array) $this->columnsAdd;
       }
 
       /**
@@ -16,11 +22,7 @@
       public function sqlCreate() {
          if (count($this->columns)) {
             $sql = "CREATE TABLE " . $this->name . " (";
-
-            $columns = array_map(function($configColumn, $nameColumn) {
-               return "`" . $nameColumn . "` " . $configColumn;
-            }, $this->columns, array_keys($this->columns));
-
+            $columns = $this->columnsByStrings($this->columns);
             $sql .= join(", ", $columns) . ")";
          }
 
@@ -30,8 +32,33 @@
       /**
        * Получить sql удаления таблицы
        */
-      function sqlDrop() {
+      public function sqlDrop() {
          return "DROP TABLE " . $this->name;
+      }
+
+      /**
+       * Получить sql добавления столбцов
+       */
+      public function sqlColumnsAdd() {
+         if (count($this->columnsAdd)) {
+            $sql = "ALTER TABLE " . $this->name . " ADD ";
+            $sql .= join(", ", $this->columnsByStrings($this->columnsAdd));
+         }
+
+         return $sql;
+      }
+
+      /**
+       * Получить столбцы по строкам
+       * @param {Array} $columns
+       * @return {Array.<String>}
+       */
+      public function columnsByStrings($columns) {
+         if (count($columns)) {
+            return array_map(function($configColumn, $nameColumn) {
+               return "`" . $nameColumn . "` " . $configColumn;
+            }, $columns, array_keys($columns));
+         }
       }
    }
 ?>
