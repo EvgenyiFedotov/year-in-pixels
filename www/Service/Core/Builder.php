@@ -209,7 +209,7 @@
          $this->cloneFolder(
             $this->pathFrom,
             $this->pathIn,
-            $this->extentions,
+            $this->exceptions,
             $this->includes,
             $this->handlerContent
          );

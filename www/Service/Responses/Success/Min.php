@@ -13,23 +13,27 @@
          $require->includeFiles(["min", "Core/Builder.php"]);
 
          // Корень директории из которой переносим файлы
-         $pathFrom = "Client";
+         $pathFrom = ".";
 
          // Корень директории в которую переносим файлы
-         $pathIn = "Client/min";
+         $pathIn = "../build";
 
          // Иссключения (Передаются как регулярные выражения)
          $exceptions = [
-            "Librarys", ".*\.phtml", ".*\.less"
+            "Client\/Librarys",
+            ".*\.phtml",
+            ".*\.less",
+            "Service\/Librarys"
          ];
 
          // Включения (Передаются как регулярные выражения)
          $includes = [
-            "Librarys/Require/Plugins",
-            "Librarys/Require/Plugins/Css/css.js",
-            "Librarys/jQuery/jquery.js",
-            "Librarys/Underscore/underscore.js",
-            "Librarys/Backbone/backbone.js"
+            "Client/Librarys/Require/Plugins",
+            "Client/Librarys/Require/Plugins/Css/css.js",
+            "Client/Librarys/jQuery/jquery.js",
+            "Client/Librarys/Underscore/underscore.js",
+            "Client/Librarys/Backbone/backbone.js",
+            "Service/Librarys"
          ];
 
          /**
@@ -58,8 +62,8 @@
          $action = $data["action"];
 
          $builder = new Builder([
-            "pathFrom" => "Client",
-            "pathIn" => "Client/min",
+            "pathFrom" => $pathFrom,
+            "pathIn" => $pathIn,
             "exceptions" => $exceptions,
             "includes" => $includes,
             "handlerContent" => $handlerContent
