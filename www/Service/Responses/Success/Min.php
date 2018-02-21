@@ -8,9 +8,7 @@
       "route" => "min",
       "type" => "success",
       "priority" => 900,
-      "handler" => function($require) {
-         echo "<b>Min</b></br></br>";
-
+      "handler" => function($require, $route, $configRoute, $query) {
          /**
           * Проверить является ли путь исключением
           * @param {String} $path
@@ -58,7 +56,6 @@
             $extension = $pathInfo["extension"];
 
             if ($extension === "js") {
-               echo "!!!!";
                $minifier = new Minify\JS();
                $minifier->add($content);
                $content = $minifier->minify();
@@ -71,14 +68,140 @@
             file_put_contents($pathIn, $content);
          };
 
+         /**
+          * Копировать дирректорию
+          * 
+          * @param {String} $pathFrom
+          * @param {String} $pathIn
+          * @param {Array.<String>} [$exceptions] (Передаются как регулярные выражения)
+          * @param {Array.<String>} [$includes] (Передаются как регулярные выражения)
+          */
+         function cloneFolder($require, $pathFrom, $pathIn, $exceptions = [], $includes = []) {
+            // Пути до файлов и дирректорий
+            $paths = $require->pathFilesDir($pathFrom, true);
+
+            // Создадим корневую папку минимизированных файлов
+            if (!file_exists($pathIn)) {
+               mkdir($pathIn);
+            }
+
+            echo "<b>Clone:</b></br>";
+            echo "<b><i>Folders:</i></b></br>";
+
+            // Склонируем папки в минимальную версию
+            foreach ($paths["dirs"] as $key => $path) {
+               // Узнаем иссключение или нет
+               $isException = isExceptionPath($path, $exceptions);
+
+               // Если не является исключением, копируем
+               if ($isException === false) {
+                  $pathMin = toPathMin($pathIn, $path);
+                  echo $pathMin . "</br>";
+
+                  if (!file_exists($pathMin)) {
+                     mkdir($pathMin);
+                  }
+               }
+            }
+
+            echo "</br><b><i>Folders includes:</i></b></br>";
+
+            // Скопируем папки (Включения)
+            foreach ($includes as $index => $path) {
+               $pathArr = explode("/", $path);
+               $pathCheckDir = $pathFrom;
+               $pathMin = $pathIn;
+
+               foreach ($pathArr as $indexPathEl => $pathEl) {
+                  $pathMin .= "/" . $pathEl;
+                  $pathCheckDir .= "/" . $pathEl;
+
+                  if (is_dir($pathCheckDir)) {
+                     echo $pathMin . "</br>";
+
+                     if (!file_exists($pathMin)) {
+                        mkdir($pathMin);
+                     }
+                  }
+               }
+            }
+
+            echo "</br>";
+            echo "<b><i>Files:</i></b></br>";
+
+            // Скопируем файлы в минимальную версию
+            foreach ($paths["files"] as $index => $path) {
+               // Узнаем иссключение или нет
+               $isException = isExceptionPath($path, $exceptions);
+
+               // Если не является исключением, копируем
+               if ($isException === false) {
+                  $pathMin = toPathMin($pathIn, $path);
+
+                  copyFile($path, $pathMin);
+
+                  echo $pathMin . "</br>";
+               }
+            }
+
+            echo "</br><b><i>Files includes:</i></b></br>";
+
+            // Скопируем файлы в минимальную версию (Включения)
+            foreach ($includes as $index => $path) {
+               /**
+                * Если передали путь до дирректории, значит копируем все файлы внутри,
+                * но не рекурсивно
+                */
+               if (is_dir($pathFrom . "/" . $path)) {
+                  $files = $require->pathFilesDir($pathFrom . "/" . $path);
+                  $files = $files["files"];
+
+                  foreach ($files as $indFile => $pathFile) {
+                     $pathMin = toPathMin($pathIn, $pathFile);
+
+                     copyFile($pathFile, $pathMin);
+
+                     echo $pathMin . "</br>";
+                  }
+               } else {
+                  $path = $pathFrom . "/" . $path;
+                  $pathMin = toPathMin($pathIn, $path);
+
+                  copyFile($path, $pathMin);
+
+                  echo $pathMin . "</br>";
+               }
+            }
+         };
+
+         /**
+          * Удалить дирректорию
+          * @param {String} $path
+          */
+         function removeFolder($require, $path) {
+            $paths = $require->pathFilesDir($path);
+
+            // Удалим папки
+            foreach ($paths["dirs"] as $index => $pathDir) {
+               removeFolder($require, $pathDir);
+            }
+
+            // Удалим файлы
+            foreach ($paths["files"] as $index => $pathFile) {
+               unlink($pathFile);
+            }
+
+            rmdir($path);
+         };
+
          // Подключим файлы необходимые для минимзации файлов
          $require->includeFiles(["min"]);
 
          // Корень директории из которой переносим файлы
-         $rootFrom = "Client";
+         $pathFrom = "Client";
 
          // Корень директории в которую переносим файлы
-         $rootIn = "../Client.min";
+         $pathIn = "Client/min";
 
          // Иссключения (Передаются как регулярные выражения)
          $exceptions = [
@@ -87,73 +210,20 @@
 
          // Включения (Передаются как регулярные выражения)
          $includes = [
-            "Librarys/Require/Plugins"
+            "Librarys/Require/Plugins",
+            "Librarys/Require/Plugins/Css/css.js",
+            "Librarys/jQuery/jquery.js",
+            "Librarys/Underscore/underscore.js",
+            "Librarys/Backbone/backbone.js"
          ];
 
-         // Пути до файлов клиентской части
-         $paths = $require->pathFilesDir("Client", true);
+         $data = $query->data();
+         $action = $data["action"];
 
-         // Создадим корневую папку минимизированных файлов
-         if (!file_exists($rootIn)) {
-            mkdir($rootIn);
-         }
-
-         echo "<b>Folders:</b>";
-
-         // Склонируем папки в минимальную версию
-         foreach ($paths["dirs"] as $key => $path) {
-            // Узнаем иссключение или нет
-            $isException = isExceptionPath($path, $exceptions);
-
-            // Если не является исключением, копируем
-            if ($isException === false) {
-               $pathMin = toPathMin($rootIn, $path);
-               echo "</br>" . $pathMin;
-
-               if (!file_exists($pathMin)) {
-                  mkdir($pathMin);
-               }
-            }
-         }
-
-         // Скопируем папки (Включения)
-         foreach ($includes as $index => $path) {
-            $pathArr = explode("/", $path);
-            $pathMin = $rootIn;
-
-            foreach ($pathArr as $indexPathEl => $pathEl) {
-               $pathMin .= "/" . $pathEl;
-
-               echo "</br>" . $pathMin;
-
-               if (!file_exists($pathMin)) {
-                  mkdir($pathMin);
-               }
-            }
-         }
-
-         echo "</br></br>";
-         echo "<b>Files:</b></br>";
-
-         // Скопируем файлы в минимальную версию
-         foreach ($paths["files"] as $index => $path) {
-            // Узнаем иссключение или нет
-            $isException = isExceptionPath($path, $exceptions);
-
-            // Если не является исключением, копируем
-            if ($isException === false) {
-               echo $path . "</br>";
-            }
-         }
-
-         // Скопируем файлы в минимальную версию (Включения)
-         foreach ($includes as $index => $path) {
-            $files = $require->pathFilesDir($rootFrom . "/" . $path);
-            $files = $files["files"];
-
-            foreach ($files as $indFile => $pathFile) {
-               copyFile($pathFile, toPathMin($rootIn, $pathFile));
-            }
+         if ($action === "remove") {
+            removeFolder($require, $pathIn);
+         } elseif ($action === "clone") {
+            cloneFolder($require, $pathFrom, $pathIn, $exceptions, $includes);
          }
 
          exit;

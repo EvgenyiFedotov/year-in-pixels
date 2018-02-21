@@ -6,7 +6,7 @@
       "Object": "Service/Objects",
       "PObject": "Service/Objects/Protected",
       "NinjPhp": "Service/Librarys/NinjPhp",
-      "PathConv": "Service/Librarys/src",
+      "PathConv": "Service/Librarys/Path-converter/src",
       "Minify": "Service/Librarys/Minify/src"
    },
    "modules": {
