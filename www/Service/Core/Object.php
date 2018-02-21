@@ -53,7 +53,7 @@
             $data[$namePrimaryKey] = $connect->id();
             $query->response($data);
          } else {
-            $query->error(503, true);
+            $query->error(503, "Bad create record!");
          }
       }
 
@@ -76,7 +76,7 @@
          if ($result->rowCount()) {
             $query->response($data);
          } else {
-            $query->error(503, true);
+            $query->error(503, "Bad update record!");
          }
       }
    }

@@ -1,14 +1,15 @@
 define([
    'Core/View',
    'jade!Pages/Years/Settings/Template',
-   'Pages/Years/Data/statuses',
+   'Pages/Years/Data/Statuses',
+   'Pages/Years/Data/StatusesIsDelete',
    'Views/List',
    'jade!Pages/Years/Settings/StatusDay',
    'Views/Informer',
    'Core/Service',
    'css!Pages/Years/Settings/Style',
    'css!Pages/Years/StatusDay/Style'
-], function(View, template, statuses, List, tStatusDay, Informer, Service) {
+], function(View, template, statuses, statusesIsDelete, List, tStatusDay, Informer, Service) {
    'use strict';
 
    return View.extend({
@@ -27,8 +28,8 @@ define([
       events: {
          'click close': 'hide',
          'click .statuses .button[data-name="add"]': 'statusAdd',
-         'click buttonEditStatus': "_statusEdit",
-         'click buttonDeleteStatus': "_statusDelete"
+         'click buttonEditStatus': '_statusEdit',
+         'click buttonDeleteStatus': '_statusDelete'
       },
 
       /**
@@ -39,6 +40,7 @@ define([
           * Меню редактирования темы
           */
          themeMenu: {
+            fastCreate: true,
             include: ['Views/ButtonMenu'],
             callback: function(ButtonMenu) {
                var menu = new ButtonMenu({
@@ -83,6 +85,7 @@ define([
           * Форма редактирования пароля
           */
          buttonEditPassword: {
+            fastCreate: true,
             include: ['Views/ButtonArea'],
             callback: function(ButtonArea, callback) {
                this.child('formEditPassword', function(form) {
@@ -173,12 +176,6 @@ define([
             templateItem: tStatusDay,
             items: statuses
          });
-
-         // Создать кнопку смены темы
-         this.child('themeMenu');
-
-         // Создать кнопку смены пароля
-         this.child('buttonEditPassword');
       },
 
       /**
@@ -211,6 +208,10 @@ define([
          var model = statuses.get($button.data().id);
 
          if (model) {
+            // Добавим модель в коллецию удаленных
+            statusesIsDelete.add(model);
+
+            // Удалим модель в базе
             model.destroy({
                wait: true
             });

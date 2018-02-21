@@ -7,18 +7,25 @@
    class Statuses extends Object {
       /**
        * Получить список статусов
-       * @param {Number|String} userId
+       * @param {Number|String} $userId
+       * @param {Number|Boolean} $isDelete
+       *    Если укзали -1, то подгрузим все статусы
        */
-      public function listByUserId($userId) {
+      public function listByUserId($userId, $isDelete = 0) {
          if (is_int($userId) || is_string($userId)) {
             $connect = $this->connect();
 
+            $where = [
+               "user_id" => $userId
+            ];
+
+            if ($isDelete !== -1) {
+               $where["is_delete"] = $isDelete;
+            }
+
             return $connect->select("statuses", [
-               "id", "color", "note"
-            ], [
-               "user_id" => $userId,
-               "is_delete" => 0
-            ]);
+               "id", "color", "note", "is_delete"
+            ], $where);
          } else {
             $this->error();
          }

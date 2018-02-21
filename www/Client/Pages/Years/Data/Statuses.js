@@ -1,6 +1,6 @@
 define([
    'Pages/Years/Data/Status.Collection'
-], function(Statuses) {
+], function(Statuses, statuses) {
    'use strict';
 
    var statuses = new Statuses(window.statuses || [], {

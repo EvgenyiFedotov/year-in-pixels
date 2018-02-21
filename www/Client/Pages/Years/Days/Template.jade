@@ -25,6 +25,7 @@
             .marker-day(
             title=date + '\n' + (day.note || ''),
             data-date=date,
+            data-status-id=day.statusId,
             style=(day.style || ''))
 
             - indexDay++;

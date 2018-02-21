@@ -2,11 +2,10 @@ define([
    'Core/View',
    'jade!Pages/Years/Days/Template',
    'Pages/Years/Data/Days',
+   'Pages/Years/Data/Statuses',
    'css!Pages/Years/Days/Style'
-], function(View, template, days) {
+], function(View, template, days, statuses) {
    'use strict';
-
-   console.log(days);
 
    return View.extend({
       className: 'days',
@@ -44,6 +43,11 @@ define([
          this.listenToObject(days, {
             'change:status_id': '_changeStatusId'
          });
+
+         // Подпишимся на события коллекции всех статусов
+         this.listenToObject(statuses, {
+            'change:color': '_changeStatuscolor'
+         });
       },
 
       /**
@@ -66,7 +70,8 @@ define([
             if (status) {
                result[day.get('dateSQL')] = {
                   style: status.get('styleMarker'),
-                  note: status.get('note')
+                  note: status.get('note'),
+                  statusId: status.id
                };
             }
 
@@ -99,7 +104,19 @@ define([
        */
       _changeStatusId: function(model) {
          this.$('.content>.markers-days>.marker-day[data-date="' + model.get('dateSQL') + '"]')
-            .attr('style', model.status().get('styleMarker'));
+            .attr({
+               'style': model.status().get('styleMarker'),
+               'data-status-id': model.get('status_id')
+            });
+      },
+
+      /**
+       * Обработчик изменения цвета статуса в коллекции всех статусов
+       * @param {Status.Model} model
+       */
+      _changeStatuscolor: function(model) {
+         this.$('.content>.markers-days>.marker-day[data-status-id="' + model.id + '"]')
+            .attr('style', model.get('styleMarker'));
       }
    });
 });

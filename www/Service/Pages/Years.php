@@ -21,6 +21,10 @@
    $statuses = new Statuses();
    $loadParams["statuses"] = $statuses->listByUserId($dataUser["id"]);
 
+   // Загрузим удаленные статусы, которые были у пользователя, чтобы раскрасить весь год
+   // Пока сделаем так, когда рендеринг дней будет на сервере, это будет не нужно
+   $loadParams["statusesIsDelete"] = $statuses->listByUserId($dataUser["id"], 1);
+
    // Загрузим список дней
    $require->includeFiles(["Object/Days.php"]);
    $days = new Days();

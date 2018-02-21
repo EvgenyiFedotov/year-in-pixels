@@ -2,7 +2,7 @@ define([
    'Core/Form',
    'jade!Pages/Years/FormEditDay/Template',
    'Pages/Years/Data/Day.Model',
-   'Pages/Years/Data/statuses',
+   'Pages/Years/Data/Statuses',
    'jade!Pages/Years/StatusDay/Template',
    'theme!css!Pages/Years/FormEditDay/Style'
 ], function(Form, template, DayModel, statuses, tStatusDay) {
@@ -73,6 +73,16 @@ define([
       },
 
       /**
+       * @param {Object} params
+       */
+      _init: function(params) {
+         // Будем слушать коллекицю статусов
+         this.listenToObject(statuses, {
+            'change:color': '_statusChangeColor'
+         });
+      },
+
+      /**
        * Сменить видимость элементов редактирования описания
        * @param {Boolean} isEdit
        */
@@ -121,6 +131,17 @@ define([
 
          this.$element('statusMarker').attr('style', status.get('styleMarker'));
          this.$element('statusNote').text(status.get('note'));
+      },
+
+      /**
+       * Изменение цвета статуса
+       * @param {Status.model} model
+       */
+      _statusChangeColor: function(model) {
+         if (parseInt(model.id )=== this.model.get('status_id')) {
+            this.$element('statusMarker').attr('style', model.get('styleMarker'));
+            this.$element('statusNote').text(model.get('note'));
+         }
       }
    });
 });
