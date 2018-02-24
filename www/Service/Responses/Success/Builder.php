@@ -13,27 +13,45 @@
          $require->includeFiles(["min", "Core/Builder.php"]);
 
          // Корень директории из которой переносим файлы
-         $pathFrom = ".";
+         $pathFrom = "..";
 
          // Корень директории в которую переносим файлы
-         $pathIn = "../build";
+         $pathIn = "../../year-in-pix";
 
          // Иссключения (Передаются как регулярные выражения)
          $exceptions = [
-            "Client\/Librarys",
+            ".git",
+            "www\/Client\/Librarys",
             ".*\.phtml",
             ".*\.less",
-            "Service\/Librarys"
+            ".*\.md",
+
+            "www\/Service\/Librarys"
          ];
 
          // Включения (Передаются как регулярные выражения)
          $includes = [
-            "Client/Librarys/Require/Plugins",
-            "Client/Librarys/Require/Plugins/Css/css.js",
-            "Client/Librarys/jQuery/jquery.js",
-            "Client/Librarys/Underscore/underscore.js",
-            "Client/Librarys/Backbone/backbone.js",
-            "Service/Librarys"
+            "www/Client/Librarys/Require/require.js",
+            "www/Client/Librarys/Require/require-load.js",
+            "www/Client/Librarys/Require/Plugins",
+            "www/Client/Librarys/Require/Plugins/Css/css.js",
+            "www/Client/Librarys/jQuery/jquery.js",
+            "www/Client/Librarys/Underscore/underscore.js",
+            "www/Client/Librarys/Backbone/backbone.js",
+
+            "www/Service/Librarys/NinjPhp",
+            "www/Service/Librarys/NinjPhp/Query",
+            "www/Service/Librarys/tale-config/ConfigurableTrait.php",
+            "www/Service/Librarys/tale-pug/Compiler/functions.php",
+            "www/Service/Librarys/tale-pug/Compiler/Exception.php",
+            "www/Service/Librarys/tale-pug/Compiler.php",
+            "www/Service/Librarys/tale-pug/Filter.php",
+            "www/Service/Librarys/tale-pug/Lexer.php",
+            "www/Service/Librarys/tale-pug/Parser/Node.php",
+            "www/Service/Librarys/tale-pug/Parser.php",
+            "www/Service/Librarys/tale-pug/Renderer/AdapterBase.php",
+            "www/Service/Librarys/tale-pug/Renderer/Adapter/File.php",
+            "www/Service/Librarys/tale-pug/Renderer.php"
          ];
 
          /**
