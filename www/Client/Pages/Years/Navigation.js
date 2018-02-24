@@ -21,6 +21,9 @@ define([
                   menu: {
                      items: [
                         {
+                           content: 'Save chat ID',
+                           attrs: {'data-name': 'save-chat-id'}
+                        }, {
                            content: 'Settings',
                            attrs: {'data-name': 'settings'}
                         }, {

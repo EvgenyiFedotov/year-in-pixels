@@ -17,9 +17,13 @@ define(function() {
             headers: {
                Method: method
             },
-            data: JSON.stringify(data),
-            contentType: 'application/json'
+            data: data
          });
+
+         if (options.type && options.type !== 'GET') {
+            options.data = JSON.stringify(options.data);
+            options.contentType = 'application/json';
+         }
    
          return Backbone.ajax(options);
       },
@@ -34,7 +38,6 @@ define(function() {
        */
       get: function(method, data, callbacks) {
          return this.call(method, data, {
-            dataType: 'json',
             success: callbacks && callbacks.success,
             error: callbacks && callbacks.error
          });
