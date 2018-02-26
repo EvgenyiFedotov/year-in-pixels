@@ -33,7 +33,7 @@ define([
                   classNameItem: 'marker-day',
                   items: [
                      '#F44336', '#E91E63', '#9C27B0', '#673AB7',
-                     '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
+                     '#3F51B5', '#1E88E5', '#03A9F4', '#00BCD4',
                      '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
                      '#FFEB3B', '#FFC107', '#FF5722', '#212121'
                   ].map(function(color) {

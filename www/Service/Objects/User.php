@@ -173,6 +173,37 @@
       }
 
       /**
+       * Сохранить чат ид для телеграмма
+       */
+      public function saveChatId($query) {
+         // Сохраним чат ид, только тогда, когда пользователь зашел         
+         if (isset($_SESSION["user"])) {
+            $data = $query->data();
+            $chat_id = $data["chat_id"];
+
+            if ($chat_id) {
+               $connect = $this->connect();
+
+               $result = $connect->update("users", [
+                  "chat_id" => $chat_id
+               ], [
+                  "id" => $_SESSION["user"]["id"]
+               ]);
+
+               if ($result->rowCount()) {
+                  $query->response("Chat ID saved successfully!");
+               } else {
+                  $query->error(500, true);
+               }
+            } else {
+               $this->error(502);
+            }
+         } else {
+            $this->error();
+         }
+      }
+
+      /**
        * Выход
        */
       public function singout($query) {

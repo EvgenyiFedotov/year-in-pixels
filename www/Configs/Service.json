@@ -1,5 +1,6 @@
 {
    "paths": {
+      "Core": "Service/Core",
       "Libs": "Service/Librarys",
       "Pug": "Service/Librarys/tale-pug",
       "resp": "Service/Responses",
