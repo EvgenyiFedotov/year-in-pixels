@@ -12,6 +12,10 @@
          // Подключим файлы необходимые для минимзации файлов
          $require->includeFiles(["min", "Core/Builder.php"]);
 
+         // Настройки
+         $data = $query->data();
+         $action = $data["action"];
+
          // Корень директории из которой переносим файлы
          $pathFrom = "..";
 
@@ -26,7 +30,8 @@
             ".*\.less",
             ".*\.md",
 
-            "www\/Service\/Librarys"
+            "www\/Service\/Librarys",
+            "www\/Service\/Responses\/Administration"
          ];
 
          // Включения (Передаются как регулярные выражения)
@@ -39,6 +44,7 @@
             "www/Client/Librarys/Underscore/underscore.js",
             "www/Client/Librarys/Backbone/backbone.js",
 
+            "www/Service/Responses/Administration/Setup.php",
             "www/Service/Librarys/NinjPhp",
             "www/Service/Librarys/NinjPhp/Query",
             "www/Service/Librarys/tale-config/ConfigurableTrait.php",
@@ -51,33 +57,34 @@
             "www/Service/Librarys/tale-pug/Parser.php",
             "www/Service/Librarys/tale-pug/Renderer/AdapterBase.php",
             "www/Service/Librarys/tale-pug/Renderer/Adapter/File.php",
-            "www/Service/Librarys/tale-pug/Renderer.php"
+            "www/Service/Librarys/tale-pug/Renderer.php",
+            "www/Service/Librarys/Medoo/Medoo.php"
          ];
 
-         /**
-          * Обработчик контента
-          * @param {Array.<String>} $pathInfo
-          * @param {String} $content
-          */
-         $handlerContent = function($pathInfo, $content) {
-            $extension = $pathInfo["extension"];
+         // Если необходиммо минимизовать файлы
+         if ($data["is-min"] === "true") {
+            /**
+             * Обработчик контента
+            * @param {Array.<String>} $pathInfo
+            * @param {String} $content
+            */
+            $handlerContent = function($pathInfo, $content) {
+               $extension = $pathInfo["extension"];
 
-            // Минимизация контента
-            if ($extension === "js") {
-               $minifier = new Minify\JS();
-               $minifier->add($content);
-               $content = $minifier->minify();
-            } elseif ($extension === "css") {
-               $minifier = new Minify\CSS();
-               $minifier->add($content);
-               $content = $minifier->minify();
-            }
+               // Минимизация контента
+               if ($extension === "js") {
+                  $minifier = new Minify\JS();
+                  $minifier->add($content);
+                  $content = $minifier->minify();
+               } elseif ($extension === "css") {
+                  $minifier = new Minify\CSS();
+                  $minifier->add($content);
+                  $content = $minifier->minify();
+               }
 
-            return $content;
-         };
-
-         $data = $query->data();
-         $action = $data["action"];
+               return $content;
+            };
+         }
 
          $builder = new Builder([
             "pathFrom" => $pathFrom,

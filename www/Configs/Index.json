@@ -1,4 +1,4 @@
 {
    "configs": ["Configs/Service.json"],
-   "include": ["resp/Success/*"]
+   "include": ["resp/Administration/*", "resp/Success/*"]
 }
