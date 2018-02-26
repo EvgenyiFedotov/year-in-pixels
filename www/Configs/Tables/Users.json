@@ -5,6 +5,6 @@
       "login": "VARCHAR(255) NOT NULL",
       "password": "VARCHAR(255) NOT NULL",
       "theme": "VARCHAR(255) NOT NULL DEFAULT 'White'",
-      "chat_id": "INT, UNIQUE `chat_id_index` (`chat_id`)"
+      "chat_id": "VARCHAR(255), UNIQUE `chat_id_index` (`chat_id`)"
    }
 }
