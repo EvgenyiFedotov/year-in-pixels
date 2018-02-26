@@ -8,16 +8,18 @@
       "handler" => function($require, $route, $configRoute, $query) {
          $require->includeFiles(["data-base", "less-css", "jade"]);
 
-         // Преобразуем Less в CSS
-         // $lesscss = new LessCSS([
-         //    "inportDirs" => ["Client/"],
-         //    "convertDirs" => [
-         //       "Client/Page/Themes/Compiled",
-         //       "Client/Views",
-         //       "Client/Pages"
-         //    ]
-         // ]);
-         // $lesscss->convert();
+         // Преобразуем Less в CSS (если находимся на отладочной версии)
+         if (class_exists("LessCSS")) {
+            $lesscss = new LessCSS([
+               "inportDirs" => ["Client/"],
+               "convertDirs" => [
+                  "Client/Page/Themes/Compiled",
+                  "Client/Views",
+                  "Client/Pages"
+               ]
+            ]);
+            $lesscss->convert();
+         }
 
          // Имя страницы
          $namePage = ucfirst($route[0]);
