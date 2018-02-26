@@ -1,6 +1,16 @@
 <?php
    $data = $query->data();
 
+   // Если необходимо сохранить чат ид
+   if (isset($data["chat_id"])) {
+      $require->includeFiles(["Object/User.php"]);
+      $user = new User();
+      $user->saveChatId($data["chat_id"]);
+
+      header('Location: /');
+      exit;
+   }
+
    // Параметры, которые необходимо передать на клиент
    $loadParams = [];
 

@@ -174,32 +174,27 @@
 
       /**
        * Сохранить чат ид для телеграмма
+       * @param {String|Number} $shat_id
        */
-      public function saveChatId($query) {
-         // Сохраним чат ид, только тогда, когда пользователь зашел         
-         if (isset($_SESSION["user"])) {
-            $data = $query->data();
-            $chat_id = $data["chat_id"];
+      public function saveChatId($chat_id) {
+         // Сохраним чат ид, только тогда, когда пользователь зашел
+         if (isset($_SESSION["user"])
+         && (is_numeric($chat_id) || is_string($chat_id))) {
+            $connect = $this->connect();
 
-            if ($chat_id) {
-               $connect = $this->connect();
+            $result = $connect->update("users", [
+               "chat_id" => $chat_id
+            ], [
+               "id" => $_SESSION["user"]["id"]
+            ]);
 
-               $result = $connect->update("users", [
-                  "chat_id" => $chat_id
-               ], [
-                  "id" => $_SESSION["user"]["id"]
-               ]);
-
-               if ($result->rowCount()) {
-                  $query->response("Chat ID saved successfully!");
-               } else {
-                  $query->error(500, true);
-               }
+            if ($result->rowCount()) {
+               return true;
             } else {
-               $this->error(502);
+               return false;
             }
          } else {
-            $this->error();
+            return false;
          }
       }
 

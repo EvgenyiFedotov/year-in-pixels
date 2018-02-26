@@ -42,15 +42,6 @@ define([
                return navigation;
             },
             events: {
-               'navigate:save-chat-id': function() {
-                  Service.get('User.SaveChatId', {
-                     'chat_id': 145566252
-                  }, {
-                     success: function(result) {
-                        console.log('SaveChatId');
-                     }.bind(this)
-                  });
-               },
                'navigate:settings': function(url) {
                   this.navigate('settings', {
                      trigger: false
