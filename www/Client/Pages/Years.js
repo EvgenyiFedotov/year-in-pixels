@@ -2,8 +2,8 @@ define([
    'Core/View',
    'Core/Service',
    'Pages/Years/Data/Days',
-   'css!Pages/Years/Style',
-   'theme!css!Pages/Years/StatusDay/Marker'
+   'css!Pages/Years/Style'//,
+   // 'theme!css!Pages/Years/StatusDay/Marker'
 ], function(View, Service, days) {
    'use strict';
 

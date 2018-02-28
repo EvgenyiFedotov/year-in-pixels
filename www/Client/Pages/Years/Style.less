@@ -1,8 +1,10 @@
-@content-column: 23.38rem;
+@import "Style.Var";
 
 body {
    &>.content {
+      width: 100%;
       height: 100%;
+      padding: 0 1rem;
       margin: 0 auto;
 
       &>.top {
@@ -12,18 +14,17 @@ body {
       }
 
       &>.center {
-         width: @content-column * 2;
+         width: 100%;
          height: 100%;
-
-         // Данные дней
-         .days {
-            width: @content-column;
-         }
+         display: flex;
 
          // Форма редактирования дня
          .form-edit-day {
             margin-left: 1rem;
-            width: @content-column - 1rem;
+
+            @media (max-width: @width-xs) {
+               display: none;
+            }
          }
       }
    }

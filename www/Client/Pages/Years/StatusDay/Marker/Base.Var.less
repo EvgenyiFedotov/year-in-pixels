@@ -1,11 +1,24 @@
+@import "../../Style.Var";
+
+@size-side: 1.5rem;
+@size-side-xs: 1.33rem;
+
+.size-day-block(@size-side) {
+   width: @size-side;
+   min-width: @size-side;
+   height: @size-side;
+   min-height: @size-side;
+}
+
 .MarkerDayBlock() {
-   width: 1.5rem;
-   min-width: 1.5rem;
-   height: 1.5rem;
-   min-height: 1.5rem;
+   .size-day-block(@size-side);
    text-align: center;
    box-sizing: border-box;
    cursor: pointer;
+
+   @media (max-width: @width-xs) {
+      .size-day-block(@size-side-xs);
+   }
 }
 
 .MarkerDay() {

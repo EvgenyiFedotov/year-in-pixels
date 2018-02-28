@@ -1,32 +1,45 @@
 @day-marker-line-height: 1.5rem;
 @day-marker-margin-right-bottom: .3rem;
+@marker-height: 1.5rem;
 
-.days-day-block {
+.days-day-block() {
    margin-right: @day-marker-margin-right-bottom;
    margin-bottom: @day-marker-margin-right-bottom;
    line-height: @day-marker-line-height;
+   height: @marker-height;
 }
 
 .days {
+   width: 100%;
    overflow: hidden;
 
-   .name-month {
-      .days-day-block();
+   .names-months {
+      .name-month {
+         width: 100% / 13;
+         text-align: center;
+      }
    }
 
    .content {
       display: flex;
-      width: 106%;
-      height: calc(~"100% - (@{day-marker-line-height} + @{day-marker-margin-right-bottom})");
-      overflow-x: hidden;
       overflow-y: scroll;
+      width: calc(~"100% + 17px");
 
-      .number-day {
-         .days-day-block();
+      .numbers-days {
+         width: 100% / 13;
+
+         .number-day {
+            height: 100% / 13;
+         }
       }
+   
+      .markers-days {
+         width: 100% / 13;
 
-      .marker-day {
-         .days-day-block();
+         .marker-day {
+            height: 100% / 13;
+            background-color: #999;
+         }
       }
    }
 }

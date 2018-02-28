@@ -7,6 +7,14 @@
   box-sizing: border-box;
   cursor: pointer;
 }
+@media (max-width: 428px) {
+  .marker-day-block {
+    width: 1.33rem;
+    min-width: 1.33rem;
+    height: 1.33rem;
+    min-height: 1.33rem;
+  }
+}
 .marker-day {
   width: 1.5rem;
   min-width: 1.5rem;
@@ -17,6 +25,14 @@
   cursor: pointer;
   border-radius: 2px;
   border: 1px solid #EEEEEE;
+}
+@media (max-width: 428px) {
+  .marker-day {
+    width: 1.33rem;
+    min-width: 1.33rem;
+    height: 1.33rem;
+    min-height: 1.33rem;
+  }
 }
 .marker-day:hover {
   border-color: #E0E0E0;
