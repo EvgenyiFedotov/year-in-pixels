@@ -3,7 +3,7 @@ define([
    'jade!Pages/Years/Days/Template',
    'Pages/Years/Data/Days',
    'Pages/Years/Data/Statuses',
-   'css!Pages/Years/Days/Style'
+   'theme!css!Pages/Years/Days/Style'
 ], function(View, template, days, statuses) {
    'use strict';
 

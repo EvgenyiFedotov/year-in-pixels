@@ -1,0 +1,47 @@
+@import "Page/Themes/Black/Color";
+.days .days-content {
+  overflow: hidden;
+}
+.days .days-content .names-months .name-month {
+  width: calc(1.5rem - 2px);
+  height: calc(1.5rem - 2px);
+  line-height: 1.5rem;
+  margin: 2px;
+  text-align: center;
+}
+.days .days-content .content {
+  width: calc(100% + 17px);
+  height: calc(100% - 1.5rem - 2px);
+  display: flex;
+  overflow-y: scroll;
+}
+.days .days-content .content .numbers-days {
+  width: calc(1.5rem - 2px);
+  margin: 0 2px;
+}
+.days .days-content .content .numbers-days .number-day {
+  height: 1.5rem;
+  line-height: 1.5rem;
+  margin: 2px 0;
+  text-align: center;
+}
+.days .days-content .content .markers-days {
+  width: calc(1.5rem - 2px);
+  margin: 0 2px;
+}
+.days .days-content .content .markers-days .marker-day {
+  border: 1px solid #EEEEEE;
+  border-radius: 2px;
+  cursor: pointer;
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  min-height: 1.5rem;
+  line-height: 1.5rem;
+  height: calc(1.5rem - 2px);
+  margin: 2px 0;
+}
+.days .days-content .content .markers-days .marker-day:hover {
+  border-color: #E0E0E0;
+  background-color: #E0E0E0;
+}

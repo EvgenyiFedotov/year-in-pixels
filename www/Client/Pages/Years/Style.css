@@ -12,8 +12,11 @@ body>.content>.center {
   height: 100%;
   display: flex;
 }
+body>.content>.center .days {
+  margin: 0 auto;
+}
 body>.content>.center .form-edit-day {
-  margin-left: 1rem;
+  width: 100%;
 }
 @media (max-width: 428px) {
   body>.content>.center .form-edit-day {

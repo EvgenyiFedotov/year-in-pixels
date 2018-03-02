@@ -1,0 +1,28 @@
+@import "Page/Themes/Base/Colors";
+
+@day-side: 1.5rem;
+@day-margin: 2px;
+@day-side-calc: calc(~"@{day-side} - @{day-margin}");
+@day-boder: 1px solid @color-day-marker-border;
+@day-border-radius: 2px;
+
+.day-block-border() {
+   border: @day-boder;
+   border-radius: @day-border-radius;
+   cursor: pointer;
+
+   &:hover {
+      border-color: @color-day-marker-hover;
+      background-color: @color-day-marker-hover;
+   }
+}
+
+.day-block(@side: @day-side) {
+   .day-block-border();
+
+   width: @side;
+   min-width: @side;
+   height: @side;
+   min-height: @side;
+   line-height: @side;
+}

@@ -1,0 +1,49 @@
+@import "Day.Var";
+
+.days() {
+   .days-content {
+      overflow: hidden;
+
+      .names-months {
+         .name-month {
+            width: @day-side-calc;
+            height: @day-side-calc;
+            line-height: @day-side;
+            margin: @day-margin;
+            text-align: center;
+         }
+      }
+
+      .content {
+         width: calc(~"100% + 17px");
+         height: calc(~"100% - @{day-side} - @{day-margin}");
+         display: flex;
+         overflow-y: scroll;
+
+         .numbers-days {
+            width: @day-side-calc;
+            margin: 0 @day-margin;
+
+            .number-day {
+               height: @day-side;
+               line-height: @day-side;
+               margin: @day-margin 0;
+               text-align: center;
+            }
+         }
+
+         .markers-days {
+            width: @day-side-calc;
+            margin: 0 @day-margin;
+
+            .marker-day {
+               .day-block();
+
+               height: @day-side-calc;
+               margin: @day-margin 0;
+               border-radius: @day-margin;
+            }
+         }
+      }
+   }
+}
